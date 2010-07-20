@@ -1,0 +1,10 @@
+<html>
+<body>
+<map name="map" id="map">
+#foreach ($area in $areaList) 
+ <area shape="${area.shape}" href="${area.href}" coords="${area.coords}" />
+#end
+</map>
+<img src="${imageName}" usemap="#map" border="0" />
+</body>
+</html>

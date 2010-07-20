@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+#macro (writePages $pageList)
+  #if ($pageList.size() == 0)
+    <p>No Pages</p>
+  #else  
+      <ul>
+      #if ($appspec.defaultPage)
+        <li class="default"><a href="$appspec.defaultPage.id$appspec.htmlExtension">$appspec.defaultPage.title</a> (Default Page)</li> 
+      #end
+      #foreach($page in $pageList)
+        #if ($page.id != $appspec.defaultPage.id)      
+            <li><a href="$page.id$appspec.htmlExtension">$page.title</a></li>
+        #end
+      #end
+      </ul>
+  #end
+#end
+
+#macro (writeEmails $emailList)
+  #if ($emailList.size() > 0)
+      <ul id="emails">
+      #foreach($email in $emailList)
+        <li>E-mail: <a href="$email.id$appspec.htmlExtension">$email.title</a></li>
+      #end
+      </ul>
+  #end
+#end
+
+<html>
+  <head>
+    <title>$appspec.title</title>
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="pagecontainer">
+    <h1><strong>$appspec.title</strong> Project Overview</h1>
+    
+    <div class="description">
+        $appspec.description
+    </div>
+    
+    <h2>Clickframes Interactive Previews (CLIPs)</h2>
+    <div class="intro">
+        Clickframes Interactive Previews (CLIPs) let you interactively explore your application's requirements. You
+        can see all the requirements for any page in the application, including actions, outcomes, form fields and
+        general facts. If another page is involved, you can just click through to see those requirements as well.
+        Clickframes generates new versions of the CLIPs as the Clickframes Application Specification changes during
+        design and development.
+    </div>
+    
+    #writePages($appspec.pages)
+    
+    #writeEmails($appspec.emails)
+
+    <h2>Entities</h2>
+  #if ($appspec.entities.size() == 0)
+    <p>No Entities</p>
+  #else  
+      <ul>
+      #foreach($entity in $appspec.entities)
+         <li>
+            <a href="entities/${entity.id}.html">${entity.title}</a>
+         </li>
+      #end
+      </ul>
+  #end
+
+    <h2>Software Requirements</h2>
+    <ul>
+        <li><a href="../requirements/requirements.html">HTML</a></li>
+        <li><a href="../requirements/requirements.txt">Text</a></li>
+        <li><a href="../requirements/requirements.xls">Excel</a></li>
+    </ul>
+    
+    <h2>Application Metadata</h2>
+    <ul>
+        <li><a href="params.html">Page Parameter Matrix</a></li>
+    </ul>
+        
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+    
+    </div>
+  </body>
+</html>

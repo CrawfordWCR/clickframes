@@ -1,0 +1,383 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    margin:30px;
+}
+
+div#pagecontainer {
+    width:800px;
+}
+
+strong {
+    font-weight:bold;
+}
+
+ul, ol {
+    margin-left:1em;
+    margin-bottom:1em;
+}
+
+ol li {
+    list-style-type:decimal;
+}
+
+ul li {
+    list-style-type:square;
+}
+
+li.default {
+    margin-bottom:1em;
+}
+
+li.default a {
+    font-weight:bold;
+}
+
+a {
+    color:#006699;
+}
+
+a:visited {
+    color:#666666;
+}
+
+h1 {
+    font-size:22pt;
+    margin-bottom:0.2em;
+    letter-spacing:-0.05em;
+}
+
+h2 {
+    font-size:16pt;
+    font-weight:bold;
+    border-bottom:10px solid #ccc;
+    margin-bottom:0.5em;
+    letter-spacing:-0.03em;
+}
+
+.login-required {
+	font-size:10pt;
+	font-style:italic;
+	color:#990000;
+	letter-spacing:normal;
+}
+
+h2 a {
+    font-weight:normal;
+    font-size:12pt;
+    color:blue;
+    text-decoration:none;
+}
+
+h2 a:hover {
+    text-decoration:underline;
+}
+
+.nowrap {
+    white-space:nowrap;
+}
+
+div.description {
+    font-size:14pt;
+    margin-bottom:1em;
+    letter-spacing:-0.03em;
+}
+
+div.intro {
+    margin-bottom:1em;
+    font-size:10pt;
+    line-height:1.5em;
+}
+
+div.breadcrumb {
+    font-size:10pt;
+    margin-bottom:2em;
+}
+
+body.clips div#footer {
+    clear:both;
+}
+
+body.clips h2 {
+    margin-top:1em;
+    font-size:32pt;
+    font-weight:normal;
+    margin-bottom:1em;
+}
+
+body.clips p.description {
+    font-size:18pt;
+    width:540px;
+    float:right;
+    margin-bottom:1em;
+}
+
+body.clips div#navigation {
+    float:left;
+    width:230px;
+}
+
+div#clip > div > * {
+    margin-left:20px;
+    margin-right:20px;
+}
+
+div#clip div > ul, div#clip div > ol {
+    margin-left:35px;
+}
+
+body.clips div.content-box, body.clips div.primary-box {
+    border:1px solid #ccc;
+    padding-bottom:20px;
+    padding-top:20px;
+}
+
+body.clips div.primary-box {
+    width:540px;
+    float:right;
+    margin-bottom:1em;
+}
+
+body.clips h3 {
+    font-size:14pt;
+    letter-spacing:-0.02em;
+    margin-bottom:1em;
+    color:#999999;
+}
+
+body.clips h4 {
+    font-size:12pt;	
+    letter-spacing:-0.02em;
+    margin-bottom:0.5em;
+    color:#999999;
+    font-weight:bold;
+}
+
+body.clips div#navigation h4 {
+    font-size:10pt;
+    font-weight:bold;
+    margin-bottom:0.5em;
+}
+
+body.clips div#navigation ul {
+    font-size:10pt;
+    margin-bottom:1em;
+}
+
+body.clips div#facts ol {
+    margin-left:3em;
+    margin-right:2em;
+    text-align:justify;
+}
+
+body.clips div#facts ol li {
+    font-size:10pt;
+    padding-bottom:3pt;
+}
+
+/*
+body.clips fieldset#facts {
+    background:#eeeeee;
+}
+
+body.clips fieldset#facts ol {
+    font-size:10pt;
+    margin:0;
+    margin-left:1.5em;
+    padding:0;
+}
+
+body.clips fieldset#facts ol li {
+    margin-bottom:.5em;
+}
+
+
+
+body.clips fieldset {
+
+}
+
+body.clips legend {
+    font-weight:bold;
+    padding-bottom:2em;
+}
+*/
+
+table.actions {
+    width:500px;
+}
+
+table.actions th, table.actions td {
+    vertical-align:top;
+    text-align:left;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+}
+
+table.actions th {
+    width:20%;
+    font-weight:bold;
+}
+
+table.actions td.arrow {
+    padding-left:1em;
+    padding-right:1em;
+    font-size:1.5em;
+    line-height:.75em;
+}
+
+ol.outcomes {
+    font-size:10pt;
+    margin: 0;
+    padding: 0;
+}
+
+ol.outcomes li {
+    margin-bottom:0.5em;
+    list-style-type:none;
+}
+
+ol.outcomes li.negative:before {
+    content: "\00D7 \0020 \0020";
+}
+
+ol.outcomes li.positive:before {
+    content: "\221A \0020 \0020";
+}
+
+.outcome-descriptions, .link-description {
+    font-size:0.8em;
+    font-style:italic;
+}
+
+p.outputList-description {
+    font-size:14pt;
+    font-style: italic;
+    margin-bottom:1em;
+    letter-spacing:-0.03em;
+}
+
+div#footer {
+    text-align:right;
+    font-size:10pt;
+}
+
+
+table.requirements {
+    width:100%;
+    border-collapse:collapse;
+    font-size:10pt;
+    margin-top:20px;
+    margin-bottom:40px;
+}
+
+table.requirements td.requirement {
+    padding-right:40px;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+
+table.requirements td.software-requirements {
+    padding-bottom:10px;
+    padding-top:10px;   
+}
+
+table.requirements th {
+    text-align:left;
+    padding-bottom:10px;
+}
+
+td.requirement div.number {
+    font-family:monospace;
+    font-size:8pt;
+}
+
+td.requirement div.notes {
+    font-size:8pt;
+    font-style:italic;
+}
+
+table.requirements tr {
+    border-bottom:1px solid #ccc;
+}
+
+div.form table.inputs {
+    margin-bottom:1em;	
+}
+
+table.inputs {
+    font-size:10pt;
+    width:500px;
+}
+
+table.inputs th {
+    font-weight:bold;
+    padding-bottom:5px;
+    padding-right:10px;
+}
+
+table.inputs td {
+    vertical-align:top;
+    padding-bottom:5px;
+    padding-right:10px;
+}
+
+table.inputs td.input-description {
+	font-style:italic;
+}
+
+table.inputs tr.input td {
+	border-top:1px solid #ccc;
+}
+
+textarea.content {
+    height:150px;
+    width:350px;
+    font-family:monospace;
+}
+
+table.parameters {
+	margin-bottom:2em;
+    border-color:#999999;
+    border-width:0 0 1px 1px;
+    border-style:solid;
+    font-size:10pt;
+}
+
+table.parameters th, table.parameters td {
+    border-color:#999999;
+    border-width:1px 1px 0 0;
+    border-style:solid;
+    margin:0;
+    padding:4px;
+}
+
+table.parameters th {
+    background-color:#eeeeee;
+}
+
+table.parameters td {
+    text-align:center;
+}
+
+table.parameters abbr {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+tr.even {
+}
+
+tr.odd {
+    background-color: #eeeeee;
+}
+td.entity-facts {
+    font-style: italic;
+}
+td.entity-example {
+	visibility: hidden;
+}
+th.entity-example {
+    color: #999999;
+}

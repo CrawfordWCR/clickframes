@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+#macro (externalLink $href $text) 
+<a href="$href">$text</a>
+#end
+
+#macro (pageLink $page $text)
+<a href="$page.id$appspec.htmlExtension">$text</a>
+#end 
+
+#macro (writeNavigation $page $project)
+  #if ($page.linkSets.size() > 0 || $appspec.globalLinkSets.size() > 0)
+  <div id="navigation" class="content-box">
+    <h3>Navigation</h3>
+    #writePageLinkSets($page.linkSets)
+    #writeGlobalLinkSets($project)
+  </div>
+  #end
+#end
+
+<html>
+  <head>
+    <title>$entity.title - $appspec.title - Clickframes Interactive Preview</title>
+    <link rel="stylesheet" type="text/css" href="../reset.css" />
+    <link rel="stylesheet" type="text/css" href="../style.css" />
+  </head>
+    <body class="clips">
+    <div id="pagecontainer">
+    
+    <h1><strong>$appspec.title</strong> Interactive Preview</h1>
+  
+    <div class="breadcrumb">
+        <a href="../index.html">&laquo; Back to project overview</a>
+    </div>
+
+    <h2>Entity: $entity.title</h2>
+    
+    <div id="clip">
+
+    #if ($entity.description)
+    <p class="description">$entity.description</p>
+    #end
+
+    <div id="entity-content" class="primary-box">
+            <h3>Properties</h3>
+            <table class="inputs">
+            <tr><th>Id</th><th>Title</th><th>Type</th></tr>
+            #if($entity.properties.size() == 0)
+            <tr><td colspan="3"><p>No Properties</p></td></tr>
+            #else ## if entity has properties
+              #foreach($property in $entity.properties)
+              <tr>
+                <td>
+                #if ($property.persistent)
+                ${property.id}
+                #else
+                <em>${property.id}</em>
+                #end
+                </td>  
+                <td>${property.title}</td>
+                <td>${property.type}</td>
+              </tr>
+                #if ($property.validations.size() > 0)
+                <tr><td colspan="3">
+                #foreach ($validation in $property.validations)
+                  #if ($validation.type == "required")
+                  &#8249;Required&#8250;
+                  #elseif ($validation.type == "length")
+                  &#8249;Length $validation.typeArgs&#8250;
+                  #elseif ($validation.type == "regex")
+                  &#8249;Regular Expression $validation.typeArgs&#8250;
+                  #elseif ($validation.type == "email")
+                  &#8249;E-mail Address&#8250;
+                  #elseif ($validation.type == "url")
+                  &#8249;URL&#8250;
+                  #else
+                  &#8249;$validation.type&#8250;
+                  #end ## validation types
+                #end ## for each validation
+                </td></tr>
+                #end ## if validations
+              #end ## for each property
+             #end ## entity properties size
+            </table>
+    </div>
+    
+    </div>
+    
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+    
+    </div>
+  </body>
+</html>

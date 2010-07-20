@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "facelet-taglib_1_0.dtd">
+<facelet-taglib>
+  <namespace>http://clipr.clickframes.org</namespace>
+  <tag>
+    <tag-name>messages</tag-name>
+    <source>messages.xhtml</source>
+  </tag>
+  
+     <tag>
+    <tag-name>upload-uploadForm-yourAppspec</tag-name>
+    <source>upload/upload-uploadForm-yourAppspec.xhtml</source>
+  </tag>
+  <tag>
+    <tag-name>upload-uploadForm-yourAppspec-message</tag-name>
+    <source>upload/upload-uploadForm-yourAppspec-message.xhtml</source>
+  </tag>
+    
+      <tag>
+    <tag-name>upload-uploadForm-upload</tag-name>
+    <source>upload/upload-uploadForm-upload.xhtml</source>
+  </tag>
+  <tag>
+    <tag-name>upload-uploadForm-upload-message</tag-name>
+    <source>upload/upload-uploadForm-upload-message.xhtml</source>
+  </tag>
+    
+    
+  </facelet-taglib>
+<!-- clickframes::version=2544534915::clickframes -->

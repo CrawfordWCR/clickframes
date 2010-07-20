@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+#macro (externalLink $href $text)  
+<a href="$href">$text</a>
+#end
+
+#macro (runtimePageLink $link)
+<a href="${link.page.id}.seam$!{context.get($link).queryString}">$link.title</a>
+#end 
+
+<html xmlns:c="http://java.sun.com/jstl/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	  xmlns:jsp="http://java.sun.com/JSP/Page"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:s="http://jboss.com/products/seam/taglib"
+	  xmlns:spring="http://www.springframework.org/tags"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:t="http://myfaces.apache.org/tomahawk"
+	  xmlns:clickframes="http://${techspec.domain}"
+	  xmlns="http://www.w3.org/1999/xhtml">
+<f:loadBundle basename="messages" var="messages" />
+<fmt:setBundle basename='messages' scope='application' />
+
+<ui:composition
+    template="/WEB-INF/facelets/layout/layout.xhtml">
+
+    <ui:define name="title">${page.title}</ui:define>
+    <ui:param name="clickframesPage" value="${page.id}" />
+
+    <ui:define name="page-content">
+
+	  <h2>${page.title}</h2>
+	  <!--
+		 ${page.description}
+	  -->
+	  
+	  <div id="page-navigation" class="grid_2 alpha">
+		  <ul>
+#foreach($linkSet in $page.linkSets)      
+#foreach($link in $linkSet.links)
+			<li>
+#if ($link.internal)
+			   #runtimePageLink($link)
+#else
+			   #externalLink($link.href $link.title)
+#end
+			</li>
+#end
+#end
+#foreach($link in $page.links)
+			<li>
+#if ($link.internal)
+			   #runtimePageLink($link)
+#else
+			   #externalLink($link.href $link.title)
+#end
+			</li>
+#end
+		  </ul>
+	  </div>
+	  
+	  <div id="page-content" class="grid_10 omega">
+
+	  <clickframes:messages />
+	  
+### CONTENTS
+#foreach ($content in $page.contents)
+	  <div class="content">${content.text}</div>
+#end
+
+### FORMS
+#if ($page.forms.size() > 0)
+#foreach($form in $page.forms)
+	  <h:form id="${form.id}" #if($form.fileInputs.size()>0) enctype="multipart/form-data" #end>
+	  <s:validateAll>
+#if ($form.inputs.size() > 0)
+#foreach($input in $form.inputs)
+		 <div class="field">
+			 <label class="grid_2 alpha">${input.title}</label>
+			 <div class="#if ($input.type == 'radio') field-checkbox #else field-input #end grid_4">
+				 <clickframes:${page.id}-${form.id}-${input.id} />
+			 </div>
+			 <div class="field-message grid_4 omega">
+				 <clickframes:${page.id}-${form.id}-${input.id}-message />
+			 </div>
+			 <div class="clear"></div>
+		 </div>
+#end
+#end
+
+		 <div class="actions alpha prefix_2 grid_4">
+#foreach ($action in $form.actions)
+			 <clickframes:${page.id}-${form.id}-${action.id} />
+#end
+		 </div>
+		 <div class="clear"></div>
+	  </s:validateAll>
+	  </h:form>
+#end ### FOREACH FORM
+#end ### FORMS
+
+### OUTPUTS
+#if ($page.outputs.size() > 0)
+		 <div id="outputs">
+#foreach($output in $page.outputs)
+			<div class="output grid_5 alpha">
+			   <h3>${output.title}</h3>
+			   <table>
+#foreach ($entityProperty in ${output.entity.properties})
+			   <tr>
+				  <th>${entityProperty.title}</th>
+				  <td>
+#if (${entityProperty.type} == 'FILE')
+                                    <h:panelGroup rendered="#{${page.id}Controller.${output.entity.id}.${entityProperty.id}.valid}">
+                                      <a href="${output.entity.id}.download?${output.entity.primaryKey.id}=#{${page.id}Controller.${output.entity.id}.${output.entity.primaryKey.id}}">Download</a>
+                                    </h:panelGroup>
+#else
+                                    #{${page.id}Controller.${output.id}.${entityProperty.id}}
+#end
+				  </td>
+			   </tr>
+#end
+			   </table>
+			</div>
+#end ### FOREACH OUTPUT
+			<div class="clear"></div>
+		 </div>
+#end ### OUTPUTS
+
+### OUTPUT LISTS
+#foreach($outputList in $page.outputLists)
+		 <div class="output-list">
+			<h3>${outputList.title}</h3>
+			<h:dataTable border="1" value="#{${page.id}Controller.${outputList.id}}" var="${outputList.entity.id}">
+			   <h:column>
+#foreach ($link in ${outputList.links})
+#if ($link.internal) ### INTERNAL LINKS
+				  <a href="${link.page.id}.seam$!{context.get($link).queryString}">${link.title}</a>
+#else ### EXTERNAL LINKS
+				  <a href="${link.href}">${link.title}</a>
+#end
+#end ### FOREACH ENTITY LINK
+
+#if($outputList.actions.size() > 0)
+				  <h:form id="defaultForm">
+#foreach ($action in $outputList.actions)
+					 <h:commandLink 
+                           action="#{${page.id}Controller.${action.id}${outputList.name}}" 
+                           actionListener="#{${page.id}Controller.${outputList.id}Listener}" 
+                           value="${action.title}"/>
+#end ### FOREACH ENTITY ACTION
+				  </h:form>
+#end ### ENTITY ACTIONS
+			   </h:column>
+#foreach ($entityProperty in ${outputList.entity.properties})
+			   <h:column>
+				  <f:facet name="header">${entityProperty.title}</f:facet>
+#if (${entityProperty.type} == 'FILE')
+                                  <h:panelGroup rendered="#{${outputList.entity.id}.${entityProperty.id}.valid}">
+                                    <a href="${outputList.entity.id}.download?${outputList.entity.primaryKey.id}=#{${outputList.entity.id}.${outputList.entity.primaryKey.id}}">Download</a>
+                                  </h:panelGroup>
+#else
+				  #{${outputList.entity.id}.${entityProperty.id}}
+#end
+			   </h:column>
+#end ### FOREACH ENTITY PROPERTY
+            </h:dataTable>
+		 </div>
+#end ### OUTPUT LISTS
+	  </div>
+
+    </ui:define>
+</ui:composition>
+</html>

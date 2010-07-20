@@ -1,0 +1,10 @@
+#macro (writeTextReq $number $page $req)
+#set ($prs = "")
+#if ($page.properties.pr)
+    #set ($prs = $page.properties.pr)
+#end
+$number|$req|$prs
+#end
+#foreach ($requirement in $requirements)
+#writeTextReq("$requirement.identifier" $requirement.page $requirement.title)
+#end

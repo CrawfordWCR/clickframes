@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype>
+  <id>clickframes-app</id>
+  <sources>
+  </sources>
+  <resources>
+    <resource>src/main/resources/techspec.xml</resource>
+    <resource>src/main/resources/clickframes/com.mycompany.myclickframesplugin/autoscan/${page.id}.html</resource>
+  </resources>
+  <testResources>
+  </testResources>
+</archetype>

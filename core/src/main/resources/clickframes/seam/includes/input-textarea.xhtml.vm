@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition>
+#set ($disabledCondition = '${disabled == null}')
+    <c:if test="${disabledCondition}">
+       <c:set var="disabled" value="false" />
+   </c:if>
+   
+#set ($valueCondition = '${value == null}')
+    <c:if test="#{empty bean}">
+       <c:set var="value" value="#{${page.id}Controller.${form.id}${input.name}}" />
+   </c:if>
+
+    <c:if test="#{!empty bean}">
+       <c:set var="value" value="#{bean[property]}" />
+    </c:if>
+
+   <a4j:region>
+    <h:inputTextarea
+#literal()
+         disabled="#{disabled}"
+         value="#{value}"
+#end 
+      id="${input.id}" 
+#if ($input.matchesInputValidation)        
+      validator="#{${page.id}Controller.${form.id}${input.name}Validator}"
+#end
+#if (${input.required})
+      required="true"
+      requiredMessage="${input.requiredValidation.description}"
+#end
+    >
+        <a4j:support event="onchange" 
+                     limitToList="true" 
+                     reRender="${input.id}_message" />
+    </h:inputTextarea>
+   </a4j:region>
+</ui:composition>
+</html>

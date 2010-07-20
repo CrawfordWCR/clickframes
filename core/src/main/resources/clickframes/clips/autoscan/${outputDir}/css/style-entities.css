@@ -1,0 +1,163 @@
+strong {
+    font-weight:bold;
+}
+
+em {
+    font-style:italic;
+}
+
+u {
+    text-decoration:underline;
+}
+
+ul {
+    margin-top:1em;
+    margin-bottom:1em;
+}
+
+ul li {
+    list-style-type:square;
+    margin-left:1em;
+    margin-bottom:0.5em;
+}
+
+h3 {
+    font-size:16pt;
+    font-weight:bold;
+    letter-spacing:-0.05em;
+    margin-bottom:0.5em;
+}
+
+.container_12 {
+    page-break-after:always;
+}
+
+.toc_title h2 {
+    font-size:16pt;
+    color:rgb(146,57,49);
+    letter-spacing:-0.05em;
+}
+
+.toc_title h1 {
+    font-size:24pt;
+    font-weight:bold;
+    letter-spacing:-0.05em;
+}
+
+.toc_title h3, .toc_title h4 {
+    font-size:14pt;
+}
+
+.toc_title h3 {
+    margin-top:1em;
+    font-weight:normal;
+}
+
+.toc_title h4 {
+    font-size:10pt;
+    font-style:italic;
+    margin-bottom:2em;
+}
+
+.toc_page, .toc_description {
+    font-size:14pt;
+}
+
+.toc_page {
+    text-align:right;
+    font-weight:bold;
+}
+
+.toc_description {
+    
+}
+
+.page-number, .header h1, .header h2 {
+    letter-spacing:-0.05em;
+}
+
+.page-number, .header h1 {
+    font-size:36pt;
+}
+
+.page-number {
+    font-weight:bold;
+}
+
+.header h2 {
+    font-size:18pt;
+    color:rgb(146,57,49);
+}
+
+.header {
+    padding-bottom:4em;
+    border-bottom:1pt solid black;
+    margin-bottom:2em;
+}
+
+.project-name {
+    font-size:12pt;
+    font-weight:bold;
+}
+
+.branding {
+    text-transform:uppercase;
+}
+
+.footer {
+    margin-top:4em;
+}
+
+table.entity-properties {
+    width:100%;
+}
+
+.entity-properties tr.property > th {
+    font-size:10pt;
+    font-weight:bold;
+    width:30%;
+}
+
+.entity-properties th, .entity-properties td {
+    vertical-align:top;
+}
+
+.entity-description {
+    font-style:italic;
+    margin-bottom:0.25em;
+}
+
+.entity-properties tr.property > td {
+    padding-bottom:1em;
+}
+
+.entity-properties table {
+    color:#666666;
+    width:100%;
+}
+
+.entity-properties table th {
+    font-size:10pt;
+    text-transform:uppercase;
+    width:15%;
+    padding-right:1em;
+    line-height:1em;
+    padding-top:0.2em;
+}
+
+.entity-properties table tr {
+    page-break-inside:avoid;
+}
+
+.entity-properties table td, .entity-properties table th {
+    vertical-align:top;
+    padding-bottom:0.3em;
+}
+
+.entity-properties a {
+    color:#666666;
+}
+
+.page-space {
+    line-height:1px;
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>${artifactId}</artifactId>
+  <packaging>jar</packaging>
+  <groupId>${groupId}</groupId>
+  <name>${artifactId}</name>
+  <version>${version}</version>
+
+  <repositories>
+    <repository>
+      <id>clickframes-releases</id>
+      <name>Clickframes release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>clickframes-snapshots</id>
+      <name>Clickframes snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>clickframes-plugin-releases</id>
+      <name>Clickframes plugin release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>clickframes-plugin-snapshots</id>
+      <name>Clickframes plugin snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <!-- clickframes core API, required for writing plugins in Java -->
+    <dependency>
+      <groupId>org.clickframes</groupId>
+      <artifactId>clickframes-core</artifactId>
+      <version>0.9.2-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${artifactId}</finalName>
+    <plugins>
+      <!-- compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <!-- Generate manifest -->
+      <plugin>
+        <version>0.9.2-SNAPSHOT</version>
+        <groupId>org.clickframes</groupId>
+        <artifactId>clickframes-manifest-plugin</artifactId>
+        <configuration>
+          <autoscanFolder>clickframes</autoscanFolder>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+            <phase>generate-resources</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

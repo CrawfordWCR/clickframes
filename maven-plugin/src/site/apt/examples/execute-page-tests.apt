@@ -1,0 +1,14 @@
+ ------
+ Execute PageTests
+ ------
+ ------
+
+Execute Page Tests
+
+ You can selectively execute tests related to a clickframes page by specifying the <<<clickframes.page>>> option on the command line.
+ 
+* Executing from command line
+
++----------+
+mvn clickframes:execute-tests -Dclickframes.page=page1
++----------+

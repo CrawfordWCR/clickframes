@@ -1,0 +1,50 @@
+#macro (safePrint $value)
+ #if ($value) 
+  $value
+ #else
+  &nbsp;
+ #end
+#end
+
+<html>
+  <head>
+    <title>$appspec.title</title>
+    <LINK REL="stylesheet" 
+          TYPE="text/css" 
+          HREF="style.css" TITLE="Style">
+  </head>
+  <body>
+    <h1>$appspec.title</h1>
+    <h2>Test Cases</h2>
+
+      <table border="1" class="testCases">
+       <tr>
+        <th>Component</th>
+        <th>TestCase Step Number</th>
+        <th>Summary</th>
+        <th>SR Trace</th>
+        <th>Predecessor</th>
+        <th>Precondition</th>
+        <th>Step Action</th>
+        <th>Expected Result</th>
+        <th>Postcondition</th>
+       </tr>
+       #foreach ($testStep in $testSteps)
+  <tr>
+    <td>#safePrint($appspec.title)</td>
+    <td>#safePrint($testStep.stepNumber)</td>
+    <td>#safePrint($testStep.summary)</td>
+    <td>#safePrint($testStep.srIdentifier)</td>
+    <td>#safePrint($testStep.preCondition.stepNumber)</td>
+    <td></td>
+    <td>#safePrint($testStep.action)</td>
+    <td>#safePrint($testStep.expectedResult)</td>
+    <td>#safePrint($testStep.postCondition)</td>
+  </tr>
+       #end
+      </table>
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+  </body>
+</html>

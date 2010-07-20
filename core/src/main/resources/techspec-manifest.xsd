@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.clickframes.org/techspec/manifest" xmlns:tsm="http://www.clickframes.org/techspec/manifest"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" targetNamespace="http://www.clickframes.org/techspec/manifest"
+  elementFormDefault="qualified" attributeFormDefault="unqualified"
+  jaxb:version="2.1">
+  <xsd:element name="manifest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="0" maxOccurs="unbounded"
+          name="entries" type="tsm:entryType" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="entryType">
+    <xsd:sequence>
+      <xsd:element type="xsd:string" name="path">
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
