@@ -1,0 +1,3 @@
+/autoscan_samples/parent0/parent0.txt
+/autoscan_samples/parent0/email_${email.id}.html
+/autoscan_samples/parent0/parent0_${page.id}.html

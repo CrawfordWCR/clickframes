@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${techspec.packageName}</groupId>
+  <artifactId>${appspec.id}</artifactId>
+  <packaging>war</packaging>
+  <name>${appspec.title}</name>
+  <version>1.0-SNAPSHOT</version>
+
+  <repositories>
+    <repository>
+      <id>clickframes-releases</id>
+      <name>Clickframes release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>clickframes-snapshots</id>
+      <name>Clickframes snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+
+    <repository>
+      <id>jboss</id>
+      <url>http://repository.jboss.com/maven2</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>clickframes-plugin-releases</id>
+      <name>Clickframes plugin release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>clickframes-plugin-snapshots</id>
+      <name>Clickframes plugin snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+  </dependencies>
+
+  <build>
+    <finalName>${appspec.id}</finalName>
+    <plugins>
+      <plugin>
+        <version>0.9.8-SNAPSHOT</version>
+        <groupId>org.clickframes</groupId>
+        <artifactId>clickframes-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="xsd2html.xsl"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.clickframes.org" xmlns:cf="http://www.clickframes.org"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" targetNamespace="http://www.clickframes.org"
+  elementFormDefault="qualified" attributeFormDefault="unqualified"
+  jaxb:version="2.1">
+
+  <xsd:element name="appspec" type="cf:appspecType">
+    <xsd:unique name="uniquePageIdConstraint">
+      <xsd:selector xpath="cf:page" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+    <xsd:unique name="uniqueEntityIdConstraint">
+      <xsd:selector xpath=".//cf:entity" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+    <xsd:unique name="uniqueEmailIdConstraint">
+      <xsd:selector xpath="cf:email" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+    <xsd:unique name="uniqueLinkSetIdConstraint">
+      <xsd:selector xpath="cf:linkSet" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+
+    <xsd:key name="pageIndex">
+      <xsd:selector xpath=".//cf:page" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+    <xsd:key name="entityIndex">
+      <xsd:selector xpath=".//cf:entity" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+    <xsd:key name="emailIndex">
+      <xsd:selector xpath=".//cf:email" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+    <xsd:key name="linkSetIndex">
+      <xsd:selector xpath="cf:linkSet" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+    <xsd:key name="contentIndex">
+      <xsd:selector xpath="./cf:contents/cf:content" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+
+    <xsd:keyref name="entityRefForeignKeyConstraint" refer="cf:entityIndex">
+      <xsd:selector xpath=".//cf:outputList" />
+      <xsd:field xpath="@entity" />
+    </xsd:keyref>
+    <xsd:keyref name="outcomePageRefForeignKeyConstraint"
+      refer="cf:pageIndex">
+      <xsd:selector xpath=".//cf:outcomes/cf:outcome/cf:pageRef" />
+      <xsd:field xpath="." />
+    </xsd:keyref>
+    <xsd:keyref name="outcomeEmailRefForeignKeyConstraint"
+      refer="cf:emailIndex">
+      <xsd:selector xpath=".//cf:outcome/cf:emailRef" />
+      <xsd:field xpath="." />
+    </xsd:keyref>
+    <xsd:keyref name="externalLinkPageRefForeignKeyConstraint"
+      refer="cf:pageIndex">
+      <xsd:selector xpath=".//cf:link/cf:pageRef" />
+      <xsd:field xpath="." />
+    </xsd:keyref>
+    <xsd:keyref name="pageLinkSetRefForeignKeyConstraint"
+      refer="cf:linkSetIndex">
+      <xsd:selector xpath="cf:page/cf:linkSetRef" />
+      <xsd:field xpath="@id" />
+    </xsd:keyref>
+    <xsd:keyref name="pageContentRefForeignKeyConstraint"
+      refer="cf:contentIndex">
+      <xsd:selector xpath="cf:pages/cf:page/cf:contentRefs/cf:contentRef" />
+      <xsd:field xpath="@id" />
+    </xsd:keyref>
+  </xsd:element>
+
+
+  <xsd:simpleType name="nonEmptyString">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="descriptionType">
+    <xsd:restriction base="xsd:string" />
+  </xsd:simpleType>
+
+  <xsd:complexType name="linkSetType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Title of navigation</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="links" type="cf:linksType">
+        <xsd:annotation>
+          <xsd:documentation>Links to include in navigation
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>Unique identifier of this linkSet
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="global" type="xsd:boolean" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>If true, displayed on all pages
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="outcomesType">
+    <xsd:sequence>
+      <xsd:element name="outcome" type="cf:outcomeType"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="entitiesType">
+    <xsd:sequence>
+      <xsd:element name="entity" type="cf:entityType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            Resuable definition of 1 or more properties
+            which can
+            be referenced throughout the application.
+          </xsd:documentation>
+        </xsd:annotation>
+        <xsd:unique name="uniqueEntityPropertyIdConstraint">
+          <xsd:selector xpath="cf:property" />
+          <xsd:field xpath="@id" />
+        </xsd:unique>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="linkSetsType">
+    <xsd:sequence>
+      <xsd:element name="linkSet" type="cf:linkSetType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>set of links, navigation
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="linkSetRefsType">
+    <xsd:sequence>
+      <xsd:element name="linkSetRef" type="cf:linkSetRefType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>set of links, navigation
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="emailsType">
+    <xsd:sequence>
+      <xsd:element name="email" type="cf:emailType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>e-mail message definition
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="pagesType">
+    <xsd:sequence>
+      <xsd:element name="page" type="cf:pageType" minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>A page in your application
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="permissionsType">
+    <xsd:sequence>
+      <xsd:element name="permission" type="cf:permissionType"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>A page in your application
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="pageBlocksType">
+    <xsd:sequence>
+      <xsd:element name="pageBlock" type="cf:pageBlockType"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>A page in your application
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="appspecType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation> Title of your application
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="cf:descriptionType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of your application
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="outcomes" type="cf:outcomesType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The consequence of an action.
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="linkSets" type="cf:linkSetsType"
+        minOccurs="0">
+      </xsd:element>
+
+      <xsd:element name="entities" type="cf:entitiesType"
+        minOccurs="0">
+      </xsd:element>
+
+      <xsd:element name="contents" type="cf:contentsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>page or application level content
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="pages" type="cf:pagesType"
+        minOccurs="0">
+      </xsd:element>
+
+      <xsd:element name="permissions" type="cf:permissionsType"
+        minOccurs="0">
+      </xsd:element>
+
+      <xsd:element name="pageBlocks" type="cf:pageBlocksType"
+        minOccurs="0">
+      </xsd:element>
+
+      <xsd:element name="emails" type="cf:emailsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>e-mail message definition
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+    <xsd:attribute name="defaultPage" type="xsd:string"
+      use="optional">
+      <xsd:annotation>
+        <xsd:documentation>"pageId" ID of page to display by default
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="loginPage" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>"pageId" ID of the login page, the login page
+          which will be displayed is user login is required
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="id" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>Identifier for this application. Will be used
+          heavily in artifact generation.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="loginPageType">
+    <xsd:sequence>
+      <xsd:element name="pageRef" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to login page ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="formRef" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to the form ID which contents the
+            login inputs</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="username" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to username input ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="password" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to password input ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="action" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to login action ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="successfulOutcome" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to success outcome ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="failedOutcome" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Reference to failure outcome ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="entityType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The name of the entity</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The description of the entity
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="properties" type="cf:entityPropertiesType"
+        minOccurs="0" />
+    </xsd:all>
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>unique ID of entity</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="outputListType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString" />
+      <xsd:element name="description" type="cf:nonEmptyString" />
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0" />
+      <xsd:element name="links" type="cf:linksType"
+        minOccurs="0" />
+      <xsd:element name="actions" type="cf:actionsType"
+        minOccurs="0" />
+    </xsd:all>
+    <xsd:attribute name="entityRef" type="xsd:string" use="required" />
+    <xsd:attribute name="id" type="xsd:string" use="required" />
+  </xsd:complexType>
+
+  <xsd:complexType name="outputType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0" />
+      <xsd:element name="description" type="cf:nonEmptyString" />
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0" />
+    </xsd:all>
+    <xsd:attribute name="entity" type="xsd:string" use="required" />
+    <xsd:attribute name="id" type="xsd:string" use="required" />
+  </xsd:complexType>
+
+  <xsd:complexType name="entityPropertyType">
+    <xsd:all>
+      <xsd:element name="entityRef" type="cf:entityRefType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>This should exist only if type = 'entity'.
+            Link to another entity</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="title" type="cf:nonEmptyString" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The title of the property
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="cf:descriptionType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>A brief description of the property
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="validations" type="cf:validationsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>The rules governing the property
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="options" type="cf:optionsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Declare options for selection input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="default" type="cf:defaultType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Specify default value/option
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="positiveExample" type="cf:exampleValueType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>An example value for this entity property
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>the required id</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="type" type="cf:entityPropertyTypeEnum">
+      <xsd:annotation>
+        <xsd:documentation>the type of the proproperty. Currently
+          unconstrainted text</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="multiple" type="xsd:boolean"
+      default="false">
+      <xsd:annotation>
+        <xsd:documentation>Indicates whether property is a collection of
+          values.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="persistent" type="xsd:boolean"
+      default="true">
+      <xsd:annotation>
+        <xsd:documentation>
+          Indicates whether this property is saved when
+          the entity is persisted. Some
+          properties
+          are never persisted but
+          calculated from other properties. For example,
+          if "date of
+          birth"
+          is persisted then "age" can be calculated.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="primaryKey" type="xsd:boolean"
+      default="false">
+      <xsd:annotation>
+        <xsd:documentation>
+          Indicates whether this property is the
+          primary key for this entity. By
+          default this is false.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+
+    <xsd:attribute name="loginUsername" type="xsd:boolean"
+      use="optional" default="false">
+      <xsd:annotation>
+        <xsd:documentation>Is this property used as a username for
+          authentication? This will be false in most cases, except for
+          the "username", or "email" field of the user entity
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+
+    <xsd:attribute name="loginPassword" type="xsd:boolean"
+      use="optional" default="false">
+      <xsd:annotation>
+        <xsd:documentation>Is this property used as a password for
+          authentication? This will be false in most cases, except for
+          the "password" field of the user entity</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:simpleType name="entityPropertyTypeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="boolean" />
+      <xsd:enumeration value="date" />
+      <xsd:enumeration value="file" />
+      <xsd:enumeration value="float" />
+      <xsd:enumeration value="int" />
+      <xsd:enumeration value="text" />
+      <xsd:enumeration value="entity">
+        <xsd:annotation>
+          <xsd:documentation>
+            The id of another entity declared in this
+            appspec. This concept is
+            similar to 'foreign key' in
+            databases
+                    </xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="entityPropertiesType">
+    <xsd:sequence>
+      <xsd:element name="property" type="cf:entityPropertyType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>The definition of an attribute of an entity
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="factsType">
+    <xsd:sequence>
+      <xsd:element name="fact" type="cf:factType" minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>a free-form software requirement
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="formsType">
+    <xsd:sequence>
+      <xsd:element name="form" type="cf:formType" minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>group inputs and actions in a form
+            (optional)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="paramsType">
+    <xsd:sequence>
+      <xsd:element name="param" type="cf:paramType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>defines a URL parameter</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="linksType">
+    <xsd:sequence>
+      <xsd:element name="link" type="cf:linkType" minOccurs="0"
+        maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>a link to another page</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="inputsType">
+    <xsd:sequence>
+      <xsd:element name="input" type="cf:inputType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Definition of a form field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="inputMany" type="cf:inputManyType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>
+            Definition of a series of repeated inputs
+            with the same
+            structure, e.g. multiple email addresses
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="outputListsType">
+    <xsd:sequence>
+      <xsd:element name="outputList" type="cf:outputListType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Indicates that a list of entities are
+            displayed on this page</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="outputsType">
+    <xsd:sequence>
+      <xsd:element name="output" type="cf:outputType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Indicates that there are a list of entity
+            references to be displayed on this page</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="actionsType">
+    <xsd:sequence>
+      <xsd:element name="action" type="cf:actionType"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="contentsType">
+    <xsd:sequence>
+      <xsd:element name="content" type="cf:contentType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>text to be displayed on page
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="contentRefsType">
+    <xsd:sequence>
+      <xsd:element name="contentRef" type="cf:contentRefType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>reference to global content
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="pageBlockRefsType">
+    <xsd:sequence>
+      <xsd:element name="pageBlockRef" type="cf:pageBlockRefType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>reference to global page blocks
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="pageType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title of your page</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="description" type="cf:descriptionType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of your page
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="actions" type="cf:actionsType"
+        minOccurs="0" />
+
+      <xsd:element name="contents" type="cf:contentsType"
+        minOccurs="0" />
+
+      <xsd:element name="contentRefs" type="cf:contentRefsType"
+        minOccurs="0" />
+
+      <xsd:element name="inputs" type="cf:inputsType"
+        minOccurs="0" />
+
+      <xsd:element name="outputLists" type="cf:outputListsType"
+        minOccurs="0" />
+
+      <xsd:element name="outputs" type="cf:outputsType"
+        minOccurs="0" />
+
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0" />
+
+      <xsd:element name="forms" type="cf:formsType"
+        minOccurs="0" />
+
+      <xsd:element name="links" type="cf:linksType"
+        minOccurs="0" />
+
+      <xsd:element name="linkSetRefs" type="cf:linkSetRefsType"
+        minOccurs="0" />
+
+      <xsd:element name="pageBlockRefs" type="cf:pageBlockRefsType"
+        minOccurs="0" />
+
+      <xsd:element name="params" type="cf:paramsType"
+        minOccurs="0" />
+    </xsd:all>
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"nameOfPage" Unique identifier of this page
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="login-required" type="xsd:boolean"
+      use="optional" default="false">
+      <xsd:annotation>
+        <xsd:documentation>"true" True if page requires login
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="permission" type="cf:nonEmptyString"
+      use="optional">
+      <xsd:annotation>
+        <xsd:documentation>id of the permission to apply on this page
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="bookmarkable" type="xsd:boolean"
+      use="optional" default="true">
+      <xsd:annotation>
+        <xsd:documentation>Is it possible for the user to bookmark this
+          page and return to the same application state by clicking on
+          the
+          bookmark. By default all pages are bookmarkable. Pages
+          which are part of a
+          workflow and which are not meant to be
+          accessed directly
+          should set bookmarkable='false'
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="permissionType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Permission summary in a few words
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="description" type="cf:descriptionType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of the permission
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0" />
+    </xsd:all>
+
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"nameOfPage" Unique identifier of this page
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="pageBlockType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title of your page</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="description" type="cf:descriptionType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of your page
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="outputLists" type="cf:outputListsType"
+        minOccurs="0" />
+
+      <xsd:element name="outputs" type="cf:outputsType"
+        minOccurs="0" />
+    </xsd:all>
+
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"nameOfPage" Unique identifier of this page
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="formType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Form title</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="inputs" type="cf:inputsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Definition of a form field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="actions" type="cf:actionsType">
+        <xsd:annotation>
+          <xsd:documentation>something the user can do on page
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>The unique identifier of thiis form
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="contentType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="id" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation>Unique identifier of content element
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="verbatim" type="xsd:boolean"
+          default="true">
+          <xsd:annotation>
+            <xsd:documentation>If verbatim, the content specified should
+              appear as is on the page</xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="emailType">
+    <xsd:annotation>
+      <xsd:documentation>
+        The emailType is used to define an email
+        message that will be
+        sent by a Clickframes application.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Internal title of e-mail
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="cf:descriptionType">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of e-mail
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="emailSubject" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Subject of e-mail</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="emailText" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Text content of e-mail</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="links" type="cf:linksType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Links to include in e-mail
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="linkSetRefs" type="cf:linkSetRefsType"
+        minOccurs="0" />
+
+      <xsd:element name="outputs" type="cf:outputsType"
+        minOccurs="0" />
+
+      <xsd:element name="params" type="cf:paramsType"
+        minOccurs="0" />
+    </xsd:all>
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation> Unique identifier of this e-mail
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="validationsType">
+    <xsd:sequence>
+      <xsd:element name="validation" type="cf:validationType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Declare a validation rule
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="optionsType">
+    <xsd:sequence>
+      <xsd:element name="option" type="cf:optionType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>Declare option for selection input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:group name="inputElements">
+    <xsd:sequence>
+      <xsd:element name="description" type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of input field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="validations" type="cf:validationsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Declare a validation rule
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="options" type="cf:optionsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Declare options for selection input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="default" type="cf:defaultType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Specify default value/option
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="positiveExample" type="cf:exampleValueType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>An example value for this input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additonal requirement for this field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+
+  <xsd:complexType name="inputType">
+    <xsd:all>
+      <xsd:element name="entityPropertyRef" type="entityPropertyRefType" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>An optional link to an entity property
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title/label of input field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="description" type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of input field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="validations" type="cf:validationsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Declare a validation rule
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="options" type="cf:optionsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Declare options for selection input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="default" type="cf:defaultType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Specify default value/option
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="positiveExample" type="cf:exampleValueType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>An example value for this input
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additonal requirement for this field
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+
+    <xsd:attribute name="type" type="cf:inputTypeEnum"
+      use="optional">
+      <xsd:annotation>
+        <xsd:documentation>"inputType" Type of user input, e.g.
+          textarea. See InputTypeEnum for valid values
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+
+    <xsd:attribute name="id" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>optional id</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:simpleType name="inputTypeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="text" />
+      <xsd:enumeration value="textarea" />
+      <xsd:enumeration value="password" />
+      <xsd:enumeration value="checkbox" />
+      <xsd:enumeration value="radio" />
+      <xsd:enumeration value="dropdown" />
+      <xsd:enumeration value="multiple" />
+      <xsd:enumeration value="upload" />
+      <xsd:enumeration value="date" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="inputManyType">
+    <xsd:sequence>
+      <xsd:element name="title" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Title/label of input set
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="input" type="cf:inputType"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>One or more input fields to repeat
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="minOccurs" type="xsd:nonNegativeInteger"
+      use="optional" default="1">
+      <xsd:annotation>
+        <xsd:documentation>"#" Minimum number of input sets
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="maxOccurs" use="optional"
+      default="1">
+      <xsd:annotation>
+        <xsd:documentation>"#" Maximum number of input sets
+        </xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleType>
+        <xsd:union memberTypes="xsd:nonNegativeInteger">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="unbounded" />
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:union>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="entityPropertyRefType">
+    <xsd:attribute name="entity" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>the id of the entity referenced
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="property" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>the property referenced by this input
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="inheritValidations" type="xsd:boolean"
+      use="optional" default="true">
+      <xsd:annotation>
+        <xsd:documentation>boolean whether validation is inherented from
+          the entity property</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="entityRefType">
+    <xsd:attribute name="entity" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>the id of the entity referenced
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="paramType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title of parameter, e.g. User ID
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of parameter
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="entityPropertyRef" type="cf:entityPropertyRefType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Deprecated. Use the "entity" and "property"
+            attributes. Does this param correspond to an entity
+            property. For example, a param
+            'userid' may correspond to the
+            entity 'user' property 'id'
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+
+    <xsd:attribute name="id" type="cf:nonEmptyString" use="required">
+      <xsd:annotation>
+        <xsd:documentation>A unique id representing this param in the
+          context of the parent page</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="type" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"datatype" Data type of param value, e.g.
+          text (currently not constrained)</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="entity" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>The param can optionally refer to an entity
+          property. This field is the id of the entity
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="property" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>The param can optionally refer to an entity
+          property. This field is the id of the entity property.
+          Property
+          is applicable only when an entity is specified. If
+          entity is
+          specified and property is not, the default value of
+          property
+          is the
+          id of this param</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="required" type="xsd:boolean" use="optional"
+      default="false">
+      <xsd:annotation>
+        <xsd:documentation>Is this parameter required? The default value
+          is 'false'.</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:simpleType name="actionTypeEnum">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="create" />
+      <xsd:enumeration value="read" />
+      <xsd:enumeration value="update" />
+      <xsd:enumeration value="createOrUpdate" />
+      <xsd:enumeration value="delete" />
+      <xsd:enumeration value="login">
+        <xsd:annotation>
+          <xsd:documentation>Is this action used to login user to the
+            system. If yes, it should be accompanied with a username and
+            a password
+            input field in the same form? This will be false
+            in most cases, except
+            for the "Submit" action on your login
+            page
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:enumeration>
+      <xsd:enumeration value="logout" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="actionType">
+    <xsd:all>
+      <xsd:element name="title" type="cf:nonEmptyString" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title of action, i.e. button label
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="outcomes" type="cf:outcomesType">
+        <xsd:annotation>
+          <xsd:documentation>consequence of an action, one or more
+            possible outcomes</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+    <xsd:attribute name="id" type="xsd:string" use="optional" />
+
+    <xsd:attribute name="type" type="cf:actionTypeEnum"
+      use="optional">
+      <xsd:annotation>
+        <xsd:documentation>
+          Don't use if the semantics are not clear.
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="outcomeType">
+    <xsd:sequence>
+      <xsd:element name="title" type="cf:nonEmptyString" minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Title of outcome</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Brief description of outcome
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="href" type="cf:nonEmptyString">
+          <xsd:annotation>
+            <xsd:documentation>External destination URL
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="pageRef" type="cf:nonEmptyString" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation>Internal destination page ID
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="emailRef" type="cf:nonEmptyString"
+        minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation>
+          <xsd:documentation>E-mail message to send; see email
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="message" type="cf:nonEmptyString"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Message to display at destination
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="negative" type="xsd:boolean" use="optional" />
+    <xsd:attribute name="id" type="xsd:string" use="optional" />
+    <xsd:attribute name="loginSuccessfulOutcome" type="xsd:boolean"
+      use="optional" default="false" />
+    <xsd:attribute name="loginFailedOutcome" type="xsd:boolean"
+      use="optional" default="false" />
+  </xsd:complexType>
+
+  <xsd:complexType name="linkSetRefType">
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"linkSetId" Identifier of linkSet
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="contentRefType">
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"contentId" Reference to global content ID
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="pageBlockRefType">
+    <xsd:attribute name="id" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>"pageBlock" id Reference to global page block
+          ID</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="propertyType">
+    <xsd:attribute name="name" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>the string name of property
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="value" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>string value of property</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="validationType">
+    <xsd:sequence>
+      <xsd:element name="negativeExample" minOccurs="0"
+        type="cf:exampleValueType" />
+    </xsd:sequence>
+    <xsd:attribute name="type" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>
+          Type of validation, acceptable values are
+          "required",
+          "regex(expression)", "email", "date",
+          "length(min=x,max=y)"
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="description" type="xsd:string"
+      use="optional">
+      <xsd:annotation>
+        <xsd:documentation>Error message to display on failure
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+    <xsd:attribute name="id" type="xsd:string" use="optional">
+      <xsd:annotation>
+        <xsd:documentation>optional id</xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+  <xsd:complexType name="optionType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="value" type="xsd:string" use="required">
+          <xsd:annotation>
+            <xsd:appinfo>
+              <jaxb:property name="optionValue" />
+            </xsd:appinfo>
+            <xsd:documentation>string value of an option
+            </xsd:documentation>
+          </xsd:annotation>
+          <!--
+            Need to coax JAXB into giving this attribute a name that
+            doesn't conflict with the getValue method used to pull out
+            the simpleContent
+          -->
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="defaultType">
+    <xsd:attribute name="value" type="xsd:string" use="required">
+      <xsd:annotation>
+        <xsd:documentation>string text, or reference to option value
+        </xsd:documentation>
+      </xsd:annotation>
+    </xsd:attribute>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="factType">
+    <xsd:annotation>
+      <xsd:documentation>Internal destination page ID
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="cf:nonEmptyString">
+        <xsd:attribute name="id" type="xsd:string" use="optional">
+          <xsd:annotation>
+            <xsd:documentation>Fact id must be unique, but are
+              autogenerated if left blank by the user
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:attribute>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="exampleValueType">
+    <xsd:annotation>
+      <xsd:documentation>Example value for the input</xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string" />
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="linkType">
+    <xsd:sequence>
+      <xsd:element name="title" type="cf:nonEmptyString">
+        <xsd:annotation>
+          <xsd:documentation>Title of link to display
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="description" type="xsd:string"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Optional description of link
+          </xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:choice>
+        <xsd:element name="href" type="cf:nonEmptyString">
+          <xsd:annotation>
+            <xsd:documentation>External destination URL
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="pageRef" type="cf:nonEmptyString">
+          <xsd:annotation>
+            <xsd:documentation>Internal destination page ID
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:choice>
+      <xsd:element name="facts" type="cf:factsType"
+        minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation>Additional requirements</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="id" type="xsd:string" use="optional" />
+  </xsd:complexType>
+</xsd:schema>

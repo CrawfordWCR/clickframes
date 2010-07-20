@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+<ui:composition>
+   <s:fileUpload 
+            id="${input.id}"
+            contentType="#{${page.id}Controller.${form.id}${input.name}ContentType}" 
+            data="#{${page.id}Controller.${form.id}${input.name}InputStream}" 
+            fileName="#{${page.id}Controller.${form.id}${input.name}FileName}"
+   />  
+
+#if ($form.updateForm && $input.entityProperty)
+#set($entity = $input.entityProperty.entity)
+<h:panelGroup rendered="#{${page.id}Controller.${entity.id}.${input.entityProperty.id}.valid}">
+## bound entity
+   <strong>Current file:</strong> 
+   <a href="${entity.id}.download?${entity.primaryKey.id}=#{${page.id}Controller.${entity.id}.${entity.primaryKey.id}}" 
+      target="_blank">#{${page.id}Controller.${entity.id}.${input.entityProperty.id}.fileName}</a>
+   <br/>
+   To keep the file as is, leave this field blank. 
+</h:panelGroup>
+#end
+</ui:composition>
+</html>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_10" class="java.beans.XMLDecoder"> 
+ <object class="org.clickframes.model.test.ProjectTestResults"> 
+  <void property="endTime"> 
+   <object class="java.util.Date"> 
+    <long>1232489574850</long> 
+   </object> 
+  </void> 
+  <void property="passedCount"> 
+   <int>2</int> 
+  </void> 
+  <void property="projectTestResultList"> 
+   <void method="add"> 
+    <object class="org.clickframes.model.test.ProjectTestResult"> 
+     <void property="browser"> 
+      <string>*firefox</string> 
+     </void> 
+     <void property="htmlOutput"> 
+      <string>&lt;html&gt;
+&lt;head&gt;&lt;style type=&apos;text/css&apos;&gt;
+body, table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.title {
+    font-style: italic;
+}
+
+.selected {
+    background-color: #ffffcc;
+}
+
+.status_done {
+    background-color: #eeffee;
+}
+
+.status_passed {
+    background-color: #ccffcc;
+}
+
+.status_failed {
+    background-color: #ffcccc;
+}
+
+.breakpoint {
+    background-color: #cccccc;
+    border: 1px solid black;
+}
+&lt;/style&gt;&lt;title&gt;Test suite results&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Test suite results &lt;/h1&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;result:&lt;/td&gt;
+&lt;td&gt;passed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;totalTime:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestTotal:&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestPasses:&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestFailures:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandPasses:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandFailures:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandErrors:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Selenium Version:&lt;/td&gt;
+&lt;td&gt;undefined&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Selenium Revision:&lt;/td&gt;
+&lt;td&gt;undefined&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&#13;
+&lt;table id=&quot;suiteTable&quot; class=&quot;selenium&quot; border=&quot;1&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot;&gt;&lt;tbody&gt;&#13;
+&lt;tr class=&quot;title status_passed&quot;&gt;&lt;td&gt;&lt;b&gt;Test Suite&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_passed&quot;&gt;&lt;td&gt;&lt;a href=&quot;#testresult0&quot;&gt;testCase1.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_passed&quot;&gt;&lt;td&gt;&lt;a href=&quot;#testresult1&quot;&gt;testCase2.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;/tbody&gt;&lt;/table&gt;&#13;
+&#13;
+&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;&lt;a name=&quot;testresult0&quot;&gt;testCase1.html&lt;/a&gt;&lt;br/&gt;&lt;div&gt;&#13;
+&lt;table border=&quot;1&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot;&gt;&#13;
+&lt;thead&gt;&#13;
+&lt;tr class=&quot;title status_passed&quot;&gt;&lt;td rowspan=&quot;1&quot; colspan=&quot;3&quot;&gt;testCase1.html&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;/thead&gt;&lt;tbody&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;open&lt;/td&gt;&#13;
+    &lt;td&gt;/&lt;/td&gt;&#13;
+    &lt;td&gt;&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;storeGlobal&lt;/td&gt;&#13;
+    &lt;td&gt;foo&lt;/td&gt;&#13;
+    &lt;td&gt;path&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;/tbody&gt;&lt;/table&gt;&#13;
+&#13;
+&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;&lt;tr&gt;
+&lt;td&gt;&lt;a name=&quot;testresult1&quot;&gt;testCase2.html&lt;/a&gt;&lt;br/&gt;&lt;div&gt;&#13;
+&lt;table border=&quot;1&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot;&gt;&#13;
+&lt;thead&gt;&#13;
+&lt;tr class=&quot;title status_passed&quot;&gt;&lt;td rowspan=&quot;1&quot; colspan=&quot;3&quot;&gt;suite2&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;/thead&gt;&lt;tbody&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;open&lt;/td&gt;&#13;
+    &lt;td&gt;/&lt;/td&gt;&#13;
+    &lt;td&gt;&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;storeGlobal&lt;/td&gt;&#13;
+    &lt;td&gt;foo&lt;/td&gt;&#13;
+    &lt;td&gt;path&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;/tbody&gt;&lt;/table&gt;&#13;
+&#13;
+&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;&lt;pre&gt;
+info: Starting test /selenium-server/tests/testCase1.html&#13;
+info: Executing: |open | / |  |&#13;
+info: Executing: |storeGlobal | foo | path |&#13;
+info: Starting test /selenium-server/tests/testCase2.html&#13;
+info: Executing: |open | / |  |&#13;
+info: Executing: |storeGlobal | foo | path |&#13;
+&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;</string> 
+     </void> 
+     <void property="passed"> 
+      <boolean>true</boolean> 
+     </void> 
+     <void property="testName"> 
+      <string>suite.html</string> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="org.clickframes.model.test.ProjectTestResult"> 
+     <void property="browser"> 
+      <string>*firefox</string> 
+     </void> 
+     <void property="htmlOutput"> 
+      <string>&lt;html&gt;
+&lt;head&gt;&lt;style type=&apos;text/css&apos;&gt;
+body, table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+}
+
+a {
+    text-decoration: none;
+}
+
+.title {
+    font-style: italic;
+}
+
+.selected {
+    background-color: #ffffcc;
+}
+
+.status_done {
+    background-color: #eeffee;
+}
+
+.status_passed {
+    background-color: #ccffcc;
+}
+
+.status_failed {
+    background-color: #ffcccc;
+}
+
+.breakpoint {
+    background-color: #cccccc;
+    border: 1px solid black;
+}
+&lt;/style&gt;&lt;title&gt;Test suite results&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Test suite results &lt;/h1&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;result:&lt;/td&gt;
+&lt;td&gt;passed&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;totalTime:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestTotal:&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestPasses:&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numTestFailures:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandPasses:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandFailures:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numCommandErrors:&lt;/td&gt;
+&lt;td&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Selenium Version:&lt;/td&gt;
+&lt;td&gt;undefined&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Selenium Revision:&lt;/td&gt;
+&lt;td&gt;undefined&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&#13;
+&lt;table id=&quot;suiteTable&quot; class=&quot;selenium&quot; border=&quot;1&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot;&gt;&lt;tbody&gt;&#13;
+&lt;tr class=&quot;title status_passed&quot;&gt;&lt;td&gt;&lt;b&gt;Test Suite&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_passed&quot;&gt;&lt;td&gt;&lt;a href=&quot;#testresult0&quot;&gt;testCase1.html&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;/tbody&gt;&lt;/table&gt;&#13;
+&#13;
+&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;&lt;table&gt;&lt;tr&gt;
+&lt;td&gt;&lt;a name=&quot;testresult0&quot;&gt;testCase1.html&lt;/a&gt;&lt;br/&gt;&lt;div&gt;&#13;
+&lt;table border=&quot;1&quot; cellpadding=&quot;1&quot; cellspacing=&quot;1&quot;&gt;&#13;
+&lt;thead&gt;&#13;
+&lt;tr class=&quot;title status_passed&quot;&gt;&lt;td rowspan=&quot;1&quot; colspan=&quot;3&quot;&gt;testCase1.html&lt;/td&gt;&lt;/tr&gt;&#13;
+&lt;/thead&gt;&lt;tbody&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;open&lt;/td&gt;&#13;
+    &lt;td&gt;/&lt;/td&gt;&#13;
+    &lt;td&gt;&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;tr class=&quot;status_done&quot; style=&quot;cursor: pointer;&quot;&gt;&#13;
+    &lt;td&gt;storeGlobal&lt;/td&gt;&#13;
+    &lt;td&gt;foo&lt;/td&gt;&#13;
+    &lt;td&gt;path&lt;/td&gt;&#13;
+&lt;/tr&gt;&#13;
+&lt;/tbody&gt;&lt;/table&gt;&#13;
+&#13;
+&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;&lt;pre&gt;
+info: Starting test /selenium-server/tests/testCase1.html&#13;
+info: Executing: |open | / |  |&#13;
+info: Executing: |storeGlobal | foo | path |&#13;
+&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;</string> 
+     </void> 
+     <void property="passed"> 
+      <boolean>true</boolean> 
+     </void> 
+     <void property="testName"> 
+      <string>suite2.html</string> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+  <void property="startTime"> 
+   <object class="java.util.Date"> 
+    <long>1232489550495</long> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

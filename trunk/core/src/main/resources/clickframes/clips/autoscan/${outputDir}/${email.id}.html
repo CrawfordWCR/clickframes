@@ -1,0 +1,105 @@
+#macro (externalLink $href $text)
+<a href="$href">$text</a>
+#end
+
+#macro (writeFacts $facts)
+  #if ($facts.size() > 0)
+    <div id="facts" class="primary-box">
+    <h3>Facts</h3>
+    <ol>
+      #foreach ($fact in $facts)
+      <li>$fact</li>
+      #end
+    </ol>
+    </div>
+  #end
+#end
+
+#macro (writeEmailLinkSets $linkSets)
+  #if ($linkSets.size() > 0)
+  <div id="navigation" class="content-box">
+    #foreach($linkSet in $linkSets)      
+      <h4>$linkSet.title</h4>
+      #writePageLinkSet($linkSet)
+    #end
+  </div>
+  #end
+#end
+
+#macro (writeEmailLinks $linkList)
+  #if ($linkList.size() > 0)
+    <div id="links" class="primary-box">
+      <h3>Links</h3>
+      <ul>
+      #foreach($link in $linkList)
+        <li>#writeEmailLink($link)</li>
+      #end
+      </ul>
+    </div>
+  #end
+#end
+
+#macro(writeEmailLink $link)
+    #if ($link.internal)
+      <!-- Internal Links Not Supported In Emails -->
+    #else
+      #externalLink($link.href $link.title)
+    #end
+
+    <div class="outcome-descriptions">
+    #if ($link.description)
+      <div class="outcome-description">$link.description</div>
+    #end
+    #if ($link.facts.size() > 0)
+      #foreach ($fact in $link.facts)
+        <div class="outcome-description">$fact</div>
+      #end
+    #end
+    </div>
+#end
+
+#macro(writeEmailContent $email)
+  <div id="email-content" class="primary-box">
+    <h3>E-mail Content</h3>
+    <h4>$email.emailSubject</h4>
+    <pre>$email.emailText</pre>
+  </div>
+#end
+
+<html>
+  <head>
+    <title>$page.title - $appspec.title - Clickframes Interactive Preview</title>
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+    <body class="clips">
+    <div id="pagecontainer">
+    
+    <h1><strong>$appspec.title</strong> Interactive Preview</h1>
+  
+    <div class="breadcrumb">
+        <a href="index.html">&laquo; Back to project overview</a>
+    </div>
+
+    <h2>E-Mail: $email.title</h2>
+    
+    <div id="clip">
+    
+    #writeEmailLinkSets($email.linkSets)
+
+    <p class="description">$email.description</p>
+    
+    #writeEmailContent($email)
+    
+    #writeEmailLinks($email.links)
+
+    #writeFacts($email.facts)
+    
+    </div>
+    
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+
+  </body>
+</html>

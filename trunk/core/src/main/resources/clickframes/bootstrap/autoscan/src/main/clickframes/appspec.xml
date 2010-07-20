@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE appspec [
+    <!ENTITY % HTMLlat1 PUBLIC
+       "-//W3C//ENTITIES Latin 1 for XHTML//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent">
+    <!ENTITY % HTMLspec PUBLIC
+        "-//W3C//ENTITIES Special for XHTML//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml-special.ent">
+    %HTMLlat1;
+    %HTMLspec;
+]>
+<appspec xmlns="http://www.clickframes.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  id="${id}">
+  <title>${id} project title</title>
+  <description>${id} project description</description>
+
+  <!-- entities -->
+  <entities>
+  </entities>
+
+  <!-- user visible pages -->
+  <pages>
+  </pages>
+</appspec>

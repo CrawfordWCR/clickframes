@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<techspec xmlns="http://www.clickframes.org/techspec"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <package>${javaPackage}</package>
+  <plugins>
+#foreach ($plugin in $plugins)
+    <plugin class="${plugin}" />
+#end
+  </plugins>
+</techspec>

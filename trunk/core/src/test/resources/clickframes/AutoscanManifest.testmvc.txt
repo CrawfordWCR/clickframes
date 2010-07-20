@@ -1,0 +1,1 @@
+clickframes/testmvc/autoscan/target/clickframes/testmvc/index.html

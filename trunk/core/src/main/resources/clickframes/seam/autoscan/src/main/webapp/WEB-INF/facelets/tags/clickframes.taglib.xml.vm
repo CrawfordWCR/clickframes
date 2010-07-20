@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "facelet-taglib_1_0.dtd">
+<facelet-taglib>
+  <namespace>http://${techspec.domain}</namespace>
+  <tag>
+    <tag-name>messages</tag-name>
+    <source>messages.xhtml</source>
+  </tag>
+  
+#foreach ($page in ${appspec.pages})
+ #foreach ($form in ${page.forms})  
+  #foreach ($input in ${form.inputs})  
+  <tag>
+    <tag-name>${page.id}-${form.id}-${input.id}</tag-name>
+    <source>${page.id}/${page.id}-${form.id}-${input.id}.xhtml</source>
+  </tag>
+  <tag>
+    <tag-name>${page.id}-${form.id}-${input.id}-message</tag-name>
+    <source>${page.id}/${page.id}-${form.id}-${input.id}-message.xhtml</source>
+  </tag>
+  #end
+  
+  ### form actions
+  #foreach ($action in ${form.actions})  
+  <tag>
+    <tag-name>${page.id}-${form.id}-${action.id}</tag-name>
+    <source>${page.id}/${page.id}-${form.id}-${action.id}.xhtml</source>
+  </tag>
+  <tag>
+    <tag-name>${page.id}-${form.id}-${action.id}-message</tag-name>
+    <source>${page.id}/${page.id}-${form.id}-${action.id}-message.xhtml</source>
+  </tag>
+  #end
+ #end
+ 
+#end
+</facelet-taglib>

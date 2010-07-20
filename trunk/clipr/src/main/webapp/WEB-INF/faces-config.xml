@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<faces-config>
+  <application>
+    <message-bundle>messages</message-bundle>
+    <locale-config>
+      <default-locale>en_US</default-locale>
+    </locale-config>
+    
+    <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+    <variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+  </application>
+</faces-config>
+<!-- clickframes::version=4288808539::clickframes -->

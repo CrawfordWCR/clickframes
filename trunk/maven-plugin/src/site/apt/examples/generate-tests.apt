@@ -1,0 +1,41 @@
+ ------
+ Generate Tests
+ ------
+ ------
+
+Generate Tests
+
+ You can automatically generate selenium tests from your appspec.xml file using the <<<generate-tests>>> goal. You can either do this
+ manually on command line or associate it with the <<<generate-resources>>> phase in your pom.xml.
+ 
+* Executing from command line
+
++----------+
+mvn clickframes:generate-tests
++----------+
+ 
+* Executing it automatically from the pom.xml 
+
++----------+
+<plugins>
+  <plugin>
+    <version>0.0.1-SNAPSHOT</version>
+    <groupId>org.chip.isg.tools</groupId>
+    <artifactId>clickframes-maven-plugin</artifactId>
+    <configuration>
+      <clickframesXml>file:${basedir}/src/main/resources/appspec.xml</clickframesXml>
+      <javaPackage>org.clickframes.demo</javaPackage>
+    </configuration>
+
+    <executions>
+      <execution>
+        <id>generate-tests</id>
+        <phase>generate-resources</phase>
+        <goals>
+          <goal>generate-tests</goal>
+        </goals>
+      </execution>
+    </executions>
+  </plugin>
+</plugins>
++----------+

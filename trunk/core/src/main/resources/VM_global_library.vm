@@ -1,0 +1,103 @@
+#macro (getterSetterAdvanced $type $id $name $title $description $indent)
+#if (!$indent)
+   #set($indent = "    ")
+#end
+
+${indent}/** $!description */
+${indent}private $type $id;
+
+${indent}/** 
+${indent} * Get $title
+${indent} *  
+${indent} * @return $title
+${indent} */
+${indent}public $type get$name() {
+${indent}   return this.$id;
+${indent}}
+
+${indent}/**
+${indent} * Set ${title}
+${indent} *
+${indent} * @param $id
+${indent} */
+${indent}public void set$name($type $id) {
+${indent}    this.$id = $id;
+${indent}}
+
+#end
+
+#macro (getterSetter $type $id $name $title $description)
+#getterSetterAdvanced($type $id $name $title $description "    ")
+#end
+
+#macro (getterSetter $args)
+## indent
+#set($indent = "    ")
+#if (${args.indent})
+ #set ($indent = ${args.indent}) 
+#end
+
+## field visibility
+#set($fieldVisibility = "private")
+#if ($args.fieldVisibility)
+ #set ($fieldVisibility = ${args.fieldVisibility}) 
+#end
+
+${indent}/** $!${args.description} */
+${indent}${fieldVisibility} ${args.type} ${args.id};
+
+${indent}/** 
+${indent} * Get ${args.title}
+${indent} *  
+${indent} * @return ${args.title}
+${indent} */
+${indent}public ${args.type} get${args.name}() {
+${indent}   return this.${args.id};
+${indent}}
+
+${indent}/**
+${indent} * Set ${args.title}
+${indent} *
+${indent} * @param ${args.id}
+${indent} */
+${indent}public void set${args.name}(${args.type} ${args.id}) {
+${indent}    this.${args.id} = ${args.id};
+${indent}}
+
+#end
+
+#macro (printAppspecElement $appspecElement)
+#if (!$appspecElement.metaName)
+	$appspecElement
+#else
+	#set ($variableMap = $appspecElement.variableMap)
+	    <table border="1">
+	     <tr><th>Key</th><th>Value</th></tr>
+	#foreach($key in $variableMap.keySet())
+	     <tr><th>$key</th>
+	      <td>
+            #set ($value = $variableMap.get($key))
+            $value
+	      </td></tr>
+	#end
+	    </table>
+#end ## if-else-end
+#end ## macro end
+
+#macro (printNestedAppspecElement $appspecElement)
+#if (!$appspecElement.metaName)
+	$appspecElement
+#else
+	#set ($variableMap = $appspecElement.nestedVariableMap)
+	    <table border="1">
+	     <tr><th>Key</th><th>Value</th></tr>
+	#foreach($key in $variableMap.keySet())
+	     #set ($value = $variableMap.get($key))
+	     <tr><td>$key</td>
+	      <td>
+		     ${value}
+	      </td></tr>
+	#end
+	    </table>
+#end ## if-else-end
+#end ## macro end

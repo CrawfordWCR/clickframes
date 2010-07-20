@@ -1,0 +1,7 @@
+This region is manual. The following region is a placeholder for dynamic data
+<!-- cf:start xxx -->
+Dynamic value 1
+Dynamic value 2
+<!-- cf:end -->
+This region is manual as well
+<!-- clickframes::version=2414195583::clickframes -->

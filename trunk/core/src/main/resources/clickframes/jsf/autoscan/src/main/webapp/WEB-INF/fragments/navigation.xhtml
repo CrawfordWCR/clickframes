@@ -1,0 +1,15 @@
+#macro (linkMe $href $text)
+<a href="$href">$text</a>
+#end
+<!-- Needs fixing!!!!  Get global data, not per page. -->
+<ul id="navigation">
+	#foreach($linkSet in $appspec.linkSets)
+	<li>
+	#if ($link.internal) 
+		#linkMe($link.page $link.title) 
+	#else 
+		#linkMe($link.href $link.title) 
+	#end
+	</li>
+	#end 
+</ul>

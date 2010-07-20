@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<appspecOverride>
+	<overridePage id="viewListing" skipJSF="true" entityClass="org.chip.isg.grants.data.Listing" />
+	<overridePage id="projectDocuments" skipJSF="true"/>
+	<overridePage id="collaborators" skipJSF="true"/>
+	<overridePage id="contacts" serviceId="contactsService"/>
+</appspecOverride>

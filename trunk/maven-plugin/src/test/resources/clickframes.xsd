@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.clickframes.org"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:isg="http://www.clickframes.org"
+  targetNamespace="http://www.clickframes.org"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xsd:element name="project" type="isg:projectType">
+    <xsd:unique name="uniquePageIdConstraint">
+      <xsd:selector xpath="isg:page" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+
+    <xsd:unique name="uniqueLinkSetIdConstraint">
+      <xsd:selector xpath="isg:linkSet" />
+      <xsd:field xpath="@id" />
+    </xsd:unique>
+
+    <xsd:key name="pageIndex">
+      <xsd:selector xpath="isg:page" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+
+    <xsd:key name="linkSetIndex">
+      <xsd:selector xpath="isg:linkSet" />
+      <xsd:field xpath="@id" />
+    </xsd:key>
+
+    <xsd:keyref name="outcomePageRefForeignKeyConstraint"
+      refer="isg:pageIndex">
+      <xsd:selector xpath=".//isg:outcome/isg:pageRef" />
+      <xsd:field xpath="." />
+    </xsd:keyref>
+
+    <xsd:keyref name="externalLinkPageRefForeignKeyConstraint"
+      refer="isg:pageIndex">
+      <xsd:selector xpath=".//isg:link/isg:pageRef" />
+      <xsd:field xpath="." />
+    </xsd:keyref>
+
+    <xsd:keyref name="pageLinkSetRefForeignKeyConstraint"
+      refer="isg:linkSetIndex">
+      <xsd:selector xpath="isg:page/isg:linkSetRef" />
+      <xsd:field xpath="@id" />
+    </xsd:keyref>
+  </xsd:element>
+
+  <xsd:complexType name="linkSetType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" />
+      <xsd:element name="fact" minOccurs="0" maxOccurs="unbounded"
+        type="isg:nonEmptyString" />
+      <xsd:element name="link" maxOccurs="unbounded"
+        type="isg:linkType" />
+    </xsd:sequence>
+    <xsd:attribute name="id" use="required" type="xsd:string" />
+    <xsd:attribute name="global" use="optional" type="xsd:boolean" />
+  </xsd:complexType>
+
+  <xsd:complexType name="projectType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" maxOccurs="1" />
+      <xsd:element name="outcome" type="isg:outcomeType" minOccurs="0"
+        maxOccurs="unbounded" />
+      <xsd:element name="linkSet" type="isg:linkSetType" minOccurs="0"
+        maxOccurs="unbounded" />
+      <xsd:element name="page" type="isg:pageType" minOccurs="1"
+        maxOccurs="unbounded" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="descriptionType">
+    <xsd:restriction base="xsd:string"></xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="pageType">
+    <xsd:sequence minOccurs="1">
+      <xsd:element name="title" maxOccurs="1" type="isg:nonEmptyString" />
+      <xsd:element name="description" maxOccurs="1"
+        type="isg:descriptionType" />
+      <xsd:element name="fact" minOccurs="0" maxOccurs="unbounded"
+        type="isg:nonEmptyString" />
+      <xsd:element name="input" minOccurs="0" maxOccurs="unbounded"
+        type="isg:inputType" />
+      <xsd:element name="action" minOccurs="0" maxOccurs="unbounded"
+        type="isg:actionType" />
+      <xsd:element name="link" minOccurs="0" maxOccurs="unbounded"
+        type="isg:linkType" />
+      <xsd:element name="linkSetRef" minOccurs="0" maxOccurs="unbounded"
+        type="isg:linkSetRefType" />
+      <xsd:element name="property" minOccurs="0" maxOccurs="unbounded"
+        type="isg:propertyType" />
+    </xsd:sequence>
+    <xsd:attribute name="id" use="required" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="inputType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" />
+      <xsd:element name="description" type="xsd:string" />
+      <xsd:element name="validation" type="isg:validationType"
+        minOccurs="0" maxOccurs="unbounded" />
+    </xsd:sequence>
+    <xsd:attribute name="type" use="required" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="actionType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" />
+      <xsd:element name="outcome" maxOccurs="unbounded"
+        type="isg:outcomeType" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="outcomeType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" />
+      <xsd:element name="description" minOccurs="0" maxOccurs="1"
+        type="xsd:string" />
+      <xsd:choice>
+        <xsd:element name="href" type="isg:nonEmptyString" />
+        <xsd:element name="pageRef" type="isg:nonEmptyString" />
+      </xsd:choice>
+      <xsd:element name="fact" minOccurs="0" maxOccurs="unbounded"
+        type="isg:nonEmptyString" />
+    </xsd:sequence>
+    <xsd:attribute name="negative" use="optional" type="xsd:boolean" />
+  </xsd:complexType>
+
+  <xsd:complexType name="linkSetRefType">
+    <xsd:attribute name="id" use="required" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="propertyType">
+    <xsd:attribute name="name" use="required" type="xsd:string" />
+    <xsd:attribute name="value" use="required" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="validationType">
+    <xsd:attribute name="type" use="required" type="xsd:string" />
+    <xsd:attribute name="description" use="optional" type="xsd:string" />
+  </xsd:complexType>
+
+  <xsd:complexType name="linkType">
+    <xsd:sequence>
+      <xsd:element name="title" type="isg:nonEmptyString" />
+      <xsd:element name="description" minOccurs="0" maxOccurs="1"
+        type="xsd:string" />
+      <xsd:choice>
+        <xsd:element name="href" type="isg:nonEmptyString" />
+        <xsd:element name="pageRef" type="isg:nonEmptyString" />
+      </xsd:choice>
+      <xsd:element name="fact" minOccurs="0" maxOccurs="unbounded"
+        type="isg:nonEmptyString" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name='nonEmptyString'>
+    <xsd:restriction base='xsd:string'>
+      <xsd:minLength value='1' />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

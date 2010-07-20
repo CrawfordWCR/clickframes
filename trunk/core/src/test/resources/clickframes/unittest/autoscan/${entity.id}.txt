@@ -1,0 +1,4 @@
+entity.id - ${entity.id}
+entity.name - ${entity.name}
+entityJava - ${entityJava.className}
+ 

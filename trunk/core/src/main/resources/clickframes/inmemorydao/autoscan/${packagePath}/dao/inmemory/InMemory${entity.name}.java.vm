@@ -1,0 +1,54 @@
+package ${techspec.packageName}.dao.inmemory;
+
+import ${techspec.packageName}.model.UploadedFile;
+import ${techspec.packageName}.entity.${entity.name};
+import java.util.List;
+
+/**
+ * ${entity.description}
+ */
+public class InMemory${entity.name} implements $entity.name {
+#foreach($property in $entity.properties)
+#set($propertyContext = $context.get($property))
+
+#if ($property.allowedValues.size() > 0)
+    public static enum ${property.name} {
+    #foreach ($allowedValue in $property.allowedValues.keySet())${allowedValue}#{if}($velocityCount < ${property.allowedValues.size()}), #{end}#end
+    };
+
+#end
+
+    /** #if (${property.description})$property.description#else${property.title}#end */
+    private $propertyContext.javaType ${property.id};
+
+    /** 
+     * Get ${property.title}.
+     *  
+     * @return the ${property.id}
+     */
+    public $propertyContext.javaType get${property.name}() {
+       return this.${property.id};
+    }
+
+    /**
+     * Set $!property.title
+     *
+     * @param ${property.id}
+     */
+    public void set${property.name}($propertyContext.javaType ${property.id}) {
+        this.${property.id} = ${property.id};
+    }
+
+#end
+
+    public Object primaryKey() {
+#if ($entity.primaryKey)
+        return get${entity.primaryKey.name}();
+#else
+        // define an entity property as primaryKey="true" in your appspec
+        // and this will be replaced with the right property e.g.
+        // return ${entity.id}.getId();
+        return this;
+#end
+    }
+}
