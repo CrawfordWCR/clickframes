@@ -43,6 +43,23 @@ public class Entity extends AbstractElementWithFacts implements Comparable<Entit
     public void setProperties(List<EntityProperty> properties) {
         this.properties = properties;
     }
+    
+    /**
+     * Returns only entity properties that are persistent, non-multiple, and non-entity.
+     * 
+     * @return A list of simple properties, or an empty list if none.
+     * @author Jonathan Abbett
+     */
+    public List<EntityProperty> getSimpleProperties() {
+    	List<EntityProperty> simple = new ArrayList<EntityProperty>();
+    	for (EntityProperty p : getProperties()) {
+    		if (p.getType() == org.clickframes.model.EntityPropertyType.ENTITY || p.isMultiple() || !p.isPersistent()) {
+    			continue;
+    		}
+    		simple.add(p);
+    	}
+    	return simple;
+    }
 
     /**
      * alias for getProperty(String)
