@@ -56,6 +56,14 @@ public abstract class AbstractElement implements AppspecElement {
 		}
 		return id;
 	}
+	
+	/**
+	 * Useful when generating names of constants.
+	 * @return
+	 */
+	public final String getUppercaseId() {
+		return getId().toUpperCase();
+	}
 
 	@Override
 	public final AppspecElement getParent() {
@@ -124,7 +132,7 @@ public abstract class AbstractElement implements AppspecElement {
 			return getTitle();
 		}
 
-		return description;
+		return StringUtils.strip(description);
 	}
 
 	public void setDescription(String description) {
@@ -135,7 +143,7 @@ public abstract class AbstractElement implements AppspecElement {
 		if (title == null) {
 			return ClickframeUtils.toHumanReadable(this.id);
 		}
-		return title;
+		return StringUtils.strip(title);
 	}
 
 	public void setTitle(String title) {
