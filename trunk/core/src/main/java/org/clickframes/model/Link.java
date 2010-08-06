@@ -81,9 +81,12 @@ public abstract class Link extends AbstractElement {
         this.loginSuccessfulOutcome = loginSuccessfulOutcome;
         this.loginFailedOutcome = loginFailedOutcome;
     }
-
-    public String getUppercaseId() {
-        return getId().toUpperCase();
+    
+    public String getKey() {
+    	if (getParent() == null || getParent().getParent() == null) {
+    		return null;
+    	}
+    	return getParent().getUppercaseId() + "_" + getParent().getParent().getUppercaseId() + "_" + getUppercaseId();
     }
 
     public abstract boolean isInternal();
@@ -188,5 +191,5 @@ public abstract class Link extends AbstractElement {
 
         return list;
     }
-
+    
 }

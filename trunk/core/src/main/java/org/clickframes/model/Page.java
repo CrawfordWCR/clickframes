@@ -606,7 +606,7 @@ public class Page extends AbstractElement {
         for (Form f : forms) {
             for (Action a : f.getActions()) {
                 for (Link o : a.getOutcomes()) {
-                    outcomes.put(f.getId() + "_" + a.getId(), o);
+                    outcomes.put(o.getKey(), o);
                 }
             }
         }

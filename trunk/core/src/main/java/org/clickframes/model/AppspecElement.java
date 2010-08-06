@@ -13,6 +13,11 @@ public interface AppspecElement {
      * @return identifier for this element.
      */
     public String getId();
+    
+    /**
+     * @return uppercase version of id
+     */
+    public String getUppercaseId();
 
     /**
      * @return id, capitalized, for this element.
