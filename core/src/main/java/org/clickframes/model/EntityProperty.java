@@ -227,4 +227,15 @@ public class EntityProperty extends AbstractElementWithFacts {
 	public String getMetaName() {
 		return "property";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj != null && obj instanceof EntityProperty) {
+			EntityProperty other = (EntityProperty) obj;
+
+			return other.getEntity().equals(this.getEntity()) && other.getId().equals(this.getId());
+		}
+
+		return false;
+	}
 }
