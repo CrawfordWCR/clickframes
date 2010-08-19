@@ -401,9 +401,9 @@ public class Page extends AbstractElement {
 
         page.getParameters().addAll(PageParameter.createList(appspec, pageType.getParams()));
 
-        page.getOutputLists().addAll(OutputList.createList(appspec, pageType.getOutputLists()));
+        page.getOutputLists().addAll(OutputList.createList(appspec, pageType.getOutputLists(), page));
 
-        page.getOutputs().addAll(Output.createList(appspec, pageType.getOutputs()));
+        page.getOutputs().addAll(Output.createList(appspec, pageType.getOutputs(), page));
 
         page.getLinks().addAll(Link.createList(appspec, pageType.getLinks(), page));
 
@@ -603,12 +603,22 @@ public class Page extends AbstractElement {
     public Map<String, Link> getAllOutcomes() {
         Map<String, Link> outcomes = new HashMap<String, Link>();
 
+        // Outcomes from forms
         for (Form f : forms) {
             for (Action a : f.getActions()) {
                 for (Link o : a.getOutcomes()) {
                     outcomes.put(o.getKey(), o);
                 }
             }
+        }
+        
+        // Outcomes from OutputList actions
+        for (OutputList ol : outputLists) {
+        	for (Action a : ol.getActions()) {
+        		for (Link o : a.getOutcomes()) {
+        			outcomes.put(o.getKey(), o);
+        		}
+        	}
         }
 
         return outcomes;

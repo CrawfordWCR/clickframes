@@ -83,9 +83,14 @@ public abstract class Link extends AbstractElement {
     }
     
     public String getKey() {
-    	if (getParent() == null || getParent().getParent() == null) {
-    		return null;
+    	if (getParent() == null) {
+    		return getUppercaseId();
     	}
+    	
+		if (getParent().getParent() == null) {
+			return getParent().getUppercaseId() + "_" + getUppercaseId();
+		}
+    	
     	return getParent().getUppercaseId() + "_" + getParent().getParent().getUppercaseId() + "_" + getUppercaseId();
     }
 

@@ -10,39 +10,17 @@ import org.clickframes.xmlbindings.OutputListsType;
 /**
  * @author Vineet Manohar
  */
-public class OutputList {
-    private String id;
-    private String title;
-    private String entityRef;
+public class OutputList extends AbstractElement {
+	private String entityRef;
     private Entity entity;
-    private String description;
     private List<Fact> facts = new ArrayList<Fact>();
     private List<Link> links = new ArrayList<Link>();
     private List<Action> actions = new ArrayList<Action>();
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * if the id is "fooBar, the name is FooBar"
-     */
-    public String getName() {
-        return StringUtils.capitalize(id);
-    }
-
+    protected OutputList(String id, AppspecElement parent) {
+		super(id, parent);
+	}
+    
     public Entity getEntity() {
         return entity;
     }
@@ -57,14 +35,6 @@ public class OutputList {
 
     public void setEntityRef(String entityRef) {
         this.entityRef = entityRef;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<Fact> getFacts() {
@@ -84,9 +54,8 @@ public class OutputList {
     }
 
     public static OutputList create(Appspec appspec, OutputListType outputListType, AppspecElement parent) {
-        OutputList outputList = new OutputList();
+        OutputList outputList = new OutputList(outputListType.getId(), parent);
 
-        outputList.setId(outputListType.getId());
         outputList.setTitle(outputListType.getTitle());
         outputList.setDescription(outputListType.getDescription());
         outputList.setEntityRef(outputListType.getEntityRef());
@@ -105,15 +74,20 @@ public class OutputList {
         this.actions = actions;
     }
 
-    public static List<OutputList> createList(Appspec appspec, OutputListsType outputLists) {
+    public static List<OutputList> createList(Appspec appspec, OutputListsType outputLists, AppspecElement parent) {
         List<OutputList> retVal = new ArrayList<OutputList>();
         if (outputLists != null) {
             for (OutputListType outputListType : outputLists.getOutputList()) {
-                OutputList outputList = OutputList.create(appspec, outputListType, appspec);
+                OutputList outputList = OutputList.create(appspec, outputListType, parent);
                 retVal.add(outputList);
             }
         }
 
         return retVal;
     }
+
+	@Override
+	public String getMetaName() {
+		return "outputList";
+	}
 }

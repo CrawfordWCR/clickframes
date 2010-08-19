@@ -30,11 +30,9 @@ import org.clickframes.xmlbindings.EmailsType;
 /**
  * Email requirement type for the ClickFrames model.
  */
-public class Email {
-    private String id;
-    private boolean loginRequired;
-    private String description;
-    private String title;
+public class Email extends AbstractElement {
+
+	private boolean loginRequired;
     private String emailSubject;
     private String emailText;
     private List<LinkSet> linkSets = new ArrayList<LinkSet>();
@@ -45,47 +43,16 @@ public class Email {
     private List<Output> outputs = new ArrayList<Output>();
     private List<PageParameter> parameters = new ArrayList<PageParameter>();
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * if the id is "fooBar, the name is FooBar"
-     *
-     * @return
-     *
-     * @author Vineet Manohar
-     */
-    public String getName() {
-        return StringUtils.capitalize(id);
-    }
-
+    protected Email(String id, AppspecElement parent) {
+		super(id, parent);
+	}
+    
     public boolean isLoginRequired() {
         return loginRequired;
     }
 
     public void setLoginRequired(boolean loginRequired) {
         this.loginRequired = loginRequired;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getEmailText() {
@@ -150,8 +117,7 @@ public class Email {
     }
 
     public static Email create(Appspec appspec, EmailType emailType, AppspecElement parent) {
-        Email email = new Email();
-        email.setId(emailType.getId());
+        Email email = new Email(emailType.getId(), parent);
         email.setTitle(emailType.getTitle());
         email.setDescription(emailType.getDescription());
         email.setEmailSubject(emailType.getEmailSubject());
@@ -161,7 +127,7 @@ public class Email {
         email.getLinks().addAll(Link.createList(appspec, emailType.getLinks(), parent));
 
         email.getLinkSetIds().addAll(LinkSet.createLinkSetIds(emailType.getLinkSetRefs()));
-        email.getOutputs().addAll(Output.createList(appspec, emailType.getOutputs()));
+        email.getOutputs().addAll(Output.createList(appspec, emailType.getOutputs(), email));
         email.getParameters().addAll(PageParameter.createList(appspec, emailType.getParams()));
 
         return email;
@@ -203,13 +169,18 @@ public class Email {
     public boolean equals(Object obj) {
         if (obj != null && obj instanceof Email) {
             Email other = (Email) obj;
-            return other.id.equals(this.id);
+            return other.getId().equals(this.getId());
         }
         return false;
     }
 
     @Override
     public int hashCode() {
-        return this.id.hashCode();
+        return this.getId().hashCode();
     }
+
+	@Override
+	public String getMetaName() {
+		return "email";
+	}
 }
