@@ -358,9 +358,9 @@ public class PageBlock extends AbstractElement {
 
         pageBlock.setDescription(pageBlockType.getDescription());
 
-        pageBlock.getOutputLists().addAll(OutputList.createList(appspec, pageBlockType.getOutputLists()));
+        pageBlock.getOutputLists().addAll(OutputList.createList(appspec, pageBlockType.getOutputLists(), pageBlock));
 
-        pageBlock.getOutputs().addAll(Output.createList(appspec, pageBlockType.getOutputs()));
+        pageBlock.getOutputs().addAll(Output.createList(appspec, pageBlockType.getOutputs(), pageBlock));
 
         return pageBlock;
     }

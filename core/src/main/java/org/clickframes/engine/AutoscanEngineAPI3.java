@@ -392,6 +392,7 @@ public abstract class AutoscanEngineAPI3 {
 			processOutput(pageContext, page, output);
 		}
 
+		// output list
 		for (OutputList outputList : page.getOutputLists()) {
 			processOutputList(pageContext, page, outputList);
 		}
@@ -413,6 +414,15 @@ public abstract class AutoscanEngineAPI3 {
 			clickframesPlugin.outputListLinkContext(outputListLinkContext,
 					page, outputList, link);
 			saveContext(link, outputListLinkContext);
+		}
+		
+		for (Action action : outputList.getActions()) {
+			for (Link outcome : action.getOutcomes()) {
+				Context outcomeContext = new Context(outputListContext);
+				outcomeContext.put("action", action);
+				clickframesPlugin.outcomeContext(outcomeContext, outcome);
+				saveContext(outcome, outcomeContext);
+			}
 		}
 	}
 
