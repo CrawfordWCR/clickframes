@@ -698,14 +698,16 @@ public class VelocityCodeGenerator {
                     "Techspec must be configured correctly to generated code! OutputDirectory is null");
         }
 
-        File generatedOutputFile = new File(techspec.getOutputDirectory(), ClickframeUtils
-                .convertSlashToPathSeparator("target/clickframes-modified/" + outputPath));
+        //File generatedOutputFile = new File(techspec.getOutputDirectory(), ClickframeUtils
+        //        .convertSlashToPathSeparator("target/clickframes-modified/" + outputPath));
+        File temp = File.createTempFile("clickframes", null);
+        IOUtils.copy(VelocityCodeGenerator.class.getResourceAsStream(templatePath), new FileOutputStream(temp));
 
         File outputFile = new File(techspec.getOutputDirectory(), ClickframeUtils
                 .convertSlashToPathSeparator(outputPath));
 
 		
-		copyIfContentNotModified(generatedOutputFile, outputFile);
+		copyIfContentNotModified(temp, outputFile);
 		
 	}
 }
