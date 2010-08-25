@@ -24,8 +24,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<scm>
-		<connection>scm:svn:https://scm.isg.chip.org/repos/dev/clickframes/tags/clickframes-0.9.8</connection>
-		<developerConnection>scm:svn:https://scm.isg.chip.org/repos/dev/clickframes/tags/clickframes-0.9.8</developerConnection>
+		<connection>scm:svn:https://clickframes.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://clickframes.googlecode.com/svn/trunk</developerConnection>
 	</scm>
 	<dependencies>
 		<dependency>
@@ -258,21 +258,21 @@
 	<developers>
 		<developer>
 			<name>Jonathan Abbett</name>
-			<email>jonathan.abbett@childrens.harvard.edu</email>
-			<url>http://chip.org/profile.cgi?id=jabbett</url>
+			<email>jonathan@abbett.org</email>
+			<url>http://abbett.org/</url>
 		</developer>
 		<developer>
 			<name>Vineet Manohar</name>
-			<email>vineet.manohar@childrens.harvard.edu</email>
+			<email>vineet.manohar@gmail.com</email>
 			<url>http://www.vineetmanohar.com/</url>
 		</developer>
 		<developer>
 			<name>Steven Boscarine</name>
-			<email>steven.boscarine@childrens.harvard.edu</email>
+			<email>steven@boscarine.com</email>
 		</developer>
 		<developer>
 			<name>William Crawford</name>
-			<email>william.crawford@childrens.harvard.edu</email>
+			<email>william.crawford@gmail.com</email>
 			<url>http://chip.org/profile.cgi?id=crawford</url>
 		</developer>
 	</developers>
@@ -280,11 +280,11 @@
 	<contributors>
 		<contributor>
 			<name>Nicole Zanetti</name>
-			<email>nicole.zanetti@childrens.harvard.edu</email>
+			<email>nicole@beacon16.com</email>
 		</contributor>
 		<contributor>
 			<name>Evan Pankey</name>
-			<email>evan.pankey@childrens.harvard.edu</email>
+			<email>evpankey@gmail.com</email>
 		</contributor>
 	</contributors>
 
@@ -328,17 +328,6 @@
 	</reporting>
 
 	<modules>
-		<!--
-			commenting out as deploying this is crashing the build
-		-->
-		<!--
-			commenting out as deploying this is crashing the build
-			<module>php-plugin</module>
-		-->
-		<!--
-			commenting out as this fails with an NPE on Windows
-			<module>clipr</module>
-		-->
 		<module>core</module>
 		<module>archetype/clickframes-plugin</module>
 		<module>archetype/jboss5seam-compile</module>
