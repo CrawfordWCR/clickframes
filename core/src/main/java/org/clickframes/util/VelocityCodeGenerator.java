@@ -151,13 +151,19 @@ public class VelocityCodeGenerator {
     }
 
     static String removePlaceHolders(String filename, String text) {
-        String versionRegex = getVersionCommentRegex();
+    	log.info("RP for " + filename);
+    	
+    	String versionRegex = getVersionCommentRegex();
 
         String versionRegexWithSurroundingComments = getCommentForFilename(filename, versionRegex);
 
         if (versionRegexWithSurroundingComments != null) {
             // first replace placeholders with comments, if possible
-            text = text.replaceAll(versionRegexWithSurroundingComments, "");
+        	String textOrig = text;
+        	text = text.replaceAll(versionRegexWithSurroundingComments, "");
+        	if (text.contentEquals(textOrig)) {
+        		log.info("replace regex comment failed for " + filename);
+        	}
         }
 
         // then replace any remaining placeholders including hand-authored
@@ -166,7 +172,8 @@ public class VelocityCodeGenerator {
             String emptyPlaceholder = getEmptyVersionPlaceholder();
             String emptyPlaceholderWithSurroundingComments = getCommentForFilename(filename, emptyPlaceholder);
             if (emptyPlaceholderWithSurroundingComments != null) {
-                text = text.replaceAll(emptyPlaceholderWithSurroundingComments, "");
+                log.info("location of empty placeholder: char " + text.indexOf(emptyPlaceholderWithSurroundingComments));
+            	text = text.replaceAll(emptyPlaceholderWithSurroundingComments, "");
             }
         }
 
@@ -369,6 +376,11 @@ public class VelocityCodeGenerator {
             return copyIfBinaryContentNotModified(source, dest);
         }
 
+        if (dest.exists()) {
+        	log.info(dest.getCanonicalPath() + " isModified: " + isModified(dest));
+        	log.info(dest.getCanonicalPath() + " isSameLogicalContent: " + isSameLogicalContent(source, dest));
+        }
+        
         if (!dest.exists() || (!isModified(dest) && !isSameLogicalContent(source, dest))) {
             boolean destExists = dest.exists();
 
@@ -436,7 +448,7 @@ public class VelocityCodeGenerator {
                 .convertSlashToPathSeparator(outputPath));
 
         // TODO: implement binary resource
-        log.warn("Binary resources are currently fully supported: " + templatePath + ", filename = " + filename);
+        log.warn("Binary resources are not currently fully supported: " + templatePath + ", filename = " + filename);
 
         InputStream is = VelocityCodeGenerator.class.getResourceAsStream(templatePath);
         if (is != null) {
@@ -660,14 +672,14 @@ public class VelocityCodeGenerator {
 
     static String getCommentForFilename(String filename, String comment) {
         if (filename.endsWith(".xml") || filename.endsWith(".xhtml") || filename.endsWith(".htm")
-                || filename.endsWith(".html") || filename.endsWith(".php")) {
+                || filename.endsWith(".html")) {
             return "<!-- " + comment + " -->";
         }
         if (filename.endsWith(".java")) {
             return "// " + comment + "";
         }
-        if (filename.endsWith(".js")) {
-            return "/* " + comment + " */";
+        if (filename.endsWith(".js") || filename.endsWith(".css") || filename.endsWith(".php") || filename.endsWith(".sql")) {
+            return "/\\* " + comment + " \\*/";
         }
         if (filename.endsWith(".properties")) {
             return "# " + comment + "";
@@ -677,9 +689,6 @@ public class VelocityCodeGenerator {
         }
         if (filename.endsWith(".txt")) {
             return "";
-        }
-        if (filename.endsWith(".css")) {
-            return "/* " + comment + " */";
         }
         if (filename.endsWith(".vm")) {
             return "## " + comment;
@@ -691,4 +700,23 @@ public class VelocityCodeGenerator {
     public static boolean isFileNameSafeForVelocity(String fileName) {
         return !fileName.matches("^.*\\.(gif|png)$");
     }
+
+	public static void generateIgnoredFile(Techspec techspec, String filename,
+			String templatePath, String outputPath) throws IOException {
+		
+        if (techspec.getOutputDirectory() == null) {
+            throw new RuntimeException(
+                    "Techspec must be configured correctly to generated code! OutputDirectory is null");
+        }
+
+        File generatedOutputFile = new File(techspec.getOutputDirectory(), ClickframeUtils
+                .convertSlashToPathSeparator("target/clickframes-modified/" + outputPath));
+
+        File outputFile = new File(techspec.getOutputDirectory(), ClickframeUtils
+                .convertSlashToPathSeparator(outputPath));
+
+		
+		copyIfContentNotModified(generatedOutputFile, outputFile);
+		
+	}
 }

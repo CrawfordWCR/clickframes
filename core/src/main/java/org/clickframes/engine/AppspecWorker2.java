@@ -25,6 +25,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.clickframes.techspec.Techspec;
 import org.clickframes.util.VelocityCodeGenerator;
 
 /**
@@ -40,6 +41,7 @@ public class AppspecWorker2 implements Callable<Boolean> {
 	private final String filename;
 	private final String outputPath;
 	private final String templatePath;
+	private final boolean ignore;
 	private final Map<String, Object> params;
 
 	public AppspecWorker2(String filename, String relativePath,
@@ -56,6 +58,7 @@ public class AppspecWorker2 implements Callable<Boolean> {
 		// filename = EmailController.java.vm }
 
 		this.templatePath = cleanTemplatePath(templatePath);
+		this.ignore = isIgnore(filename);
 		this.filename = cleanFilename(filename);
 		this.params = params;
 		outputPath = relativePath + this.filename;
@@ -75,9 +78,16 @@ public class AppspecWorker2 implements Callable<Boolean> {
 	private static String cleanFilename(String in) {
 		if (in.endsWith(".vm")) {
 			return in.substring(0, in.length() - 3);
+		} else if (in.endsWith(".ignore")) {
+			return in.substring(0, in.length() - 7);
 		}
 		return in;
 	}
+	
+	private static boolean isIgnore(String in) {
+		return in.endsWith(".ignore");
+	}
+	
 
 	@Override
 	public Boolean call() {
@@ -94,8 +104,13 @@ public class AppspecWorker2 implements Callable<Boolean> {
 
 	public void callSync() throws IOException {
 		// logger.debug("Processing template: " + templatePath);
-		VelocityCodeGenerator.generateFromTemplate(params, filename,
-				templatePath, outputPath);
+		if (!ignore) {
+			VelocityCodeGenerator.generateFromTemplate(params, filename,
+					templatePath, outputPath);
+		} else {
+			Techspec techspec = (Techspec) params.get("techspec");
+			VelocityCodeGenerator.generateIgnoredFile(techspec, filename, templatePath, outputPath);
+		}
 		// logger.debug("Processed template: " + templatePath);
 	}
 }
