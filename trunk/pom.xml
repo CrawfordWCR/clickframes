@@ -4,7 +4,7 @@
 	<groupId>org.clickframes</groupId>
 	<artifactId>clickframes</artifactId>
 	<packaging>pom</packaging>
-	<version>0.9.9</version>
+	<version>0.9.10-SNAPSHOT</version>
 	<name>Clickframes</name>
 	<repositories>
 		<repository>
@@ -23,8 +23,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<scm>
-		<connection>scm:svn:https://clickframes.googlecode.com/svn/tags/clickframes-0.9.9</connection>
-		<developerConnection>scm:svn:https://clickframes.googlecode.com/svn/tags/clickframes-0.9.9</developerConnection>
+		<connection>scm:svn:https://clickframes.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://clickframes.googlecode.com/svn/trunk</developerConnection>
 	</scm>
 	<dependencies>
 		<dependency>
