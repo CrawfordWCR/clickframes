@@ -6,7 +6,7 @@
     5.1.0.GA that aren't included in container.</description>
   <artifactId>jboss5seam-compile</artifactId>
   <groupId>org.clickframes</groupId>
-  <version>0.9.9-SNAPSHOT</version>
+  <version>0.9.9</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>org.jboss.seam</groupId>
