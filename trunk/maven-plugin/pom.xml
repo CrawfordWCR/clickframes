@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>clickframes</artifactId>
 		<groupId>org.clickframes</groupId>
-		<version>0.9.10-SNAPSHOT</version>
+		<version>0.9.9-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>clickframes-maven-plugin</artifactId>

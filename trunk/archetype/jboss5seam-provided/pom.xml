@@ -5,7 +5,7 @@
   <description>Jars needed by application to get Seam running on JBoss 5.1.0.GA that aren't included in container.</description>
   <artifactId>jboss5seam-provided</artifactId>
   <groupId>org.clickframes</groupId>
-  <version>0.9.10-SNAPSHOT</version>
+  <version>0.9.9-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <repositories>
