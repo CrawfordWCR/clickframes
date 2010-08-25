@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.clickframes</groupId>
 	<artifactId>clickframes</artifactId>
 	<packaging>pom</packaging>
-	<version>0.9.9-SNAPSHOT</version>
+	<version>0.9.9</version>
 	<name>Clickframes</name>
 	<repositories>
 		<repository>
@@ -24,8 +23,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<scm>
-		<connection>scm:svn:https://clickframes.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://clickframes.googlecode.com/svn/trunk</developerConnection>
+		<connection>scm:svn:https://clickframes.googlecode.com/svn/tags/clickframes-0.9.9</connection>
+		<developerConnection>scm:svn:https://clickframes.googlecode.com/svn/tags/clickframes-0.9.9</developerConnection>
 	</scm>
 	<dependencies>
 		<dependency>
