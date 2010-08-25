@@ -151,8 +151,6 @@ public class VelocityCodeGenerator {
     }
 
     static String removePlaceHolders(String filename, String text) {
-    	log.info("RP for " + filename);
-    	
     	String versionRegex = getVersionCommentRegex();
 
         String versionRegexWithSurroundingComments = getCommentForFilename(filename, versionRegex);
@@ -161,9 +159,6 @@ public class VelocityCodeGenerator {
             // first replace placeholders with comments, if possible
         	String textOrig = text;
         	text = text.replaceAll(versionRegexWithSurroundingComments, "");
-        	if (text.contentEquals(textOrig)) {
-        		log.info("replace regex comment failed for " + filename);
-        	}
         }
 
         // then replace any remaining placeholders including hand-authored
@@ -172,7 +167,6 @@ public class VelocityCodeGenerator {
             String emptyPlaceholder = getEmptyVersionPlaceholder();
             String emptyPlaceholderWithSurroundingComments = getCommentForFilename(filename, emptyPlaceholder);
             if (emptyPlaceholderWithSurroundingComments != null) {
-                log.info("location of empty placeholder: char " + text.indexOf(emptyPlaceholderWithSurroundingComments));
             	text = text.replaceAll(emptyPlaceholderWithSurroundingComments, "");
             }
         }
@@ -376,11 +370,6 @@ public class VelocityCodeGenerator {
             return copyIfBinaryContentNotModified(source, dest);
         }
 
-        if (dest.exists()) {
-        	log.info(dest.getCanonicalPath() + " isModified: " + isModified(dest));
-        	log.info(dest.getCanonicalPath() + " isSameLogicalContent: " + isSameLogicalContent(source, dest));
-        }
-        
         if (!dest.exists() || (!isModified(dest) && !isSameLogicalContent(source, dest))) {
             boolean destExists = dest.exists();
 
