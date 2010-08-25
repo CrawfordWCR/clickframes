@@ -1,0 +1,29 @@
+#if ($input.type.toUpperCase() == "TEXT")
+<h:inputText value="#{${form.id}.${input.id}}" id="${input.id}" />
+#elseif ($input.type.toUpperCase() == "PASSWORD")
+<h:inputSecret value="#{${form.id}.${input.id}}" id="${input.id}" />
+#elseif ($input.type.toUpperCase() == "TEXTAREA")
+<h:inputTextarea value="#{${form.id}.${input.id}}" id="${input.id}" />
+#elseif ($input.type.toUpperCase() == "RADIO")
+<h:selectOneRadio value="#{${form.id}.${input.id}}" id="${input.id}">
+##	#foreach($key in $input.allowedValues.keySet())
+##		<f:selectItem itemLabel="#{messages.${form.id}_${input.id}_${key}}" itemValue="${key}" />
+##	#end
+	<f:selectItems value="#{${serviceId}.${input.id}Options}"/>
+</h:selectOneRadio>
+#elseif ($input.type.toUpperCase() == "DROPDOWN")
+<h:selectOneMenu value="#{${form.id}.${input.id}}" id="${input.id}">
+	<f:selectItems value="#{${serviceId}.${input.id}Options}"/>
+</h:selectOneMenu>
+#elseif ($input.type.toUpperCase() == "CHECKBOX")
+##((${input.allowedValues.size})) 
+###if($input.allowedValues.size < 2)
+    <h:selectBooleanCheckbox id="${input.id}" value="#{${form.id}.${input.id}}"/>
+###else
+##<h:selectManyCheckbox value="#{${form.id}.${input.id}}" id="${input.id}">
+##	<f:selectItems value="#{${serviceId}.${input.id}Options}"/>
+##</h:selectManyCheckbox>
+###end
+#else
+I don't know what to do with ${input.type}.
+#end

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs id="FAQ" title="Frequently Asked Questions">
+  <part id="General">
+    <faq id="question">
+      <question>Do I need to know java in order to use the maven clickframes plugin</question>
+      <answer>
+        <p>
+          No, knowledge of java is not needed to use maven clickframes plugin. However, familiarity and previous 
+          ability to work with maven and pom.xml is recommended.   
+        </p>
+        <p>
+        Knowledge of java is required only when you are working with goal which generate java code, for example, the the seam-plugin.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

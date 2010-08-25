@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<manifest xmlns="http://www.clickframes.org/techspec/manifest">
+    <entries>
+        <path>target/clickframes/clips/reset.css</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/estimates.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/index.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/imageMap.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/params.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/style.css</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/project.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/test-steps.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/testStrategy.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/success.html</path>
+    </entries>
+    <entries>
+        <path>target/clickframes/clips/upload.html</path>
+    </entries>
+</manifest>

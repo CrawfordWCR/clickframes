@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://www.clickframes.org"
+  xmlns:isg="http://www.clickframes.org"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.clickframes.org clickframes.xsd">
+  <title>Sample Project Title</title>
+
+  <outcome negative="true">
+    <title>Global Outcome 1</title>
+    <description>This outcome is shared in all states</description>
+    <pageRef>page1</pageRef>
+  </outcome>
+
+  <linkSet id="linkSet1">
+    <title>Link Set 1</title>
+    <fact>fact1</fact>
+    <link>
+      <title>External Link 1 Title</title>
+      <description>External Link 1 Description</description>
+      <href>mailto:externalLink1</href>
+    </link>
+    <link>
+      <title>Internal Link 1 Title</title>
+      <pageRef>page2</pageRef>
+    </link>
+  </linkSet>
+
+  <linkSet id="linkSet2" global="true">
+    <title>Link Set 2</title>
+    <link>
+      <title>External Link 2.1 Title</title>
+      <href>mailto:externalLink2.1</href>
+    </link>
+    <link>
+      <title>External Link 2.2 Title</title>
+      <href>http://externalLink2.2</href>
+    </link>
+  </linkSet>
+
+  <page id="page1">
+    <title>Page 1 Title</title>
+
+    <description>Page 1 Description</description>
+
+    <fact>Fact 1</fact>
+    <fact>Fact 2</fact>
+
+    <input type="text">
+      <title>TextInput 1 title</title>
+      <description>Enter text input 1</description>
+      <validation type="required" />
+      <validation type="length(min=8)" />
+      <validation type="regex(/^\S+$/)"
+        description="INPUT may not contain whitespace" />
+    </input>
+
+    <input type="checkbox">
+      <title>CheckboxInput 1 title</title>
+      <description>Enter checkbox input 1</description>
+    </input>
+
+    <action>
+      <title>Action 1 title</title>
+
+      <outcome>
+        <title>Outcome to page1</title>
+        <description>This will take your to page1</description>
+        <pageRef>page1</pageRef>
+        <fact>Fact 1</fact>
+        <fact>Fact 2</fact>
+      </outcome>
+
+      <outcome>
+        <title>Outcome to page2</title>
+        <href>externalLink</href>
+      </outcome>
+    </action>
+
+    <action>
+      <title>Action 2 title</title>
+
+      <outcome>
+        <title>Outcome to page1</title>
+        <pageRef>page1</pageRef>
+      </outcome>
+
+      <outcome>
+        <title>Outcome to page2</title>
+        <pageRef>page3</pageRef>
+      </outcome>
+    </action>
+
+    <link>
+      <title>Link to Page 2</title>
+      <pageRef>page2</pageRef>
+      <fact>Fact 1</fact>
+    </link>
+
+    <link>
+      <title>Link to Page 3</title>
+      <pageRef>page3</pageRef>
+    </link>
+
+    <linkSetRef id="linkSet1" />
+    <linkSetRef id="linkSet2" />
+
+    <property name="property1" value="value1" />
+  </page>
+
+  <page id="page2">
+    <title>Page2</title>
+    <description>
+      This is Page 2 of the sample application. You can put a very long
+      description here.
+    </description>
+    <action>
+      <title>Action 2a title</title>
+      <outcome>
+        <title>Page 3</title>
+        <pageRef>page3</pageRef>
+      </outcome>
+    </action>
+  </page>
+
+  <page id="page3">
+    <title>Page3</title>
+    <description>
+      This is Page 3 of the sample application. You can put a very long
+      description here.
+    </description>
+  </page>
+</project>

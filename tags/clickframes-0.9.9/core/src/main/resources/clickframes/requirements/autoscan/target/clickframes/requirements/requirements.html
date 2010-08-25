@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+#macro (writeReq $number $page $req)
+  <tr>
+    <td class="requirement">
+		<div class="number">$number</div>
+		<div class="req">$req</div>
+		#if ($requirement.description)
+		  <!--<div class="notes">$requirement.description</div>-->
+		#end
+	</td>
+  </tr>
+#end
+
+<html>
+  <head>
+    <title>$appspec.title - Software Requirements</title>
+    <link rel="stylesheet" type="text/css" href="../clips/reset.css" />
+    <link rel="stylesheet" type="text/css" href="../clips/style.css" />
+  </head>
+  <body>
+  <div id="pagecontainer">
+    <h1><strong>$appspec.title</strong> Software Requirements</h1>
+    
+    <div class="breadcrumb">
+        <a href="../clips/index.html">&laquo; Back to project overview</a>
+    </div>
+    
+      <table class="requirements">
+       <tr>
+        <th>Software Requirement</th>
+       </tr>
+       #foreach ($requirement in $requirements)
+         #writeReq("$requirement.identifier" $requirement.page $requirement.title)
+       #end
+      </table>
+
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+  </div>
+  </body>
+</html>

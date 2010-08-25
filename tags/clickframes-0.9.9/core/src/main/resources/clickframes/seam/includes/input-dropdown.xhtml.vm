@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:fn="http://java.sun.com/jstl/functions">
+<ui:composition>
+  <h:selectOneMenu 
+      id="${input.id}" 
+      value="#{${page.id}Controller.${form.id}${input.name}}">
+    <f:selectItems 
+      value="#{${page.id}Controller.${form.id}${input.name}Options}" />
+  </h:selectOneMenu>
+</ui:composition>
+</html>

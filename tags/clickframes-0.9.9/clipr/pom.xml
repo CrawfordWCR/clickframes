@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>clickframes</artifactId>
+    <groupId>org.clickframes</groupId>
+    <version>0.9.8-SNAPSHOT</version>
+  </parent>
+  <groupId>org.clickframes</groupId>
+  <artifactId>clickframes-clipr</artifactId>
+  <repositories>
+    <repository>
+      <id>clickframes-releases</id>
+      <name>Clickframes release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+      </releases>
+    </repository>
+    <repository>
+      <id>clickframes-snapshots</id>
+      <name>Clickframes snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>clickframes-plugin-releases</id>
+      <name>Clickframes plugin release repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public</url>
+      <releases>
+      </releases>
+    </pluginRepository>
+    <pluginRepository>
+      <id>clickframes-plugin-snapshots</id>
+      <name>Clickframes plugin snapshots repo</name>
+      <url>http://nexus.clickframes.org/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <packaging>war</packaging>
+  <name>Clickframes CLIP Generator</name>
+  <version>0.9.8-SNAPSHOT</version>
+  <dependencies>
+    <!-- servlet dependencies -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- need clickframes runtime -->
+    <dependency>
+      <groupId>org.clickframes</groupId>
+      <artifactId>clickframes-core</artifactId>
+      <version>0.9.8-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Universal Dependencies -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.facelets</groupId>
+      <artifactId>jsf-facelets</artifactId>
+      <version>1.1.14</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <!--/Universal Dependencies-->
+
+    <dependency>
+      <groupId>org.openqa.selenium.client-drivers</groupId>
+      <artifactId>selenium-java-client-driver</artifactId>
+      <version>0.9.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>clipr</finalName>
+    <plugins>
+      <!-- compiler plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.0.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <!-- eclipse plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-eclipse-plugin</artifactId>
+        <configuration>
+          <additionalProjectnatures>
+            <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+          </additionalProjectnatures>
+          <additionalBuildcommands>
+            <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+          </additionalBuildcommands>
+          <wtpversion>2.0</wtpversion>
+          <downloadSources />
+          <downloadJavadocs />
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.glassfish</groupId>
+        <artifactId>maven-glassfish-plugin</artifactId>
+        <version>1.0-alpha-4</version>
+        <configuration>
+          <httpPort>8080</httpPort>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>selenium-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <version>0.9.8-SNAPSHOT</version>
+        <groupId>org.clickframes</groupId>
+        <artifactId>clickframes-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>jboss</id>
+      <properties>
+        <testng-excludedGroups>bdb, web-container, ignore</testng-excludedGroups>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <configuration>
+              <container>
+                <containerId>jboss4x</containerId>
+                <type>remote</type>
+              </container>
+              <configuration>
+                <type>runtime</type>
+              </configuration>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.chip.isg</groupId>
+          <artifactId>jboss-seam-support-compile</artifactId>
+          <version>1.0</version>
+          <scope>compile</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.chip.isg</groupId>
+          <artifactId>jboss-seam-support-provided</artifactId>
+          <version>1.0</version>
+          <scope>provided</scope>
+        </dependency>
+        <!--
+          Override transitive compile-scoped import from jboss-seam.
+          This can't be on JBoss
+        -->
+        <dependency>
+          <groupId>javax.el</groupId>
+          <artifactId>el-api</artifactId>
+          <version>1.2</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>glassfish</id>
+      <properties>
+        <seam-version>2.0.1.GA</seam-version>
+        <richfaces-version>3.3.0.GA</richfaces-version>
+        <testng-excludedGroups>bdb, web-container, ignore</testng-excludedGroups>
+      </properties>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+
+      <build>
+        <plugins>
+          <!-- deploy plugin -->
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+            <version>1.0-beta-1</version>
+            <executions>
+              <execution>
+                <id>deploy-artifact</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>upload</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.glassfish</groupId>
+            <artifactId>maven-glassfish-plugin</artifactId>
+            <version>1.0-alpha-4</version>
+            <configuration>
+              <httpPort>8080</httpPort>
+              <webXml>${basedir}/src/main/webapp/WEB-INF/gfe-web.xml</webXml>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+      <dependencies>
+        <dependency>
+          <groupId>org.chip.isg</groupId>
+          <artifactId>gf-seam-support</artifactId>
+          <version>1.0</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+</project>

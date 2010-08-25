@@ -1,0 +1,39 @@
+## this is how you render something with multiple outcomes.
+	<view-state id="${page.id}">
+		<on-render>
+			<evaluate expression="${groupId}Service.startFlow()" result="viewScope.${page.id}" />
+		</on-render>
+#foreach ($action in $page.actions)
+		<transition on="${action.id}" to="${action.id}" />
+#end
+#foreach ($form in $page.forms)
+#foreach ($action in $form.actions)
+		<transition on="${action.id}" to="${action.id}" />
+#end
+#end
+		
+	</view-state>
+#foreach ($action in $page.actions)
+	<action-state id="${action.id}">
+#foreach ($outcome in $action.outcomes)
+		<transition on="${outcome.id}" to="${action.id}_${outcome.id}" />
+#end
+	</action-state>
+#foreach ($outcome in $action.outcomes)
+	<end-state id="${action.id}_${outcome.id}" view="externalRedirect:contextRelative:/${swfServlet}/${outcome.page.id}" />
+#end
+#end
+	
+#foreach ($form in $page.forms)
+#foreach ($action in $form.actions)
+	<action-state id="${action.id}">
+#foreach ($outcome in $action.outcomes)
+		<transition on="${outcome.id}" to="${action.id}_${outcome.id}" />
+#end
+	</action-state>
+#foreach ($outcome in $action.outcomes)
+	<end-state id="${action.id}_${outcome.id}" view="externalRedirect:contextRelative:/${swfServlet}/${outcome.page.id}" />
+#end
+#end
+#end
+	

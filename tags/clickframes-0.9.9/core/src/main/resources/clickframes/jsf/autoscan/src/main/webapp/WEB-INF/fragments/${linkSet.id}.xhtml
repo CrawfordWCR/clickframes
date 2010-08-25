@@ -1,0 +1,9 @@
+<ul id="navigation">
+#foreach($link in $linkSet.links)
+#if ($link.internal) 
+	<li><a href="${link.page.id}"> ${link.title}</a></li> 
+#else 
+	<li><a href="${link.href}"> ${link.title}</a></li> 
+#end
+#end 
+</ul>

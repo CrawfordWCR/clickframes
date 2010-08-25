@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:rich="http://richfaces.org/rich">
+<ui:composition>
+   <s:fileUpload id="${input.id}" data="#{${page.id}Controller.${input.id}}" fileName="#{${page.id}Controller.${input.id}_fileName}"/>  
+</ui:composition>
+</html>

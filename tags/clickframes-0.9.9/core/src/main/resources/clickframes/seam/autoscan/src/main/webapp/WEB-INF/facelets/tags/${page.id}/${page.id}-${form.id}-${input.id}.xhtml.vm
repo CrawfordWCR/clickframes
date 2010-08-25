@@ -1,0 +1,11 @@
+#if ($input.type == 'text')
+#parse('/clickframes/seam/includes/input-text.xhtml.vm')
+#elseif ($input.type == 'textarea')
+#parse('/clickframes/seam/includes/input-textarea.xhtml.vm')
+#elseif ($input.type == 'password')
+#parse('/clickframes/seam/includes/input-password.xhtml.vm')
+#elseif ($input.type == 'upload')
+#parse('/clickframes/seam/includes/input-upload.xhtml.vm')
+#elseif ($input.type == 'radio')
+#parse('/clickframes/seam/includes/input-radio.xhtml.vm')
+#end

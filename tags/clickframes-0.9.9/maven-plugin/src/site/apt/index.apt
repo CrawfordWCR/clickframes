@@ -1,0 +1,28 @@
+ ------
+ Introduction
+ ------
+ ------
+
+Clickframes Maven Plugin
+
+ Provides support for using {{{http://clickframes.org/}Clickframes}} with Maven 2.
+ 
+ Use this plugin to generate code or artifacts from your appspec.xml file.
+ 
+* Goals Overview
+
+ All the goals available in the Clickframes Maven Plugin can be found on the {{{usage.html}goals page}}.
+ 
+ []
+
+* Usage
+
+ Instructions on how to use the Selenium Maven Plugin can be found on the {{{usage.html}usage page}}.
+
+* Examples
+
+ * {{{examples/generate-tests.html}How to generate tests.}}
+ 
+ * {{{examples/execute-page-tests.html}Execute tests for a given page.}}
+ 
+ []

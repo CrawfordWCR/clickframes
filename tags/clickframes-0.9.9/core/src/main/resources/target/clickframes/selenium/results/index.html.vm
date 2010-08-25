@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <LINK REL="stylesheet" 
+          TYPE="text/css" 
+          HREF="../../style.css" TITLE="Style">
+    <title>Project test results</title>
+  </head>
+  <body>
+    <h2>Result summary</h2>
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr><td>Failed count:</td><td>${projectTestResults.failedCount}</td></tr>
+      <tr><td>Passed count:</td><td>${projectTestResults.passedCount}</td></tr>
+      <tr><td>Start time:</td><td>${projectTestResults.startTime}</td></tr>
+      <tr><td>End time:</td><td>${projectTestResults.endTime}</td></tr>
+    </table>
+    
+    <h2>Test Results</h2>
+    <table border="1" cellpadding="2" cellspacing="0">
+    <tr><th>Test name</th><th>Status</th>
+    #foreach ($projectTestResult in ${projectTestResults.projectTestResultList})
+      <tr>
+       <td><a href="${projectTestResult.browser}/${projectTestResult.testName}_result.html">${projectTestResult.testName}</a></td>
+       <td>
+        #if (${projectTestResult.passed})
+        <span style="color: green;">pass</span>
+        #else
+        <span style="color: red;">fail</span>
+        #end
+        </td>
+      </tr>
+    #end
+    </table>
+
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+
+  </body>
+</html>

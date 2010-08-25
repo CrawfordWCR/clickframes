@@ -1,0 +1,129 @@
+body {
+    margin:50px;
+    font-family:Calibri,sans-serif;
+}
+
+div.container {
+    width:700px;
+}
+
+div#application-name {
+    width:700px;
+    color:#336699;
+    font-weight:bold;
+    font-size:1.5em;
+    border-bottom:1px solid #ccc;
+    padding-bottom:0.2em;
+}
+
+h3 {
+    margin:0;
+    font-size:1.2em;
+}
+
+ul {
+    list-style-type:square;
+    margin:0;
+    padding:0;
+    margin-left:1em;
+    margin-bottom:1em;
+}
+
+form {
+    border:1px solid #ccc;
+    padding:1em;
+}
+
+div.submit {
+    padding-top:0.5em;
+    margin-left:30%;
+}
+
+ul#navigation {
+    font-size:0.8em;
+    width:30%;
+    float:left;
+    list-style-type:none;
+    margin:0;
+    border-top:1px solid #dddddd;
+    margin-right:2em;
+}
+
+ul#navigation li {
+    border-bottom:1px solid #dddddd;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+}
+
+div.content {
+    width:65%;
+    float:right;
+}
+
+
+table.inputs {
+    width:100%;
+    border-collapse:collapse;
+}
+
+table.inputs th {
+    text-align:left;
+    width:30%;
+    vertical-align:top;
+    font-size:0.8em;
+    padding-bottom:0.5em;
+    padding-right:0.5em;
+}
+
+table.inputs td {
+    font-size:0.8em;
+    vertical-align:top;
+    padding-bottom:0.5em;
+}
+
+table.inputs td input, table.inputs td textarea {
+    width:100%;
+    border:1px solid black;
+}
+
+table.inputs td div.message {
+    font-size:0.8em;
+    font-weight:bold;
+    color:red;
+}
+
+div#branding {
+    clear:both;
+    width:700px;
+    padding-top:4em;
+    text-align:right;
+    font-weight:bold;
+    font-size:0.8em;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+}
+
+div#branding p {
+    margin:0;
+    padding:0;
+    border-top:1px solid #ccc;
+    padding-top:0.5em;
+    color:#666666;
+}
+
+div.messages ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    color:#FF7F2A;
+    font-weight:bold;
+    margin-bottom:1em;
+}
+
+div.page-description {
+    font-size:1.2em;
+    font-style:italic;
+    color:#999999;
+    margin-bottom:1em;
+}
+/* version=2609972677 */

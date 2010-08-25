@@ -1,0 +1,58 @@
+package org.clickframes.clipr.controller;
+
+import java.io.Serializable;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.web.RequestParameter;
+
+/**
+ * @author Vineet Manohar
+ */
+@Name("redirectController")
+@Scope(ScopeType.APPLICATION)
+public class RedirectController implements Serializable {
+    private static final Log log = LogFactory.getLog(RedirectController.class);
+    private static final long serialVersionUID = 1L;
+
+    @RequestParameter
+    private String url;
+
+    @In
+    private FacesContext facesContext;
+
+    public void redirect302() {
+        HttpServletResponse res = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+        res.setContentType("text/html");
+        String fullUrl;
+        if (url.startsWith("/")) {
+            fullUrl = facesContext.getExternalContext().getRequestContextPath() + url;
+        } else {
+            fullUrl = url;
+        }
+        log.info("Redirecting to " + fullUrl + "...");
+        res.setHeader("Location", fullUrl);
+        res.setStatus(302);
+        facesContext.responseComplete();
+    }
+
+    public String getCurrentUrl() {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance()
+                .getExternalContext().getRequest();
+        String url = httpServletRequest.getRequestURL().toString();
+
+        if (httpServletRequest.getQueryString() != null) {
+            url += "?" + httpServletRequest.getQueryString();
+        }
+        return url;
+    }
+}
+// clickframes::version=262760183::clickframes
