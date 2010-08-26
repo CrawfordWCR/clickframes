@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<appspec xmlns="http://www.clickframes.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" loginPage="login">
+  <title>Sample Project Title</title>
+  <description>
+        Sample Project Description
+    </description>
+  <outcomes>
+    <outcome id="negative" negative="true">
+      <title>Global Outcome 1</title>
+      <description>This outcome is shared in all states</description>
+      <pageRef>page1</pageRef>
+    </outcome>
+  </outcomes>
+  <linkSets>
+    <linkSet id="linkSet1">
+      <title>Link Set 1</title>
+      <facts>
+        <fact>fact1</fact>
+      </facts>
+      <links>
+        <link id="emailLink">
+          <title>External Link 1 Title</title>
+          <description>External Link 1 Description</description>
+          <href>mailto:externalLink1</href>
+        </link>
+        <link>
+          <title>Internal Link 1 Title</title>
+          <pageRef>page2</pageRef>
+        </link>
+      </links>
+    </linkSet>
+    <linkSet id="linkSet2" global="true">
+      <title>Link Set 2</title>
+      <links>
+        <link>
+          <title>External Link 2.1 Title</title>
+          <href>mailto:externalLink2.1</href>
+        </link>
+        <link>
+          <title>External Link 2.2 Title</title>
+          <href>http://externalLink2.2</href>
+        </link>
+      </links>
+    </linkSet>
+  </linkSets>
+
+  <entities>
+    <entity id="user">
+      <title>User</title>
+      <properties>
+        <property id="email1" type="text">
+          <title>Email</title>
+          <validations>
+            <validation type="required" />
+          </validations>
+        </property>
+        <property id="password" loginPassword="true">
+          <title>Password</title>
+          <validations>
+            <validation type="required" description="Password is required" />
+            <validation type="length(min=6)" />
+          </validations>
+        </property>
+        <property id="firstName" type="text">
+          <title>First Name</title>
+          <validations>
+            <validation type="required" />
+            <validation type="length(max=25)" />
+          </validations>
+        </property>
+        <property id="lastName" type="text">
+          <title>Last Name</title>
+          <validations>
+            <validation type="required" />
+            <validation type="length(max=50)" />
+          </validations>
+        </property>
+        <property id="email" type="text" loginUsername="true">
+          <title>Email</title>
+          <validations>
+            <validation type="required" />
+            <validation type="email" />
+          </validations>
+        </property>
+        <!--
+          <property id="email" type="text"> <title>Email</title>
+          <validation type="required" /> <validation type="email" />
+          </property>
+        -->
+      </properties>
+    </entity>
+    <entity id="organization">
+      <title>Organization</title>
+      <properties>
+        <property id="email" type="text">
+          <title>Email</title>
+          <validations>
+            <validation type="required" />
+          </validations>
+        </property>
+      </properties>
+    </entity>
+  </entities>
+
+  <contents>
+    <content id="globalVerbatim" verbatim="true">
+      This is some global
+      content which should be displayed verbatim
+  </content>
+    <content id="globalNonVerbatim" verbatim="false">
+      This is some global
+      content which should not be displayed verbatim
+  </content>
+    <content id="copyright">
+     This appspec is copyrighted
+     </content>
+  </contents>
+
+  <pages>
+    <page id="page1" login-required="true">
+      <title>Page 1 Title</title>
+      <description>
+        Page 1 Description
+        </description>
+      <params>
+        <param type="text" id="param1">
+          <title>param 1</title>
+          <description>
+            Value of param 1
+            </description>
+        </param>
+      </params>
+      <facts>
+        <fact>
+          Fact 1
+      </fact>
+        <fact>
+          Fact 2
+      </fact>
+      </facts>
+      <forms>
+        <form id="form1">
+          <inputs>
+            <input type="text">
+              <title>Form Input 1</title>
+              <description>Form Input 1</description>
+            </input>
+            <input type="text">
+              <title>Form Input 2</title>
+              <description>
+                Form Input 2
+                </description>
+            </input>
+          </inputs>
+          <actions>
+            <action id="formAction1">
+              <title>Form Action 1 title</title>
+              <outcomes>
+                <outcome id="formAction1Failure">
+                  <title>Outcome to page1</title>
+                  <description>
+                  This will take you to page1
+                    </description>
+                  <pageRef>page1</pageRef>
+                  <message>
+                  Oops, you did not say the magic word, you will
+                  stay
+                  on
+                  this page forever!
+                    </message>
+                </outcome>
+              </outcomes>
+            </action>
+          </actions>
+        </form>
+        <form id="form2">
+          <inputs>
+            <input id="textInput1" type="text">
+              <title>TextInput 1 title</title>
+              <description>
+                Enter text input 1
+                </description>
+              <validations>
+                <validation id="required" type="required"
+                  description="INPUT is required" />
+                <validation type="length(min=8)" />
+                <validation type="regex(/^\S+$/)"
+                  description="INPUT may not contain whitespace" />
+              </validations>
+            </input>
+            <input type="checkbox">
+              <title>CheckboxInput 1 title</title>
+              <description>
+                Enter checkbox input 1
+                </description>
+            </input>
+            <input id="dropdown1" type="dropdown">
+              <title>Dropdown 1 title</title>
+              <description>
+                Enter dropdown input 1
+                </description>
+            </input>
+            <input id="radio1" type="radio">
+              <title>Radio 1 title</title>
+              <description>
+                Enter radio input 1
+                </description>
+              <options>
+                <option value="stooge1">Moe</option>
+                <option value="stooge2">Larry</option>
+                <option value="stooge3">Curly</option>
+              </options>
+            </input>
+          </inputs>
+          <actions>
+            <action id="action1">
+              <title>Action 1 title</title>
+              <outcomes>
+                <outcome id="failure">
+                  <title>Outcome to page1</title>
+                  <description>
+                  This will take you to page1
+                    </description>
+                  <pageRef>page1</pageRef>
+                  <message>
+                  Oops, you did not say the magic word, you will
+                  stay
+                  on
+                  this page forever!
+                    </message>
+                  <facts>
+                    <fact>Fact 1</fact>
+                    <fact>Fact 2</fact>
+                  </facts>
+                </outcome>
+                <outcome id="success">
+                  <title>Outcome to page2</title>
+                  <href>externalLink</href>
+                </outcome>
+              </outcomes>
+            </action>
+            <action>
+              <title>Action 2 title</title>
+              <outcomes>
+                <outcome id="success">
+                  <title>Outcome to page1</title>
+                  <pageRef>page1</pageRef>
+                </outcome>
+                <outcome id="success">
+                  <title>Outcome to page2</title>
+                  <pageRef>page3</pageRef>
+                </outcome>
+              </outcomes>
+            </action>
+          </actions>
+        </form>
+      </forms>
+
+      <linkSetRefs>
+        <linkSetRef id="linkSet1" />
+        <linkSetRef id="linkSet2" />
+      </linkSetRefs>
+
+      <links>
+        <link id="page1Link1">
+          <title>Link to Page 2</title>
+          <pageRef>page2</pageRef>
+          <facts>
+            <fact>
+              Fact 1
+            </fact>
+          </facts>
+        </link>
+        <link>
+          <title>Link to Page 3</title>
+          <pageRef>page3</pageRef>
+        </link>
+      </links>
+
+      <outputLists>
+        <outputList entityRef="user" id="allUsers">
+          <title>All users</title>
+          <description>Show all users in the system</description>
+          <facts>
+            <fact>User's first name, last name, email address
+              and
+              profile image will be displayed in each row</fact>
+            <fact>Fact 2</fact>
+            <fact>Fact 3</fact>
+          </facts>
+        </outputList>
+      </outputLists>
+
+      <contentRefs>
+        <contentRef id="globalVerbatim" />
+        <contentRef id="globalNonVerbatim" />
+      </contentRefs>
+
+      <contents>
+        <content id="localVerbatim" verbatim="true">Local
+          verbatim</content>
+        <content id="localNonVerbatim" verbatim="true">Local non
+          verbatim</content>
+      </contents>
+    </page>
+    <page id="page2">
+      <title>Page2</title>
+      <description>
+        This is Page 2 of the sample application. You can put
+        a very long
+        description here.
+        </description>
+      <actions>
+        <action id="page2Action">
+          <title>Action 2a title</title>
+          <outcomes>
+            <outcome id="success">
+              <title>Page 3</title>
+              <pageRef>page3</pageRef>
+            </outcome>
+          </outcomes>
+        </action>
+      </actions>
+    </page>
+    <page id="page3">
+      <title>Page3</title>
+      <description>
+        This is Page 3 of the sample application. You can put
+        a very long
+        description here.
+        </description>
+      <contentRefs>
+        <contentRef id="copyright" />
+      </contentRefs>
+    </page>
+    <page id="login">
+      <title>Log In</title>
+      <description>
+        This page shows the user a log in form, and provides
+        a link to
+        create an account.
+    </description>
+      <forms>
+        <form id="loginForm">
+          <inputs>
+            <input type="text">
+              <entityPropertyRef entity="user"
+                property="email" />
+              <title>Email</title>
+              <validations>
+                <validation type="required"
+                  description="Please enter your e-mail address." />
+              </validations>
+            </input>
+            <input id="password" type="password">
+              <entityPropertyRef entity="user"
+                property="password" inheritValidations="true" />
+              <validations>
+                <validation type="required" description="Enter password to login">
+                  <negativeExample></negativeExample>
+                </validation>
+              </validations>
+            </input>
+            <input type="text">
+              <title>Email</title>
+              <validations>
+                <validation type="required"
+                  description="Please enter your e-mail address." />
+              </validations>
+            </input>
+          </inputs>
+          <actions>
+            <action type="login">
+              <title>Login</title>
+              <outcomes>
+                <outcome id="loginSuccessful" loginSuccessfulOutcome="true">
+                  <title>Login successful</title>
+                  <pageRef>page1</pageRef>
+                </outcome>
+                <outcome id="loginFailed" negative="true" loginFailedOutcome="true">
+                  <title>Login failed</title>
+                  <pageRef>login</pageRef>
+                  <facts>
+                    <fact>
+                    PAGE shall display the message, "Login failed."
+                    </fact>
+                  </facts>
+                </outcome>
+              </outcomes>
+            </action>
+          </actions>
+        </form>
+      </forms>
+    </page>
+  </pages>
+
+  <emails>
+    <email id="email1">
+      <title>Announcement Email</title>
+      <description>
+        This is an email message sent to the user on request.
+        </description>
+      <emailSubject>The subject of the email.</emailSubject>
+      <facts>
+        <fact>
+          The email shall include some text.
+        </fact>
+        <fact>
+          The email shall be styled in HTML.
+        </fact>
+      </facts>
+      <links>
+        <link>
+          <title>Link to an outside page</title>
+          <href>http://www.google.com</href>
+        </link>
+      </links>
+    </email>
+  </emails>
+</appspec>

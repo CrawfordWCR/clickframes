@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+#macro (externalLink $href $text) 
+<a href="$href">$text</a>
+#end
+
+#macro (pageLink $page $text)
+<a href="$page.id$appspec.htmlExtension">$text</a>
+#end 
+
+#macro (writeNavigation $page $project)
+  #if ($page.linkSets.size() > 0 || $appspec.globalLinkSets.size() > 0)
+  <div id="navigation" class="content-box">
+    <h3>Navigation</h3>
+    #writePageLinkSets($page.linkSets)
+    #writeGlobalLinkSets($project)
+  </div>
+  #end
+#end
+
+#macro (writeGlobalLinkSets $project)
+ #writePageLinkSets($appspec.globalLinkSets)
+#end
+
+#macro (writePageLinkSets $linkSets)
+  #if ($linkSets.size() > 0)
+    #foreach($linkSet in $linkSets)      
+      <h4>$linkSet.title</h4>
+      #writePageLinkSet($linkSet)
+    #end
+  #end
+#end
+
+#macro (writePageLinkSet $linkSet)
+  #if ($linkSet.links.size() == 0)
+    <p>No links</p>
+  #else 
+      <ul>
+      #foreach($link in $linkSet.links)
+       <li>
+        #writePageLink($link)
+       </li>
+      #end
+      </ul>
+  #end
+#end
+
+#macro (writePageParams $params)
+    #if ($params.size() > 0)
+        <div id="params" class="primary-box">
+            <h3>Page Parameters</h3>
+            <table class="inputs">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            #foreach ($param in $params)
+              #writePageParam($param)
+            #end
+            </table>
+        </div>
+    #end
+#end
+
+#macro (writePageParam $param)
+    <tr>
+        <td>$param.title</td>
+        <td>$param.description</td>
+    </tr>
+#end
+
+#macro (writeForms $forms)
+  #if ($forms.size() > 0)
+    #foreach ($form in $forms)
+    <div class="form primary-box">
+      <h3>Form: $form.id</h3>
+      <h4>Inputs</h4>
+      #writeInputs($form.inputs)
+      <h4>Actions &amp; Outcomes</h4>
+      #writeFormActions($form.actions)
+    </div>
+    #end
+  #end
+#end
+
+#macro (writeInputs $inputs)
+  #if ($inputs.size() > 0)
+	<table class="inputs">
+	<tr>
+	  <th>Field</th>
+	  <th>Type</th>
+      <th>Validations</th>
+    </tr>
+    #foreach ($input in $inputs)
+      #writeInputRow($input)
+    #end
+    </table>
+  #end
+#end
+
+#macro (writeInputRow $input)
+  <tr class="input">
+    <td>$input.title</td>
+	<td>$input.type</td>
+    <td>
+	  #if ($input.validations.size() > 0)
+	    #foreach ($validation in $input.validations)
+            #if ($validation.type == "required")
+              <div>Required</div>
+            #elseif ($validation.type == "length")
+              <div>Length ($validation.typeArgs)</div>   
+            #elseif ($validation.type == "regex")
+              <div>Regular Expression ($validation.typeArgs)</div>
+            #elseif ($validation.type == "email")
+              <div>E-mail Address</div>
+            #elseif ($validation.type == "url")
+              <div>URL</div>
+            #else
+              <div>$validation.type</div>
+            #end
+        #end
+      #end
+    </td>
+  </tr>
+  #if ($input.description && $input.description != $input.title)
+  <tr>
+    <td class="input-description" colspan="3">$input.description</td>
+  </tr>
+  #end
+  #if ($input.entityProperty)
+  <tr>
+	<td>&rArr; {<a href="entities/${input.entityProperty.entity.id}.html">$input.entityProperty.entity.title</a>}.{$input.entityProperty.title}</td>
+  </tr>
+  #end
+#end
+
+#macro (writeFacts $facts)
+  #if ($facts.size() > 0)
+    <div id="facts" class="primary-box">
+    <h3>Facts</h3>
+    <ol>
+      #foreach ($fact in $facts)
+      <li>$fact.description</li>
+      #end
+    </ol>
+    </div>
+  #end
+#end
+
+
+#macro (writeFormActions $actionList)
+  #if ($actionList.size() > 0)
+    <table class="actions">
+      #foreach($action in $actionList)
+        <tr>
+          <th>$action.title</th>
+          <td class="arrow">&rArr;</td>
+          <td>
+            #writePageOutcomes($action.outcomes)
+          </td>
+        </tr>
+      #end
+    </table>
+  #end
+#end
+
+#macro (writePageOutputLists $outputLists)
+  #if ($outputLists.size() > 0)
+      #foreach($outputList in $outputLists)
+       <div class="primary-box">
+           <h3>Entity List: <a href="entities/${outputList.entity.id}.html">$outputList.title</a> ($outputList.id)</h3>
+           <p class="outputList-description">$outputList.description</p>
+
+           <table class="inputs">
+
+            <tr class="odd">
+              <th class="entity-example">${outputList.entity.title}</th>
+              
+              <td class="entity-facts"
+              #if ($outputList.entity.properties.size()>0) 
+                 colspan="$outputList.entity.properties.size()"
+              #end>
+                <ul>
+                  #foreach($fact in $outputList.facts)
+                  <li>$fact.description</li>
+                  #end ##each fact
+                </ul>
+              </td>
+            </tr>
+             
+            #foreach ($row in [2..5])
+             #if ($row % 2 == 0)
+              #set($style = "even")
+             #else
+              #set($style = "odd") 
+             #end ## end foreach row
+             
+             <tr class="$style">
+               <th class="entity-example">${outputList.entity.title}${row}</th>
+               <td class="entity-facts"
+               #if ($outputList.entity.properties.size()>0) 
+                  colspan="$outputList.entity.properties.size()"
+               #end>
+               <div>....</div>
+               </td>
+             </tr>
+            #end ## example
+           </table>
+       </div>
+      #end ### end foreach entitiyList
+    #end ## if entitylist.size() > 0
+#end
+
+#macro (writePageLinks $linkList)
+  #if ($linkList.size() > 0)
+    <div id="links" class="primary-box">
+      <h3>Links</h3>
+      <ul>
+      #foreach($link in $linkList)
+        <li>#writePageLink($link)</li>
+      #end
+      </ul>
+    </div>
+  #end
+#end
+
+#macro(writePageLink $link)
+    #if ($link.internal)
+      #pageLink($link.page $link.title)
+    #else
+      #externalLink($link.href $link.title)
+    #end
+    
+    <div class="outcome-descriptions">
+    #if ($link.description)
+      <div class="outcome-description">$link.description</div>
+    #end
+    #if ($link.facts.size() > 0)
+        #foreach ($fact in $link.facts)
+            <div class="outcome-description">$fact.description</div>
+        #end
+    #end
+    </div>
+#end        
+
+#macro(writePageOutcomes $outcomeList)
+  #if ($outcomeList.size() == 0)
+    <p>No Outcomes</p>
+  #else
+      <ol class="outcomes">
+      #foreach($outcome in $outcomeList)
+        <li>
+          #if ($outcome.negative)
+            <span style="color:red;">&times;</span>
+          #end
+          #pageLink($outcome.page $outcome.title)
+          <div class="outcome-descriptions">
+      #if ($page.id != $outcome.page.id)
+        <div class="outcome-description"><strong>Proceed to $outcome.page.title</strong></div>
+      #else
+        <div class="outcome-description"><strong>Remain on current page.</strong></div>
+      #end
+      
+      #if ($outcome.emails.size() > 0)
+        #foreach ($email in $outcome.emails)
+          <div class="outcome-description">Send e-mail <a href="$email.id$appspec.htmlExtension">$email.title</a></div>
+        #end
+      #end
+      
+          #if ($outcome.facts.size() > 0)
+            #foreach ($fact in $outcome.facts)
+              <div class="outcome-description">$fact.description</div>
+            #end
+          #end
+          
+          #if ($outcome.message)
+            <div class="outcome-description">Display message "$outcome.message"</div>
+          #end
+          
+          </div>
+        </li>
+      #end
+      </ol>
+  #end
+#end
+
+#macro (writePageContents $contents)
+    #if ($contents.size() > 0)
+        <div id="blurbs" class="primary-box">
+            <h3>Content Elements</h3>
+            <table class="inputs">
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+            </tr>
+            #foreach ($content in $contents)
+              #writePageContent($content)
+            #end
+            </table>
+        </div>
+    #end
+#end
+
+#macro (writePageContent $content)
+    <tr>
+        <td>$content.id</td>
+        <td>$content.text</td>
+    </tr>
+#end
+
+#macro (writeSecurity $loginRequired)
+  #if ($loginRequired)
+     <span class="login-required">Login Required</span>
+  #end
+#end
+
+<html>
+  <head>
+    <title>$page.title - $appspec.title - Clickframes Interactive Preview</title>
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+    <body class="clips">
+    <div id="pagecontainer">
+    
+    <h1><strong>$appspec.title</strong> Interactive Preview</h1>
+  
+    <div class="breadcrumb">
+        <a href="index.html">&laquo; Back to project overview</a>
+    </div>
+
+    <h2>$page.title #writeSecurity($page.loginRequired)</h2>
+    
+    <div id="clip">
+    
+    #writeNavigation($page $project)
+
+    <p class="description">$page.description</p>
+    
+    #writePageParams($page.parameters)
+    
+    #writePageLinks($page.links)
+
+    #writeForms($page.forms)
+    
+    #writePageOutputLists($page.outputLists)
+    
+    #writePageContents($page.contents)
+
+    #writeFacts($page.facts)
+    
+    </div>
+    
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+    
+    </div>
+  </body>
+</html>

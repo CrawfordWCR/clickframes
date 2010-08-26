@@ -1,0 +1,1038 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book [
+<!ENTITY % isopub SYSTEM "http://www.w3.org/2003/entities/iso8879/isopub.ent">
+%isopub;
+]>
+<book version="5.0" xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:m="http://www.w3.org/1998/Math/MathML"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:db="http://docbook.org/ns/docbook">
+  <info>
+    <title>Clickframes</title>
+
+    <subtitle>The User Guide</subtitle>
+
+    <authorgroup>
+      <author>
+        <personname><firstname>Jonathan</firstname>
+        <surname>Abbett</surname></personname>
+      </author>
+
+      <author>
+        <personname><firstname>Vineet</firstname>
+        <surname>Manohar</surname></personname>
+      </author>
+    </authorgroup>
+  </info>
+
+  <preface>
+    <title>What is Clickframes?</title>
+
+    <para>Clickframes is a framework for creating web applications. It
+    supports quick iteration of design, development and testing through a
+    simple, unified requirements model tailored to the needs of a web
+    application. Using Clickframes, project teams can automate the generation
+    of design artifacts, prototypes, software requirements, production-ready
+    code, and Selenium test scripts.</para>
+
+    <para>The heart of the Clickframes framework is appspec.xml, the
+    application specification (or "appspec"). The
+    <filename>appspec.xml</filename> file is written in Clickframes XML. It is
+    the single source of truth. Other code and artifacts are generated
+    directly from this file by using a variety of provided plug-ins, then
+    further customized by developers and testers to produce the final
+    application.</para>
+
+    <para>Clickframes is not dependent on any particular implementation
+    technology. The initial open source release included two different Java
+    code generators and a PHP code generator, and we're encouraging the
+    community to write new plug-ins to generate applications in still other
+    languages. Clickframes is ultimately about turning design into high
+    quality, well-tested applications.</para>
+
+    <sect1>
+      <title>Clickframes History</title>
+
+      <para>Clickframes was originally developed in 2008 by the Informatics
+      Solutions Group at Children's Hospital Boston. The original Clickframes
+      came about when we decided to automate generation of HTML wireframes,
+      and to reduce our time and effort managing requirements for a
+      particularly demanding client. At a certain point, we realized that we
+      didn't have wireframes anymore—we had a computable requirements model.
+      Some refactoring and ongoing development later, the result was
+      Clickframes—a suite focused on the complete lifecycle of a web
+      application, from modeling and design to code generation and development
+      to testing and release.</para>
+    </sect1>
+  </preface>
+
+  <chapter>
+    <title>Quickstart</title>
+
+    <para>Clickframes is incredibly easy to try out, especially if you have
+    Java and Maven already installed. (If not, those are incredibly easy to
+    install.)</para>
+
+    <section>
+      <title>Java &amp; Maven</title>
+
+      <para>Java 1.6 is required for using Clickframes. Check the version of
+      Java installed on your computer:</para>
+
+      <programlisting>java -version</programlisting>
+
+      <para>If you don't have Java installed, you can get Java 1.6 from <link
+      xlink:href="http://www.java.com/en/download">http://www.java.com/en/download</link></para>
+
+      <para>Maven is a <varname>make</varname>-like tool for Java. Clickframes
+      uses Maven to build projects. Maven must be installed on your machine in
+      order to use Clickframes. If you don't have Maven installed, you can
+      download it from <link
+      xlink:href="http://maven.apache.org/download.html">http://maven.apache.org/download.html</link></para>
+
+      <para>After installing Maven (which is usually as simple as unzipping
+      your download into a directory and adding Maven's <varname>bin</varname>
+      directory to your path), you should be able to run the following
+      command:</para>
+
+      <para><programlisting>$ mvn -version
+Maven version: 2.0.9
+Java version: 1.6.0_10
+OS name: "linux" version: "2.6.23.15-137.fc8" arch: "i386" Family: "unix"</programlisting></para>
+    </section>
+
+    <section>
+      <title>1-Minute Quickstart</title>
+
+      <orderedlist>
+        <listitem>
+          <para>Add the clickframes repo to your
+          <code>USER_HOME/.m2/settings.xml</code> file. This is a one time
+          setup per machine.</para>
+
+          <para><programlisting>&lt;settings&gt;
+ 
+ &lt;profiles&gt;
+  &lt;profile&gt;
+    &lt;id&gt;<emphasis role="bold">default</emphasis>&lt;/id&gt;
+    &lt;activation&gt;
+      &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+    &lt;/activation&gt;
+
+    &lt;pluginRepositories&gt;
+      &lt;pluginRepository&gt;
+         &lt;id&gt;<emphasis role="bold">clickframes-releases-repo</emphasis>&lt;/id&gt;
+         &lt;name&gt;Clickframes official releases repo&lt;/name&gt;
+         &lt;url&gt;http://nexus.clickframes.org/nexus/content/repositories/releases&lt;/url&gt;
+         &lt;releases&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;/releases&gt;
+         &lt;snapshots&gt;&lt;enabled&gt;false&lt;/enabled&gt;&lt;/snapshots&gt;
+      &lt;/pluginRepository&gt;
+
+      &lt;pluginRepository&gt;
+         &lt;id&gt;<emphasis role="bold">clickframes-snapshots-repo</emphasis>&lt;/id&gt;
+         &lt;name&gt;Clickframes official snapshots repo&lt;/name&gt;
+         &lt;url&gt;http://nexus.clickframes.org/nexus/content/repositories/snapshots&lt;/url&gt;
+         &lt;releases&gt;&lt;enabled&gt;false&lt;/enabled&gt;&lt;/releases&gt;
+         &lt;snapshots&gt;&lt;enabled&gt;true&lt;/enabled&gt;&lt;/snapshots&gt;
+      &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;
+  &lt;/profile&gt;
+ &lt;/profiles&gt;
+ 
+  &lt;pluginGroups&gt;
+   &lt;pluginGroup&gt;<emphasis role="bold">org.clickframes</emphasis>&lt;/pluginGroup&gt;
+ &lt;/pluginGroups&gt;
+&lt;/settings&gt;</programlisting></para>
+        </listitem>
+
+        <listitem>
+          <para>Create a new empty directory for your project:</para>
+
+          <programlisting>mkdir demo
+cd demo</programlisting>
+        </listitem>
+
+        <listitem>
+          <para>Start a new clickframes project by typing the following
+          command:</para>
+
+          <programlisting>mvn clickframes:gen</programlisting>
+        </listitem>
+
+        <listitem>
+          <para>Your appspec is generated in
+          <varname>src/main/clickframes/appspec.xml</varname>. You (or your
+          designer, business analyst, or manager) will customize the appspec
+          to describe your desired web app's functionality. (See Chapter
+          2)</para>
+        </listitem>
+
+        <listitem>
+          <para>Your techspec is generated in
+          <varname>src/main/clickframes/techspec.xml</varname>. You (or your
+          developer) will customize the techspec to describe the technical
+          requirements of your web app.</para>
+        </listitem>
+
+        <listitem>
+          <para>After customizing the above, regenerate your artifacts by
+          running Clickframes again:</para>
+
+          <programlisting>mvn clickframes:gen </programlisting>
+        </listitem>
+      </orderedlist>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Clickframes XML</title>
+
+    <para>Clickframes XML is an XML-based format for describing the core
+    functional requirements of a web application. <emphasis role="bold">At is
+    most basic level, Clickframes XML lets you define the individual web pages
+    of your application, how they link to one another, the actions a user may
+    perform, and the data your application collects and
+    displays.</emphasis></para>
+
+    <para>This is written in a file we call an application specification – or
+    appspec – and is named <filename>appspec.xml</filename>. It's a very
+    important file: Clickframes uses the appspec to generate Clickframes
+    Interactive Previews (CLIPs), to build executable code via Clickframes
+    Plugins, and to generate automated test scripts.</para>
+
+    <para>The appspec will evolve over the course of the application
+    development process. At the start of a project, the appspec may be very
+    simple—a few pages, a few relationships and a few miscellaneous
+    requirements. As you proceed through the Clickframes Project Lifecycle the
+    appspec will be fleshed out and used to generate new artifacts and
+    regenerate old ones.</para>
+
+    <para>When designing the Clickframes XML format, we've been very careful
+    to avoid modeling in a technology- or implementation-specific way. For
+    instance, we don't allow you to specify things like Java package names in
+    an appspec, because the application may not be generated in Java. The
+    simple rule of thumb is that the only things that go into the appspec are
+    the ones that users can see, and that users care about. In many software
+    development processes, these are referred to as "testable
+    requirements"—you should be able to confirm every requirement in the
+    appspec by loading the final application in a web server and running
+    through the pages.</para>
+
+    <para>(Technical requirements, like a Java package name, instead go into a
+    technical specification, or "techspec." More on that later.)</para>
+
+    <sect1>
+      <title>Appspec</title>
+
+      <para>An application to be specified by Clickframes XML is contained by
+      the <varname>appspec</varname> element.</para>
+
+      <para>At the very least, an <varname>appspec</varname> must have a
+      <varname>title</varname>.</para>
+
+      <para>Your title will most likely be the name of your
+      application.</para>
+
+      <programlisting>&lt;appspec&gt;
+  &lt;title&gt;Crazy Al's Online Photo Organizer&lt;/title&gt;
+  ...
+&lt;/appspec&gt;</programlisting>
+
+      <para>A <varname>description</varname> is also a good idea, to provide
+      some narrative on your application's goals and features.</para>
+
+      <programlisting>&lt;appspec&gt;
+  &lt;title&gt;Crazy Al's Online Photo Organizer&lt;/title&gt;
+  &lt;description&gt;
+    CAOPO helps people manage photo albums over the web.
+  &lt;/description&gt;
+&lt;/appspec&gt;</programlisting>
+
+      <variablelist>
+        <title>Appspec Attributes</title>
+
+        <varlistentry>
+          <term>id</term>
+
+          <listitem>
+            <para>Unique identifier for this application, used primarily for
+            artifact generation.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>defaultPage</term>
+
+          <listitem>
+            <para>The unique ID of the page to display by default, i.e. the
+            index page.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>loginPage</term>
+
+          <listitem>
+            <para>The unique ID of the page which will be displayed if the
+            user is required to log in.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect1>
+
+    <sect1>
+      <title>Page</title>
+
+      <para>The basic Clickframes XML building block is the
+      <varname>page</varname>. Very simply, a page describes its purpose
+      within the application, i.e. possible user actions and content, and
+      indicates where else the user may go from there.</para>
+
+      <para>Each page is labeled with a unique string identifier. This should
+      be something brief but legible, similar to what you might name the
+      page's HTML file.</para>
+
+      <programlisting>&lt;page id="passwordReset"&gt; ... &lt;/page&gt;</programlisting>
+
+      <para>A page must have a <systemitem>title</systemitem> and a
+      <systemitem>description</systemitem>. The description should provide a
+      casual narrative of what the user can do on the page.</para>
+
+      <programlisting>&lt;page id="passwordReset"&gt;
+  &lt;title&gt;Password Reset Request Form&lt;/title&gt;
+  &lt;description&gt;
+    On this page, the user may enter a username
+    to initiate the password reset process.  If
+    the username does not exist, an error message
+    will be displayed asking for a second try.
+  &lt;/description&gt;
+&lt;/page&gt;</programlisting>
+
+      <para>Remember, the description is casual, not canonical. Anything truly
+      important in your description should ultimately be codified in actions,
+      outcomes, and facts.</para>
+
+      <sect2>
+        <title>Page Contents</title>
+
+        <para>Pages may contain any of the following:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><varname>actions</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>contents</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>contentRefs</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>outputLists</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>outputs</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>facts</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>forms</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>links</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>linkSetRefs</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>pageBlocks</varname></para>
+          </listitem>
+
+          <listitem>
+            <para><varname>params</varname></para>
+          </listitem>
+        </itemizedlist>
+      </sect2>
+
+      <sect2>
+        <title>The Default Page</title>
+
+        <para>You may define a default destination when users first access
+        your application, like a web site's "index" page. Use the
+        <varname>defaultPage</varname> attribute in the
+        <varname>appspec</varname> element.</para>
+
+        <programlisting>&lt;appspec defaultPage="home"&gt; ... &lt;/appspec&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Page Blocks</title>
+
+        <para>Anything that can be defined within a <varname>page</varname>
+        may also be defined within a <varname>pageBlock</varname>, and then
+        referenced within any page on which you wish those items to
+        appear.</para>
+
+        <programlisting>&lt;pageBlocks&gt;
+  &lt;pageBlock id="header"&gt; ... &lt;/pageBlock&gt;
+&lt;/pageBlocks&gt;
+&lt;pages&gt;
+  &lt;page id="contactUs"&gt;
+    &lt;title&gt;Contact Us&lt;/title&gt;
+    &lt;description&gt; ... &lt;/description&gt;
+    &lt;pageBlockRefs&gt;
+      &lt;pageBlockRef id="header" /&gt;
+    &lt;/pageBlockRefs&gt;
+  &lt;/page&gt;
+&lt;/pages&gt;</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Links</title>
+
+      <para>The most basic means for connecting one <varname>page</varname> to
+      another is by using the <varname>link</varname> element.</para>
+
+      <para>A <varname>link</varname> must have a <varname>title</varname> and
+      a reference to another page, either internal to the application or
+      external. The <varname>title</varname> should reflect how the link would
+      be displayed to the user.</para>
+
+      <para>Optionally, a <varname>link</varname> may contain a
+      <varname>description</varname>, which could explain some context or
+      justification for the link.</para>
+
+      <para>A page reference can take one of two forms. Internal page
+      references require a <varname>pageRef</varname> tag, containing a valid
+      page identifier (the <varname>id</varname> attribute of a
+      <varname>page</varname> element). External page references require an
+      <varname>href</varname> tag, containing a valid URL.</para>
+
+      <programlisting>&lt;link&gt;
+  &lt;title&gt;Open Inbox&lt;/title&gt;
+  &lt;pageRef&gt;messagingInbox&lt;/pageRef&gt;
+&lt;/link&gt;
+&lt;link&gt;
+  &lt;title&gt;Terminate Account&lt;/title&gt;
+  &lt;description&gt;
+    Sends the user to parent company's website where
+    account termination information is displayed.
+  &lt;/description&gt;
+  &lt;href&gt;http://www.megalomart.net/terminate.php&lt;/href&gt;
+&lt;/link&gt;</programlisting>
+    </sect1>
+
+    <sect1>
+      <title>User Input</title>
+
+      <para>When a <varname>page</varname> will gather data from the user,
+      create a <varname>form</varname> containing fields defined by the
+      <varname>input</varname> tag followed by <varname>actions</varname>
+      which define how the system processes the data.</para>
+
+      <para>An input must have a <varname>type</varname> attribute, indicating
+      what kind of form input is expected, and a <varname>title</varname>
+      element, indicating the field label which will be displayed to the user.
+      Optionally, you may use the <varname>description</varname> element to
+      provide more information about the field.</para>
+
+      <para>Valid input types, which map to <link
+      xlink:href="http://www.w3.org/TR/html401/interact/forms.html#form-controls">HTML
+      form controls</link>, are:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><varname>text</varname>: single-line input</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>textarea</varname>: multiple-line input</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>password</varname>: sensitive single-line
+          input</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>checkbox</varname>: on/off switches toggled by the
+          user</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>radio</varname>: mutually exclusive switches</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>dropdown</varname>: single-selection menu of
+          options</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>multiple</varname>: multiple-selection menu of
+          options</para>
+        </listitem>
+
+        <listitem>
+          <para><varname>upload</varname>: file selector</para>
+        </listitem>
+      </itemizedlist>
+
+      <programlisting>&lt;form id="editWikiForm"&gt;
+  &lt;inputs&gt;
+    &lt;input type="textarea"&gt;
+      &lt;title&gt;Page Content&lt;/title&gt;
+      &lt;description&gt;User enters page content with wiki-text syntax.&lt;/description&gt;
+    &lt;/input&gt;
+  &lt;/inputs&gt;
+  ...
+  &lt;actions&gt;
+    &lt;action&gt;
+       ...
+    &lt;/action&gt;
+  &lt;/actions&gt;
+&lt;/form&gt;</programlisting>
+
+      <sect2>
+        <title>Selection Input</title>
+
+        <para>Inputs of type <varname>checkbox</varname>,
+        <varname>radio</varname>, <varname>dropdown</varname>, or
+        <varname>multiple</varname> should contain one or more
+        <varname>option</varname> elements, specifying the options available
+        for the user to select.</para>
+
+        <programlisting>&lt;input type="radio"&gt;
+  &lt;title&gt;Your Favorite Ice Cream Flavor&lt;/title&gt;
+  &lt;option value="chocolate"&gt;Double Chocolate Chunk&lt;/option&gt;
+  &lt;option value="vanilla"&gt;French Vanilla Bean&lt;/option&gt;
+  &lt;option value="strawberry"&gt;Sweet Summer Strawberry&lt;/option&gt;
+  &lt;default value="chocolate" /&gt;
+&lt;/input&gt;</programlisting>
+
+        <para>Use the <varname>default</varname> tag to specify an
+        <varname>option</varname> to be selected by default. For inputs of
+        type <varname>dropdown</varname> and <varname>radio</varname>,
+        Clickframes will assume the first option is default if a default is
+        not explicitly specified.</para>
+      </sect2>
+
+      <sect2>
+        <title>Data Validation</title>
+
+        <para>User-supplied data may be validated against rules you define
+        within each <varname>input</varname> element using the
+        <varname>validation</varname> tag. Validations must define a
+        <varname>type</varname> attribute:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><varname>required</varname>: input is required</para>
+          </listitem>
+
+          <listitem>
+            <para><varname>url</varname>: input must be in the form of a
+            URL</para>
+          </listitem>
+
+          <listitem>
+            <para><varname>email</varname>: input must be in the form of an
+            e-mail address</para>
+          </listitem>
+
+          <listitem>
+            <para><varname>length</varname>: input must fulfill the specified
+            length requirements</para>
+          </listitem>
+
+          <listitem>
+            <para><varname>regex</varname>: input must satisfy the specified
+            regular expression</para>
+          </listitem>
+        </itemizedlist>
+
+        <programlisting>&lt;input type="text"&gt;
+  &lt;title&gt;Your E-mail Address&lt;/title&gt;
+  &lt;validations&gt;
+    &lt;validation type="required" /&gt;
+    &lt;validation type="email" /&gt;
+  &lt;/validations&gt;
+&lt;/input&gt;</programlisting>
+
+        <para>Each <varname>validation</varname> may also include a
+        <varname>description</varname> attribute to specify the message to
+        display when the validation fails.</para>
+
+        <programlisting>&lt;input type="password"&gt;
+  &lt;title&gt;New Password&lt;/title&gt;
+  &lt;validations&gt;
+    &lt;validation type="required" description="Please enter a new password." /&gt;
+  &lt;/validations&gt;
+&lt;/input&gt;</programlisting>
+
+        <para>Validations of type <varname>length</varname> and
+        <varname>regex</varname> require additional parameters provided within
+        parentheses as part of the <varname>type</varname> definition. Length
+        validations may include the <varname>min</varname> or
+        <varname>max</varname> parameters, or both. Regular expression
+        validators must include a regular expression within the
+        parentheses.</para>
+
+        <programlisting>&lt;input type="text"&gt;
+  &lt;title&gt;Username&lt;/title&gt;
+  &lt;validations&gt;
+    &lt;validation type="regex(/^[a-z0-9_\.-]+$/i)"
+      description="Username must contain only alphanumeric characters, underscores, dots, and dashes" /&gt;
+  &lt;/validations&gt;
+&lt;/input&gt;</programlisting>
+
+        <programlisting>&lt;input type="password"&gt;
+  &lt;title&gt;Password&lt;/title&gt;\
+  &lt;validations&gt;
+    &lt;validation type="length(min=6,max=12)"
+      description="Password must be between six and twelve characters." /&gt;
+  &lt;/validations&gt;
+&lt;/input&gt;</programlisting>
+
+        <programlisting>&lt;input type="textarea"&gt;
+  &lt;title&gt;Enter Description of Task&lt;/title&gt;
+  &lt;validations&gt;
+    &lt;validation type="length(max=255)"
+      description="Keep your description within 255 characters, please." /&gt;
+  &lt;/validations&gt;
+&lt;/input&gt;</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Actions &amp; Outcomes</title>
+
+      <para>An <varname>action</varname> represents something the user can do
+      on a page that may have one or more consequences, the most obvious
+      example of which is form submission.</para>
+
+      <para>An <varname>action</varname> is made up of a
+      <varname>title</varname> and at least one
+      <varname>outcome</varname>.</para>
+
+      <programlisting>&lt;action id="createAccount"&gt;
+  &lt;title&gt;Create Account&lt;/title&gt;
+  &lt;outcomes&gt;
+    ...
+  &lt;/outcomes&gt;
+&lt;/action&gt;</programlisting>
+
+      <sect2>
+        <title>Outcomes</title>
+
+        <para>An outcome describes one possible consequence of an action.
+        Outcomes may cause the following to occur:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Send the user to a different page or URL</para>
+          </listitem>
+
+          <listitem>
+            <para>Display a message</para>
+          </listitem>
+
+          <listitem>
+            <para>Send an e-mail</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>Additional tasks to perform within an outcome may be described
+        as <varname>facts</varname>.</para>
+
+        <para>An <varname>outcome</varname> must contain an
+        <varname>id</varname>, a <varname>title</varname> and an internal or
+        external page reference (see previous section on links). The following
+        outcome would send the user to a page identified as
+        <varname>systemDashboard</varname>.</para>
+
+        <programlisting>&lt;outcome id="accountCreated"&gt;
+  &lt;title&gt;New account created&lt;/title&gt;
+  &lt;pageRef&gt;userProfile&lt;/pageRef&gt;
+&lt;/outcome&gt;</programlisting>
+
+        <para>Optionally, an <varname>outcome</varname> may have a
+        <varname>description</varname> to provide any additional explanation
+        of the performance of the action.</para>
+
+        <para>To display a message on the destination page, include a
+        <varname>message</varname> tag:</para>
+
+        <programlisting>&lt;outcome id="accountCreated"&gt;
+  &lt;title&gt;New account created&lt;/title&gt;
+  &lt;pageRef&gt;userProfile&lt;/pageRef&gt;
+  &lt;message&gt;Welcome, your account has been created.&lt;/message&gt;
+&lt;/outcome&gt;</programlisting>
+
+        <para>To send an e-mail, include an <varname>emailRef</varname> tag
+        with a reference to an <varname>email</varname> specified elsewhere
+        within your <varname>appspec</varname>.</para>
+
+        <programlisting>&lt;outcome id="accountCreated"&gt;
+  &lt;title&gt;New account created&lt;/title&gt;
+  &lt;pageRef&gt;userProfile&lt;/pageRef&gt;
+  &lt;message&gt;Welcome, your account has been created.&lt;/message&gt;
+  &lt;emailRef&gt;newAccountMessage&lt;/emailRef&gt;
+&lt;/outcome&gt;</programlisting>
+
+        <para>An <varname>outcome</varname> may also be modified by the
+        <varname>negative</varname> attribute to indicate that outcome is a
+        negative case, e.g. form submission failure, as shown in this complete
+        action/outcome example:</para>
+
+        <programlisting>&lt;action id="createAccount"&gt;
+  &lt;title&gt;Create Account&lt;/title&gt;
+  &lt;outcomes&gt;
+    &lt;outcome id="accountCreated"&gt;
+      &lt;title&gt;New account created&lt;/title&gt;
+      &lt;pageRef&gt;userProfile&lt;/pageRef&gt;
+      &lt;message&gt;Welcome, your account has been created.&lt;/message&gt;
+      &lt;emailRef&gt;newAccountMessage&lt;/emailRef&gt;
+    &lt;/outcome&gt;
+    &lt;outcome id="usernameExists" negative="true"&gt;
+      &lt;title&gt;Desired username already exists&lt;/title&gt;
+      &lt;description&gt;
+        User is shown an explanatory error message
+        and asked to try again.
+      &lt;/description&gt;
+      &lt;pageRef&gt;newAccount&lt;/pageRef&gt;
+      &lt;message&gt;Sorry, that username is already in use. Please choose another.&lt;/message&gt;
+    &lt;/outcome&gt;
+  &lt;/outcomes&gt;
+&lt;/action&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Action Types</title>
+
+        <para>Clickframes provides a series of action types to help you define
+        common user activities. In particular, Clickframes code generators can
+        leverage these action types to great effect.</para>
+
+        <variablelist>
+          <varlistentry>
+            <term>login</term>
+
+            <listitem>
+              <para>Action initiates the login process</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>logout</term>
+
+            <listitem>
+              <para>Action terminates the user's authenticated session</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>create</term>
+
+            <listitem>
+              <para>Action creates a new data object</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>update</term>
+
+            <listitem>
+              <para>Action updates an existing data object</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>createOrUpdate</term>
+
+            <listitem>
+              <para>Action updates an existing data object, or creates it if
+              it doesn't exist</para>
+            </listitem>
+          </varlistentry>
+
+          <varlistentry>
+            <term>delete</term>
+
+            <listitem>
+              <para>Action deletes a data object</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+
+        <para>Action types are described in greater detail in the sections on
+        User Authentication and CRUD.</para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Navigation</title>
+
+      <para>A <varname>linkSet</varname> defines a group of links that can be
+      displayed together on any number of pages.</para>
+
+      <programlisting>&lt;linkSet id="projectNavigation"&gt;
+  &lt;link&gt;
+     &lt;title&gt;Start new project&lt;/title&gt;
+     &lt;pageRef&gt;newProject&lt;/pageRef&gt;
+  &lt;/link&gt;
+  &lt;link&gt;
+     &lt;title&gt;See all projects&lt;/title&gt;
+     &lt;pageRef&gt;projects&lt;/pageRef&gt;
+  &lt;/link&gt;
+  &lt;link&gt;
+     &lt;title&gt;Send feedback&lt;/title&gt;
+     &lt;href&gt;mailto:projectfeedback@clickframes.org&lt;/href&gt;
+  &lt;/link&gt;
+&lt;/linkSet&gt;</programlisting>
+
+      <sect2>
+        <title>Referencing Linksets</title>
+
+        <para>Once defined, a <varname>linkSet</varname> may be referenced in
+        each <varname>page</varname> on which it will appear.</para>
+
+        <programlisting>&lt;page id="newProject"&gt;
+  ...
+  &lt;linkSetRef id="projectNavigation" /&gt;
+&lt;/page&gt;
+&lt;page id="projects"&gt;
+  ...
+  &lt;linkSetRef id="projectNavigation" /&gt;
+&lt;/page&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Global Navigation</title>
+
+        <para>You may define a <varname>linkSet</varname> that will appear on
+        every <varname>page</varname> in your application, known as global
+        navigation, by adding the <varname>global</varname> attribute.</para>
+
+        <programlisting>&lt;linkSet id="siteNavigation" global="true"&gt;
+  ...
+&lt;/linkSet&gt;</programlisting>
+
+        <para>Global navigation does not need per-page
+        <varname>linkSet</varname> references.</para>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Page Parameters</title>
+
+      <para>Because URL parameters (e.g. <varname>foo?id=123</varname>) are
+      exposed to the user through his browser, it is important to model them
+      up front. REST-based web services especially have placed additional
+      importance on the structure of an application's URLs.</para>
+
+      <para>If a page will accept URL parameters, define them with the
+      <varname>param</varname> tag.</para>
+
+      <programlisting>&lt;page id="viewListing"&gt;
+  ...
+  &lt;param type="text"&gt;
+    &lt;title&gt;Listing ID&lt;/title&gt;
+    &lt;description&gt;&lt;/description&gt;
+  &lt;/param&gt;
+&lt;/page&gt;</programlisting>
+    </sect1>
+
+    <sect1>
+      <title>E-mail</title>
+
+      <para>If your application will send e-mail, define each individual
+      e-mail message with the <varname>email</varname> element.</para>
+
+      <programlisting>&lt;email id="newUserMessage"&gt;
+  &lt;title&gt;Message sent to new users&lt;/title&gt;
+  &lt;description&gt;
+    This message is sent to all new users once their account
+    has been created.
+  &lt;/description&gt;
+  &lt;emailSubject&gt;
+    Your Issue Tracker account has been created!
+  &lt;/emailSubject&gt;
+  &lt;emailText&gt;
+  &lt;![CDATA[
+    Dear FIRSTNAME LASTNAME,
+    Your account has been created.
+    Please log in at APPLICATIONURL with your username USERNAME.
+    Regards,
+    Issue Tracker
+  ]]&gt;
+  &lt;/emailText&gt;
+&lt;/email&gt;</programlisting>
+
+      <para>The <varname>title</varname> and <varname>description</varname>
+      fields are for your own reference—they will not be displayed to a user.
+      The <varname>emailSubject</varname> and <varname>emailText</varname>
+      fields should be seen as the basis for the e-mail's content. When
+      implemented, a developer can integrate any dynamic data or visual
+      styling that should appear.</para>
+
+      <para>You may also add <varname>fact</varname>, <varname>link</varname>,
+      and <varname>linkSetRef</varname> to an <varname>email</varname>.</para>
+
+      <sect2>
+        <title>Referencing E-mails</title>
+
+        <para>Declare when your application will send e-mail by associating an
+        <varname>email</varname> element with an
+        <varname>outcome</varname>.</para>
+
+        <programlisting>&lt;outcome&gt;
+  &lt;title&gt;New account created&lt;/title&gt;
+  &lt;pageRef&gt;dashboard&lt;/pageRef&gt;
+  &lt;emailRef&gt;newUserMessage&lt;/emailRef&gt;
+&lt;/outcome&gt;</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Facts</title>
+
+      <para>Facts provide a simple way to specify software requirements that
+      aren't otherwise encoded in your appspec.</para>
+
+      <programlisting>&lt;fact&gt;A tooltip shall appear when the user hovers over the image.&lt;/fact&gt;</programlisting>
+
+      <para>Occurrences of the word PAGE (all caps) will be converted to the
+      relevant page's title in your generated artifacts (e.g. software
+      requirements).</para>
+
+      <programlisting>&lt;fact&gt;PAGE shall list the user's unread messages.&lt;/fact&gt;</programlisting>
+
+      <para>Facts may be placed within any of the following elements:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para><varname>linkSet</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>page</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>email</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>input</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>outcome</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>link</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>output</varname></para>
+        </listitem>
+
+        <listitem>
+          <para><varname>outputList</varname></para>
+        </listitem>
+      </itemizedlist>
+    </sect1>
+
+    <sect1>
+      <title>Content</title>
+
+      <para>Specify content blocks that appear on a page with the
+      <varname>content</varname> tag. Identify the content with an
+      <varname>id</varname> attribute.</para>
+
+      <programlisting>&lt;content id="homepageIntro"&gt;
+  Welcome to your home page.
+&lt;/content&gt;</programlisting>
+
+      <sect2>
+        <title>Complex Content</title>
+
+        <para>Content may contain HTML-formatted text. Identify this type of
+        content with a <varname>complex</varname> attribute set to
+        "true".</para>
+
+        <programlisting>&lt;content id="homepageIntro" complex="true"&gt;
+  &lt;![CDATA[&lt;b&gt;Welcome to your home page.&lt;/b&gt;]]&gt;
+&lt;/content&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Global Content</title>
+
+        <para>Content that will appear on multiple pages may be defined as a
+        global content element as a child of the <varname>appspec</varname>
+        element, using the same syntax as above. Pages that wish to display
+        that content should reference it as follows:</para>
+
+        <programlisting>&lt;contentRef id="homepageIntro" /&gt;</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>Data Entities</title>
+
+      <para>Entities allow you to model the data elements that you wish to
+      collect (i.e. through forms) or display (i.e. with outputs or
+      outputLists) in your application.</para>
+
+      <para>Because Clickframes is focused on defining the user's
+      experience,</para>
+
+      <sect2>
+        <title>Defining entities</title>
+
+        <para></para>
+      </sect2>
+
+      <sect2>
+        <title>Using entities for CRUD</title>
+
+        <para></para>
+
+        <sect3>
+          <title>Displaying entities</title>
+
+          <para></para>
+        </sect3>
+
+        <sect3>
+          <title>Mapping input to entities</title>
+
+          <para></para>
+        </sect3>
+      </sect2>
+    </sect1>
+
+    <sect1>
+      <title>User Authentication</title>
+
+      <para></para>
+    </sect1>
+  </chapter>
+</book>

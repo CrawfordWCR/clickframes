@@ -1,0 +1,52 @@
+package org.clickframes.clipr.controller;
+
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.AutoCreate;
+import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Scope;
+import org.jboss.seam.annotations.async.Asynchronous;
+import org.jboss.seam.annotations.async.Duration;
+import org.jboss.seam.contexts.Contexts;
+import org.jboss.seam.faces.Renderer;
+
+@Name("emailController")
+@Scope(ScopeType.APPLICATION)
+@AutoCreate
+public class EmailController {
+    private static final Log log = LogFactory.getLog(EmailController.class);
+
+    public void sendMessage(@SuppressWarnings("unused")
+    @Duration
+    long delay, Renderer renderer, Map<String, Object> params, String template) {
+        boolean applicationContextActive = Contexts.isApplicationContextActive();
+
+        try {
+            if (!applicationContextActive) {
+                org.jboss.seam.contexts.Lifecycle.beginCall();
+            }
+
+            for (String key : params.keySet()) {
+                Contexts.getEventContext().set(key, params.get(key));
+            }
+            renderer.render(template);
+        } catch (RuntimeException e) {
+            log.error("Exception occurred while sending email", e);
+            throw e;
+        } finally {
+            if (!applicationContextActive) {
+                org.jboss.seam.contexts.Lifecycle.endCall();
+            }
+        }
+    }
+
+    @Asynchronous
+    public void sendMessageAsynchronously(@Duration
+    long delay, Renderer renderer, Map<String, Object> params, String template) {
+        sendMessage(delay, renderer, params, template);
+    }
+}
+// clickframes::version=2516097566::clickframes

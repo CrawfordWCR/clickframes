@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<techspec xmlns="http://www.clickframes.org/techspec"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!--
+    You can call your dependencies in this file. This file will be
+    called before your plugin.
+  -->
+  <plugins>
+    <!--
+      uncommenting the following line will invoke the "clips" plugin
+    -->
+    <!-- <plugin class="clips" /> -->
+  </plugins>
+</techspec>

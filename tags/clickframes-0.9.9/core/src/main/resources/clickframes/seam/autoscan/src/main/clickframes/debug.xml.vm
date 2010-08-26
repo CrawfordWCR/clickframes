@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+ <page id="debug">
+  <title>Database Debug</title>
+  <description>This page displays all data stored in the system.</description>
+
+  <outputLists>
+#foreach ($entity in $appspec.entities)
+    <outputList entityRef="${entity.id}" id="${entity.id}List">
+      <title>All ${entity.name}s</title>
+      <description>Display all ${entity.name}s in the system.</description>
+    </outputList>
+#end
+  </outputLists>
+ </page>

@@ -1,0 +1,200 @@
+strong {
+    font-weight:bold;
+}
+
+em {
+    font-style:italic;
+}
+
+#header {
+    background:#999999;
+    color:white;
+    padding-top:1em;
+    padding-bottom:2em;
+    margin-bottom:2em;
+}
+
+h1 {
+    font-size:32pt;
+    font-weight:bold;
+    letter-spacing:-0.05em;
+}
+
+h1 a:link, h1 a:visited {
+    text-decoration:none;
+    color:white;
+}
+
+h2 {
+    font-size:18pt;
+    font-weight:bold;
+    border-bottom:1px solid black;
+    margin-bottom:1em;
+}
+
+h3 {
+    font-size:14pt;
+    font-weight:bold;
+    border-bottom:1px solid black;
+    margin-bottom:0.5em;
+}
+
+#site-navigation a:link, #site-navigation a:visited {
+    color:white;
+}
+
+#site-navigation li {
+    display:inline;
+    font-size:12pt;
+    margin-right:1em;
+}
+
+#identity {
+    font-size:12pt;
+    text-align:right;
+}
+
+#page-navigation ul li {
+    font-size:11pt;
+    list-style-type:square;
+    margin-left:1em;
+    margin-bottom:0.3em;
+}
+
+.content {
+    font-size:14pt;
+    color:#666666;
+    background-color:#eeeeee;
+    padding:0.6em;
+    margin-bottom:0.5em;
+}
+
+#outputs {
+    margin-top:2em;
+}
+
+.output table, .output-list table {
+    font-size:11pt;
+    width:100%;
+}
+
+.output table th, .output table td, .output-list table th, .output-list table td {
+    padding-bottom:0.2em;
+}
+
+.output table th {
+    font-weight:bold;
+    padding-right:1em;
+    width:30%;
+}
+
+.output-list {
+    margin-top:2em;
+}
+
+.output-list th {
+    font-weight:bold;
+    vertical-align:bottom;
+}
+
+.output-list td, .output-list th {
+    padding-right:1em;
+}
+
+.output-list td {
+    vertical-align:top;
+}
+
+.output-list td a {
+    white-space:nowrap;
+}
+
+#page-content form {
+    margin-top:2em;
+    margin-bottom:3em;
+}
+
+#page-content form .field {
+    margin-bottom:1em;
+}
+
+#page-content form label {
+    font-weight:bold;
+    font-size:12pt;
+    text-align:right;
+    padding-top:1pt;
+}
+
+#page-content form .field-input input, #page-content form .field-input textarea {
+    border:1px solid black;
+    font-size:12pt;
+    padding:1pt;
+    width:100%;
+}
+
+#page-content form .field-input select {
+    width:70%;
+    border:1px solid black;
+    font-size:12pt;
+}
+
+#page-content form .field-message {
+    font-size:10pt;
+}
+
+#page-content form .field-message span span {
+    display:block;
+    padding:3pt 6pt;
+    margin-bottom:0.4em;
+}
+
+#page-content form .field-message span span.error {
+    background:#ffcccc;
+    border-left:3px solid #990000;
+}
+
+#page-content form .field-message span span.info {
+    background:#cccccc;
+    border-left:3px solid #999999;
+}
+
+#page-content form .field-checkbox .field-checkbox-option {
+    margin-bottom:0.5em;
+}
+
+#page-content form .field-checkbox .field-checkbox-option input {
+    float:left;
+    margin-right:10px;
+    margin-top:3px;
+    
+}
+
+#page-content form .field-checkbox label {
+    font-weight:normal;
+    line-height:1.1em;
+}
+
+#page-content form .actions {
+    margin-top:1em;
+}
+
+#page-content form .actions input {
+    font-size:12pt;
+    padding-left:1em;
+    padding-right:1em;
+}
+
+#footer {
+    border-top:1px solid #ccc;
+    padding-top:0.5em;
+    margin-top:5em;
+    font-size:12pt;
+    text-align:right;
+    color:#999999;
+}
+
+div.messages  {
+    font-size:14pt;
+    margin-bottom:1em;
+    color:#669933;
+}

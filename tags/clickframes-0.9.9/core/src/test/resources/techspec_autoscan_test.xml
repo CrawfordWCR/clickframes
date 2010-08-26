@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<techspec xmlns="http://www.clickframes.org/techspec"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <plugins>
+    <plugin class="jsf" />
+    <plugin class="seam" />
+    <plugin class="testmvc" />
+    <plugin class="unittest" />
+    <plugin class="clips">
+      <include condition="$page.id == 'page1'" />
+    </plugin>
+    <plugin class="graph">
+    </plugin>
+    <plugin class="debug" />
+  </plugins>
+</techspec>

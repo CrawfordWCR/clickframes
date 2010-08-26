@@ -1,0 +1,39 @@
+#macro (writePageEstimate $pageEstimate)
+  <tr>
+    <td class="estimate">
+		<div>$pageEstimate.page.title</div>
+	</td>
+	<td>
+		<div>$pageEstimate.points</div>
+	</td>
+  </tr>
+#end
+
+<html>
+  <head>
+    <title>$appspec.title</title>
+    <LINK REL="stylesheet" 
+          TYPE="text/css" 
+          HREF="../style.css" TITLE="Style">
+  </head>
+  <body>
+    <h1>$appspec.title</h1>
+    <h2>Estimates</h2>
+
+      $projectEstimate.points points
+      
+      <table class="requirements">
+       <tr>
+        <th>Page</th>
+        <th>Estimate</th>
+       </tr>
+       #foreach ($pageEstimate in $projectEstimate.pageEstimates)
+         #writePageEstimate($pageEstimate)
+       #end
+      </table>
+
+    <div id="footer">
+      Built with Clickframes &middot; <a href="http://www.clickframes.org/">http://www.clickframes.org/</a>
+    </div>
+  </body>
+</html>

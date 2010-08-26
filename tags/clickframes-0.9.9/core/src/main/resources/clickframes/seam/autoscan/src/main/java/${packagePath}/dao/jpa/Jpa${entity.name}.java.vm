@@ -1,0 +1,124 @@
+package ${techspec.packageName}.dao.jpa;
+
+import ${techspec.packageName}.entity.UploadedFile;
+import ${techspec.packageName}.entity.${entity.name};
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.CascadeType;
+
+#if ($entity.loginEntity)
+import org.apache.commons.codec.binary.Base64;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+#end
+
+#foreach($foreignEntity in $entity.foreignEntities)
+import ${techspec.packageName}.entity.${foreignEntity.name};
+#end
+
+/**
+ * ${entity.description}
+ */
+@Entity
+@Table(name="${entity.id}")
+public class Jpa${entity.name} implements $entity.name {
+    private static final long serialVersionUID = 1L;
+
+#foreach($property in $entity.properties)
+#set($propertyContext = $context.get($property))
+
+#if ($property.allowedValues.size() > 0)
+    public static enum ${property.name} {
+    #foreach ($allowedValue in $property.allowedValues.keySet())${allowedValue}#{if}($velocityCount < ${property.allowedValues.size()}), #{end}#end
+    };
+
+#end
+
+    /** #if (${property.description})$property.description#else${property.title}#end */
+#if ($property.primaryKey)
+    @Id
+#end
+#if ($property.multiple)
+    @Transient
+#else
+    @Basic
+#end
+#if ($property.type == 'FILE')
+    @javax.persistence.ManyToOne(targetEntity=JpaUploadedFile.class, cascade=CascadeType.ALL)
+#end
+#if (${property.type} == 'ENTITY')
+    @javax.persistence.ManyToOne(targetEntity=Jpa${property.foreignEntity.name}.class)
+#end
+    private $propertyContext.javaType ${property.id};
+
+    /** 
+     * Get ${property.title}.
+     *  
+     * @return the ${property.id}
+     */
+    public $propertyContext.javaType get${property.name}() {
+       return this.${property.id};
+    }
+
+    /**
+     * Set $!property.title
+     *
+     * @param ${property.id}
+     */
+    public void set${property.name}($propertyContext.javaType ${property.id}) {
+#if (${property.loginPassword})
+        this.${property.id} = encrypt(${property.id});
+#else
+        this.${property.id} = ${property.id};
+#end
+    }
+
+#end
+
+#if ($entity.loginEntity)
+    public static synchronized String encrypt(String plaintext) {
+        if (plaintext == null) {
+            return null;
+        }
+    
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("System is not ready.", e);
+        }
+        try {
+            md.update(plaintext.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("System is not ready.", e);
+        }
+
+        byte raw[] = md.digest(); // step 4
+        // Don't modify the charset, or old passwords won't match anymore
+        return new String((new Base64().encode(raw)), Charset.forName("US-ASCII"));
+    }
+#end
+
+    public String primaryKey() {
+#if ($entity.primaryKey)
+        return get${entity.primaryKey.name}();
+#else
+        // define an entity property as primaryKey="true" in your appspec
+        // and this will be replaced with the right property e.g.
+        // return ${entity.id}.getId();
+        return this;
+#end
+    }
+    
+    @Override
+    public String toString() {
+        return primaryKey();
+    }
+}

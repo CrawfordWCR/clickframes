@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<techspec xmlns="http://www.clickframes.org/techspec"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <package>net.clickframes.unittest.sampleapp</package>
+  <properties>
+    <property name="baseurl" value="localhost:8080" />
+    <property name="hub" value="${page.id}" condition="$page &amp;&amp; $page.id != 'home'" />
+    <property name="hub" value="dashboard"  condition="$page.id == 'home'" />
+  </properties>
+  <plugins>
+    <plugin class="jsf" />
+    <plugin class="test.test" />
+
+    <!-- generic plugin call -->
+    <plugin class="unittest">
+      <include condition="$page.id == 'home'" />
+      <!-- <page id="foo" /> -->
+    </plugin>
+  </plugins>
+</techspec>

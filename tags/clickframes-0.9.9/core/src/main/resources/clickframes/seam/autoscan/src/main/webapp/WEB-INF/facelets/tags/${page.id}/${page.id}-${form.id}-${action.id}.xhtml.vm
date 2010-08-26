@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition>
+#set ($disabledCondition = '${disabled == null}')
+    <c:if test="${disabledCondition}">
+        <c:set var="disabled" value="false" />
+    </c:if>
+
+    <h:commandButton
+         action="#{${page.id}Controller.#if(${form.id})${form.id}${action.name}#else${action.id}#end}"
+#literal()
+         disabled="#{disabled}"
+#end 
+         id="#if(${form.id})${form.id}${action.name}#else${action.id}#end"
+         value="${action.escapedTitle}"
+     />
+</ui:composition>
+</html>

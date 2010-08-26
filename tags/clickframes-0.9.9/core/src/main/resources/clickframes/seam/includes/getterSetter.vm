@@ -1,0 +1,31 @@
+#macro (getterSetterAdvanced $type $id $name $title $description $indent)
+#if (!$indent)
+   #set($indent = "    ")
+#end
+
+${indent}/** $!description */
+${indent}private $type $id;
+
+${indent}/** 
+${indent} * Get $title
+${indent} *  
+${indent} * @return $title
+${indent} */
+${indent}public $type get$name() {
+${indent}   return this.$id;
+${indent}}
+
+${indent}/**
+${indent} * Set ${title}
+${indent} *
+${indent} * @param $id
+${indent} */
+${indent}public void set$name($type $id) {
+${indent}    this.$id = $id;
+${indent}}
+
+#end
+
+#macro (getterSetter $type $id $name $title $description)
+#getterSetterAdvanced($type $id $name $title $description "    ")
+#end

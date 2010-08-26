@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:clickframes="http://clipr.clickframes.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<f:loadBundle basename="messages" var="messages" />
+<fmt:setBundle basename='messages' scope='application' />
+
+<ui:composition template="/WEB-INF/facelets/layout/layout.xhtml">
+	<ui:define name="title">Upload an appspec</ui:define>
+	<ui:param name="clickframesPage" value="upload" />
+
+	<ui:define name="page-content">
+
+		<h2>CLIPr</h2>
+
+		<p>Upload a <code>truth.xml</code> file and see its Clickframes
+		artifacts.</p>
+
+		<clickframes:messages />
+
+		<h:form id="uploadUploadForm" enctype="multipart/form-data">
+			<s:validateAll>
+                <clickframes:upload-uploadForm-yourAppspec /> <clickframes:upload-uploadForm-upload />
+				<div class="message"><clickframes:upload-uploadForm-yourAppspec-message /></div>
+			</s:validateAll>
+		</h:form>
+		
+		<p><a href="http://www.clickframes.org/examples/clips">See an example of the output</a></p>
+		<p>Here&#8217;s what happens:</p>
+		<ul>
+			<li>Your project will be assigned a unique URL that you can share with colleagues.</li>
+			<li>We will generate CLIPs, software requirements, and application metadata.</li>
+			<li>This service is not for permanent hosting of your artifacts; projects may be cleared as frequently as once daily.</li>
+		</ul>
+    
+	</ui:define>
+</ui:composition>
+</html>
+<!-- clickframes::version=2180209499::clickframes -->
