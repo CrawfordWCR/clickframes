@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<techspec xmlns="http://www.clickframes.org/techspec"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <plugins>
-    <plugin class="seam" />
-    <plugin class="clips" />
-    <!-- <plugin class="selenium" /> -->
-  </plugins>
-</techspec>
