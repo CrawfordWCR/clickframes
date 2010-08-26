@@ -18,30 +18,6 @@
     <version.seam>2.2.0.GA</version.seam>
   </properties>
 
-  <distributionManagement>
-    <site>
-      <id>new.clickframes.org</id>
-      <name>Clickframes Website</name>
-      <url>scp://root@new.clickframes.org/home/webadmin/www.clickframes.org/html/docs/${project.version}
-      </url>
-    </site>
-
-    <!-- use the following if you're not using a snapshot version. -->
-    <repository>
-      <id>clickframes-releases</id>
-      <name>Clickframes repository</name>
-      <url>dav:http://nexus.clickframes.org/nexus/content/repositories/releases
-      </url>
-    </repository>
-    <!-- use the following if you ARE using a snapshot version. -->
-    <snapshotRepository>
-      <id>clickframes-snapshots</id>
-      <name>Clickframes snapshorts repository</name>
-      <url>dav:http://nexus.clickframes.org/nexus/content/repositories/snapshots
-      </url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <repositories>
     <repository>
       <id>jboss</id>
