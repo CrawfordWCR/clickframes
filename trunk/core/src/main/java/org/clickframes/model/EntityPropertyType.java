@@ -3,7 +3,7 @@ package org.clickframes.model;
 import org.apache.commons.lang.StringUtils;
 
 public enum EntityPropertyType {
-    BOOLEAN("boolean"), DATE("date"), ENTITY("entity"), FILE("file"), FLOAT("float"), INT("int"), TEXT("text");
+    BOOLEAN("boolean"), DATE("date"), ENTITY("entity"), FILE("file"), FLOAT("float"), INT("int"), LONG_TEXT("longText"), TEXT("text");
 
     private String value;
 

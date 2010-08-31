@@ -470,8 +470,7 @@
     </xsd:attribute>
     <xsd:attribute name="type" type="cf:entityPropertyTypeEnum">
       <xsd:annotation>
-        <xsd:documentation>the type of the proproperty. Currently
-          unconstrainted text</xsd:documentation>
+        <xsd:documentation>The type of the property, see the enumeration for allowed values.</xsd:documentation>
       </xsd:annotation>
     </xsd:attribute>
     <xsd:attribute name="multiple" type="xsd:boolean"
@@ -534,6 +533,7 @@
       <xsd:enumeration value="file" />
       <xsd:enumeration value="float" />
       <xsd:enumeration value="int" />
+      <xsd:enumeration value="longText" />
       <xsd:enumeration value="text" />
       <xsd:enumeration value="entity">
         <xsd:annotation>
