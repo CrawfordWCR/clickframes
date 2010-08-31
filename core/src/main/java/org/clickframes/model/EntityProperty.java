@@ -43,7 +43,7 @@ public class EntityProperty extends AbstractElementWithFacts {
 
     /**
      * @return the containing entity
-     * 
+     *
      * @author Vineet Manohar
      */
     public Entity getEntity() {
@@ -64,12 +64,12 @@ public class EntityProperty extends AbstractElementWithFacts {
 
     /**
      * Return an existing entity property from the appspec
-     * 
+     *
      * @param appspec
      * @param entityPropertyRef
      * @return existing entity property from the appspec, if exists - otherwise
      *         null
-     * 
+     *
      * @author Vineet Manohar
      * @throws EntityNotFoundException
      */
@@ -85,15 +85,23 @@ public class EntityProperty extends AbstractElementWithFacts {
         return ep;
     }
 
+    /**
+     * factory method
+     *
+     * @param entityPropertyType
+     * @param parent
+     * @return
+     */
     public static EntityProperty create(org.clickframes.xmlbindings.EntityPropertyType entityPropertyType,
             AppspecElement parent) {
         EntityProperty entityProperty = new EntityProperty(entityPropertyType.getId(), entityPropertyType.getTitle(), parent);
-        
+
         entityProperty.setFacts(entityPropertyType.getFacts());
 
         // type
         entityProperty.setType(EntityPropertyType.fromValue(entityPropertyType.getType()));
 
+        // foreign key
         if (entityProperty.getType() == EntityPropertyType.ENTITY) {
             String foreignEntityId = entityPropertyType.getEntityRef().getEntity();
             entityProperty.setForeignEntityId(foreignEntityId);
@@ -222,12 +230,12 @@ public class EntityProperty extends AbstractElementWithFacts {
     public void setLoginPassword(boolean loginPassword) {
         this.loginPassword = loginPassword;
     }
-    
+
 	@Override
 	public String getMetaName() {
 		return "property";
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj != null && obj instanceof EntityProperty) {
