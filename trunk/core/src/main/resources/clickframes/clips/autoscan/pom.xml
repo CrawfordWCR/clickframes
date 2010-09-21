@@ -58,7 +58,7 @@
     <finalName>${appspec.id}</finalName>
     <plugins>
       <plugin>
-        <version>0.9.8-SNAPSHOT</version>
+        <version>CLICKFRAMES_VERSION</version>
         <groupId>org.clickframes</groupId>
         <artifactId>clickframes-maven-plugin</artifactId>
       </plugin>
