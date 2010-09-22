@@ -44,7 +44,7 @@ import org.clickframes.xmlbindings.PagesType;
  * user visible pages. A page defines a view of the user into the application. A
  * page defines a state of the application. If the application were a finite
  * state machine, a page would be a state.
- * 
+ *
  * @author Vineet Manohar
  */
 public class Page extends AbstractElement {
@@ -91,7 +91,7 @@ public class Page extends AbstractElement {
 
     /**
      * @return The default form of this page, or null otherwise
-     * 
+     *
      * @author Vineet Manohar
      */
     public Form getDefaultForm() {
@@ -189,9 +189,9 @@ public class Page extends AbstractElement {
 
     /**
      * Is this page a login page?
-     * 
+     *
      * @return
-     * 
+     *
      * @author Vineet Manohar
      */
     public boolean isLoginPage() {
@@ -206,9 +206,9 @@ public class Page extends AbstractElement {
 
     /**
      * @return the first login form found on page
-     * 
+     *
      * @throws AppspecConstraintViolationException
-     * 
+     *
      * @author Vineet Manohar
      */
     public Form getLoginForm() throws AppspecConstraintViolationException {
@@ -231,9 +231,9 @@ public class Page extends AbstractElement {
 
     /**
      * XML escaped URL, e.g. to escape & in query strings
-     * 
+     *
      * @return
-     * 
+     *
      * @author Vineet Manohar
      */
     public String getNavigationUrlEscaped() {
@@ -308,7 +308,7 @@ public class Page extends AbstractElement {
     }
 
     /**
-     * @return true if there is at least one file input in any drop down input
+     * @return true if there is at least one dropdown input in any drop down input
      *         on the page, false otherwise
      */
     public boolean isAnyDropdownInputsOnPage() {
@@ -321,9 +321,22 @@ public class Page extends AbstractElement {
     }
 
     /**
+     * @return true if there is at least one file input in any radio input
+     *         on the page, false otherwise
+     */
+    public boolean isAnyRadioInputsOnPage() {
+        for (Form form : getForms()) {
+            if (form.getRadioInputs().size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return a list of all emails referenced by any outcome from this page, or
      *         an empty list if no emails are referenced
-     * 
+     *
      * @author Vineet Manohar
      */
     public Set<Email> getEmails() {
@@ -508,7 +521,7 @@ public class Page extends AbstractElement {
     /**
      * @return a collection of all entities which are bound to any input on this
      *         page
-     * 
+     *
      * @author Vineet Manohar
      */
     public List<Entity> getInputEntities() {
@@ -529,7 +542,7 @@ public class Page extends AbstractElement {
      *         them. This method is calculated by browsing all form actions and
      *         looking at the action type="update" page. Only those entities
      *         which are updated are returned.
-     * 
+     *
      * @author Vineet Manohar
      */
     public Map<Entity, Form> getEntitiesUpdated() {
@@ -544,7 +557,7 @@ public class Page extends AbstractElement {
     /**
      * @return All entities referenced by this page, including entities bound to
      *         input forms, entity lists and entity refs
-     * 
+     *
      * @author Vineet Manohar
      */
     public List<Entity> getInputOrOutputEntities() {
@@ -611,7 +624,7 @@ public class Page extends AbstractElement {
                 }
             }
         }
-        
+
         // Outcomes from OutputList actions
         for (OutputList ol : outputLists) {
         	for (Action a : ol.getActions()) {
@@ -643,7 +656,7 @@ public class Page extends AbstractElement {
     public void setBookmarkable(boolean bookmarkable) {
         this.bookmarkable = bookmarkable;
     }
-    
+
 	@Override
 	public String getMetaName() {
 		return "page";
