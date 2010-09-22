@@ -126,10 +126,10 @@ public class SingleUserInput extends AbstractElement {
 
     /**
      * get the entityPropertyRef child of input type
-     * 
+     *
      * @param inputType
      * @return
-     * 
+     *
      * @author Vineet Manohar
      */
     private static EntityPropertyRefType getEntityPropertyRef(InputType inputType) {
@@ -260,10 +260,10 @@ public class SingleUserInput extends AbstractElement {
             for (OptionType opt : optionsType.getOption()) {
                 if (opt.getOptionValue() != null && opt.getOptionValue().length() > 0) {
                     // they specified <option value="foo">fubar</option>
-                    getAllowedValues().put(opt.getOptionValue(), opt.getValue());
+                    getAllowedValues().put(opt.getOptionValue(), ClickframeUtils.normalize(opt.getValue()));
                 } else {
                     // they specified <option >fubar</option>
-                    getAllowedValues().put(opt.getValue(), opt.getValue());
+                    getAllowedValues().put(opt.getValue(), ClickframeUtils.normalize(opt.getValue()));
 
                 }
             }
@@ -380,7 +380,7 @@ public class SingleUserInput extends AbstractElement {
 
     /**
      * @return MatchesInputValidation if asscociated with this input, or null
-     * 
+     *
      * @author Vineet Manohar
      */
     public MatchesInputValidation getMatchesInputValidation() {
