@@ -32,7 +32,7 @@ import org.clickframes.xmlbindings.InputTypeEnum;
 
 /**
  * represents a form - grouping of data in a view page
- * 
+ *
  * @author Vineet Manohar
  */
 public class Form extends AbstractElement {
@@ -52,7 +52,7 @@ public class Form extends AbstractElement {
 
     public Form(String id, AppspecElement parent) {
         super(id, parent);
-        
+
         if (parent instanceof Page) {
             this.page = (Page) parent;
         }
@@ -86,10 +86,10 @@ public class Form extends AbstractElement {
 
     /**
      * get all the entities referenced from this form
-     * 
+     *
      * @return a list of all entities, or an empty list of no entities were
      *         referenced
-     * 
+     *
      * @author Jon
      */
     public List<Entity> getEntities() {
@@ -105,14 +105,14 @@ public class Form extends AbstractElement {
     /**
      * Returns a mappping of entities bound to this form to a list of inputs
      * bound to the entity
-     * 
+     *
      * This method is useful when you are mapping the form back to a list of
      * constructed entities. It answers the question: which entities does this
      * form populate, and which fields in the populated entities are filled
-     * 
+     *
      * @return A map; where key is an entity bound to this form; and value is
      *         the list of all inputs bound to that entity
-     * 
+     *
      * @author Vineet Manohar
      */
     public Map<Entity, List<SingleUserInput>> getEntityInputs() {
@@ -133,10 +133,10 @@ public class Form extends AbstractElement {
     }
 
     /**
-     * 
+     *
      * @param inputId
      * @return an input with that id
-     * 
+     *
      * @author Vineet Manohar
      * @throws InputNotFoundException
      */
@@ -171,6 +171,10 @@ public class Form extends AbstractElement {
 
     public List<DropdownInput> getDropdownInputs() {
         return getInputsByType(InputTypeEnum.DROPDOWN);
+    }
+
+    public List<DropdownInput> getDateInputs() {
+        return getInputsByType(InputTypeEnum.DATE);
     }
 
     public List<DropdownInput> getMultiDropdownInputs() {
@@ -212,10 +216,10 @@ public class Form extends AbstractElement {
     /**
      * Is this form a login form, a form that the user can fill out to login to
      * the website
-     * 
+     *
      * @return true if there is a username and password field, and a submit
      *         action
-     * 
+     *
      * @author Vineet Manohar
      */
     public boolean isLoginForm() {
@@ -264,7 +268,7 @@ public class Form extends AbstractElement {
 
     /**
      * @return If this form is a login form, return the login action
-     * 
+     *
      * @throws AppspecConstraintViolationException
      *             throw an exception if it isn't
      */
@@ -284,7 +288,7 @@ public class Form extends AbstractElement {
 
     /**
      * @return if this page is a login page, return the login username input
-     * 
+     *
      * @throws AppspecConstraintViolationException
      *             throw an exception if it isn't
      */
@@ -306,7 +310,7 @@ public class Form extends AbstractElement {
 
     /**
      * @return if this page is a login page, return the login password input
-     * 
+     *
      * @throws AppspecConstraintViolationException
      *             throw an exception if it isn't
      */
@@ -356,10 +360,10 @@ public class Form extends AbstractElement {
 
     /**
      * get the input bound to this entity property, or null
-     * 
+     *
      * @param entityProperty
      * @return
-     * 
+     *
      * @author Vineet Manohar
      */
     public SingleUserInput getInputFor(EntityProperty entityProperty) {
@@ -387,7 +391,7 @@ public class Form extends AbstractElement {
      *         This method is calculated by browsing all form actions and
      *         looking at the action type="update" page. Only those entities
      *         which are updated are returned.
-     * 
+     *
      * @author Vineet Manohar
      */
     public Map<Entity, Form> getEntitiesUpdated() {
@@ -407,7 +411,7 @@ public class Form extends AbstractElement {
 
     /**
      * @return true if any action on this form is of type "update"
-     * 
+     *
      * @author Vineet Manohar
      */
     public boolean isUpdateForm() {
@@ -422,7 +426,7 @@ public class Form extends AbstractElement {
     public void setDefaultForm(boolean defaultForm) {
         this.defaultForm = defaultForm;
     }
-    
+
 
 	@Override
 	public String getMetaName() {
