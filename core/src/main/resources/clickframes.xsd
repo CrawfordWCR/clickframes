@@ -397,7 +397,7 @@
     <xsd:all>
       <xsd:element name="title" type="cf:nonEmptyString"
         minOccurs="0" />
-      <xsd:element name="description" type="cf:nonEmptyString" />
+      <xsd:element name="description" type="cf:nonEmptyString" minOccurs="0"/>
       <xsd:element name="facts" type="cf:factsType"
         minOccurs="0" />
     </xsd:all>
