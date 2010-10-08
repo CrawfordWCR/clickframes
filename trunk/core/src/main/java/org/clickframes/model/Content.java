@@ -3,6 +3,7 @@ package org.clickframes.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.clickframes.util.ClickframeUtils;
 import org.clickframes.xmlbindings.ContentType;
 import org.clickframes.xmlbindings.ContentsType;
 
@@ -37,7 +38,7 @@ public class Content extends AbstractElement{
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.text = ClickframeUtils.normalize(text);
     }
 
 
@@ -59,7 +60,7 @@ public class Content extends AbstractElement{
         }
         return list;
     }
-    
+
 	@Override
 	public String getMetaName() {
 		return "content";
