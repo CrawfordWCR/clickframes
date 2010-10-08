@@ -44,4 +44,11 @@ public class ClickframeUtilsTest {
         String escapedTitle = ClickframeUtils.escapeXml(str);
         Assert.assertEquals("Save &amp; Continue", escapedTitle, "Escape not implmemented correctly");
     }
+
+    @Test
+    public static void testNormalize() {
+    	String text = "\n\nSome text\n\nfollowed by \n more text";
+        String normalized = ClickframeUtils.normalize(text);
+        Assert.assertFalse(text.equals(normalized));
+    }
 }
