@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.clickframes.util.ClickframeUtils;
 import org.clickframes.xmlbindings.EntityPropertyRefType;
 import org.clickframes.xmlbindings.OptionType;
 import org.clickframes.xmlbindings.OptionsType;
@@ -129,9 +130,9 @@ public class EntityProperty extends AbstractElementWithFacts {
         if (optionsType != null) {
             for (OptionType opt : optionsType.getOption()) {
                 if (!StringUtils.isEmpty(opt.getOptionValue())) {
-                    entityProperty.getAllowedValues().put(opt.getOptionValue(), opt.getValue());
+                    entityProperty.getAllowedValues().put(opt.getOptionValue(), ClickframeUtils.normalize(opt.getValue()));
                 } else {
-                    entityProperty.getAllowedValues().put(opt.getValue(), opt.getValue());
+                    entityProperty.getAllowedValues().put(opt.getValue(), ClickframeUtils.normalize(opt.getValue()));
 
                 }
             }
