@@ -35,7 +35,7 @@ public abstract class Link extends AbstractElement {
     private List<Fact> facts = new ArrayList<Fact>();
     /**
      * TODO: refactor field to outcome subclass
-     * 
+     *
      * applies only to outcomes
      */
     private String message;
@@ -52,7 +52,7 @@ public abstract class Link extends AbstractElement {
 
     /**
      * TODO: refactor field to outcome subclass
-     * 
+     *
      * applies only to outcomes
      */
     private boolean negative;
@@ -81,16 +81,16 @@ public abstract class Link extends AbstractElement {
         this.loginSuccessfulOutcome = loginSuccessfulOutcome;
         this.loginFailedOutcome = loginFailedOutcome;
     }
-    
+
     public String getKey() {
     	if (getParent() == null) {
     		return getUppercaseId();
     	}
-    	
+
 		if (getParent().getParent() == null) {
 			return getParent().getUppercaseId() + "_" + getUppercaseId();
 		}
-    	
+
     	return getParent().getUppercaseId() + "_" + getParent().getParent().getUppercaseId() + "_" + getUppercaseId();
     }
 
@@ -107,9 +107,9 @@ public abstract class Link extends AbstractElement {
     public abstract String getTargetTitle();
 
     public String getMessage() {
-        if (message == null) {
-            return getTitle();
-        }
+		// if (message == null) {
+		// return getTitle();
+		// }
 
         return message;
     }
@@ -196,5 +196,5 @@ public abstract class Link extends AbstractElement {
 
         return list;
     }
-    
+
 }
