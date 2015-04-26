@@ -1,0 +1,1 @@
+Clickframes is a framework for creating web applications. It supports quick iteration of design, development and testing through a simple, XML-based requirements model tailored to the needs of a web application. Using Clickframes, project teams can automate the generation of design artifacts, prototypes, software requirements, production-ready code, and Selenium test scripts.
